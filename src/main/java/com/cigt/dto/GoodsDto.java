@@ -12,6 +12,6 @@ public class GoodsDto {
     private  String  updated_at;
     private int num;
     private String category;
-    UserDto user_id;
+    private int user_id;
 }
 ;

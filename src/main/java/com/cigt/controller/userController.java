@@ -56,9 +56,9 @@ public class userController {
      */
     @PostMapping("/findAllUserInfo")
     @ResponseBody
-    public Map allUser(UserDto userDto , Model model, HttpServletResponse response, HttpServletRequest request ){
+    public Map allUser(){
         Map map = new HashMap<>();
-        List<UserDto> list = userService.allUser(userDto);
+        List<UserDto> list = userService.allUser();
         if(list != null ){
             map.put("findAllUser",list);
             return map;
@@ -68,7 +68,71 @@ public class userController {
     }
 
     /**
+     *查询单个用户
+     */
+    @PostMapping("/findAllUserInfo/{name}")
+    @ResponseBody
+    public Map oneUser(String name){
+        Map map = new HashMap<>();
+        UserDto userDto = userService.findUserByName(name);
+        if( userDto != null ){
+            map.put("findAllUserByName",userDto);
+        }
+        map.put("findAllUserByName","名字不存在");
+        return map;
+    }
+
+    /**
      * 修改用户信息---controller
      */
+    @PostMapping("/updateUserInfo")
+    @ResponseBody
+    public Map updateUser(UserDto userDto){
+        Map map =new HashMap();
+        try {
+            userService.updateUser(userDto);
+            map.put("updateUser",userDto);
+            return  map;
+        }catch (Exception e){
+            System.out.println(e);
+            map.put("updateUser","false");
+            return map;
+        }
+    }
 
+    /**
+     * 插入操作
+     */
+    @PostMapping("/insertUserInfo")
+    @ResponseBody
+    public Map insertUser(UserDto userDto){
+        Map map = new HashMap();
+        try{
+            userService.register(userDto);
+            map.put("insertUser",userDto);
+            return map;
+        }catch (Exception e){
+            System.out.println(e);
+            map.put("insertUser","false");
+            return map;
+        }
+    }
+
+    /**
+     * 删除操作
+     */
+    @PostMapping("/delectUserInfo")
+    @ResponseBody
+    public Map delectUser(int id){
+        Map map = new HashMap();
+        try{
+            userService.delectUser(id);
+            map.put("delectUser","ture");
+            return map;
+        }catch (Exception e){
+            System.out.println(e);
+            map.put("delectUser","false");
+            return map;
+        }
+    }
 }

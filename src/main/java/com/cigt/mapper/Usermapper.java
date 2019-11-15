@@ -29,19 +29,19 @@ public interface Usermapper {
     /**
      * 插入用户信息
      */
-    @Insert(" INSERT INTO t_user (id, name, password, created_at, updated_at,real_name ) VALUES ( #{id}, #{name}, #{password}, #{created_at}, #{updated_at},#{real_name} ) ")
+    @Insert(" INSERT INTO t_user (name,address,phone,Information_state,updated_at,real_name ) VALUES ( #{name},#{address},#{phone},#{Information_state},#{updated_at},#{real_name} ) ")
     int insertUser(UserDto userDto);
 
     /**
      * 修改用户信息
      */
-    @Update(" UPDATE t_user SET name,=#{name},image=#{image},address=#{address},sex=#{sex},phone=#{phone},autograph=#{autograph},Information_state = #{Information_state}，updated_at=#{updated_at} where user_id = #{user_id},real_name=#{real_name} ")
+    @Update(" UPDATE t_user SET real_name=#{real_name},image=#{image},address=#{address},sex=#{sex},phone=#{phone},autograph=#{autograph},Information_state = #{Information_state}，updated_at=#{updated_at} where id = #{id}")
     int updateUser(UserDto userDto);
 
     /**
      * 删除用户信息
      */
     @Delete(" DELETE FROM t_user WHERE id= #{id} ")
-    int Delete(UserDto userDto);
+    int Delete(int id);
 
 }

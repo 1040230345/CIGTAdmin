@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService{
     private Usermapper usermapper;
     @Autowired
     private GetTime_util getTime_util;
+
     /**
      * 登录的账号密码验证
      * @param name
@@ -31,13 +32,26 @@ public class UserServiceImpl implements UserService{
 
     /**
      * 查询所有用户
-     * @param userDto
      * @return
      */
-    public List<UserDto> allUser(UserDto userDto){
+    public List<UserDto> allUser(){
         List<UserDto> list = usermapper.findAllUser();
         if(list != null ){
             return  list;
+        }
+        return null;
+    }
+
+    /**
+     * 查询单个用户
+     * @param name
+     * @return
+     */
+    @Override
+    public UserDto findUserByName(String name) {
+        UserDto userDto =usermapper.findByName(name);
+        if(userDto != null ){
+            return userDto;
         }
         return null;
     }
@@ -49,6 +63,7 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public UserDto updateUser(UserDto userDto) {
+        //赋值更新时间
         userDto.setUpdated_at(getTime_util.GetNowTime_util());
         int num = usermapper.updateUser(userDto);
         if ( num>0 ){
@@ -64,8 +79,7 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public UserDto register(UserDto userDto) {
-        // 赋值创建时间和修改时间
-        userDto.setCreated_at(getTime_util.GetNowTime_util());
+        // 赋值修改时间
         userDto.setUpdated_at(getTime_util.GetNowTime_util());
         //插入数据库
         int num = usermapper.insertUser(userDto);
@@ -79,5 +93,19 @@ public class UserServiceImpl implements UserService{
             }
         }
         return null;
+    }
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean delectUser(int id) {
+        int num = usermapper.Delete(id);
+        if( num >0 ){
+            return true;
+        }
+        return false;
     }
 }
