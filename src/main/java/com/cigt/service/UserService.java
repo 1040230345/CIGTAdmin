@@ -1,9 +1,6 @@
 package com.cigt.service;
 
 import com.cigt.dto.UserDto;
-import com.cigt.mapper.Usermapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

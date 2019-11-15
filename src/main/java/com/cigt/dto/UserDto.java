@@ -2,7 +2,6 @@ package com.cigt.dto;
 
 import lombok.Data;
 
-import java.util.Date;
 @Data
 public class UserDto {
     private int id;

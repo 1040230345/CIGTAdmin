@@ -14,9 +14,6 @@ public class UserServiceImpl implements UserService{
     private Usermapper usermapper;
     @Autowired
     private GetTime_util getTime_util;
-    @Autowired
-    private UserDto userDto;
-
     /**
      * 登录的账号密码验证
      * @param name
