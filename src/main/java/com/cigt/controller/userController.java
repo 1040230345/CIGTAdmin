@@ -1,6 +1,8 @@
 package com.cigt.controller;
 
 import com.cigt.dto.UserDto;
+import com.cigt.dto.adminDto;
+import com.cigt.mapper.Adminmapper;
 import com.cigt.service.UserService;
 import com.cigt.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +23,18 @@ public class userController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private Adminmapper adminmapper;
     /**
      * 登录--controller
      */
     @RequestMapping("/login")
     @ResponseBody
-    public Map<String, String> login(@RequestParam(required = false) String remember, String name , String password, Model model, HttpServletResponse response, HttpServletRequest request) {
+    public Map<String, String> login(@RequestParam(required = false) String remember, String account , String password, Model model, HttpServletResponse response, HttpServletRequest request) {
         Map<String, String> map = new HashMap<>();
         //验证登录账号密码
-        UserDto userDto = userService.checkLogin(name, password);
-        if (userDto != null) {
+        adminDto adminDto = adminmapper.findUser_login(account,password);
+        if (adminDto != null) {
             //创建token，缓存用户数据
             //  String token = userService.updateCookie(userDto);
             //model.addAttribute("USER",userDto);

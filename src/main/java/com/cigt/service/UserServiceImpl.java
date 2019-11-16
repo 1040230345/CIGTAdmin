@@ -1,6 +1,8 @@
 package com.cigt.service;
 
 import com.cigt.dto.UserDto;
+import com.cigt.dto.adminDto;
+import com.cigt.mapper.Adminmapper;
 import com.cigt.mapper.Usermapper;
 import com.cigt.my_util.GetTime_util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +16,20 @@ public class UserServiceImpl implements UserService{
     private Usermapper usermapper;
     @Autowired
     private GetTime_util getTime_util;
+    @Autowired
+    private Adminmapper adminmapper;
 
     /**
      * 登录的账号密码验证
-     * @param name
+     * @param account
      * @param password
      * @return
      */
     @Override
-    public UserDto checkLogin(String name, String password) {
-        UserDto userDto = usermapper.findUser_login(name,password);
-        if(userDto != null){
-            return userDto;
+    public adminDto checkLogin(String account, String password) {
+        adminDto adminDto = adminmapper.findUser_login(account,password);
+        if(adminDto != null){
+            return adminDto;
         }
         return null;
     }

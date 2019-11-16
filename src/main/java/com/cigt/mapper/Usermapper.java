@@ -8,11 +8,6 @@ import java.util.List;
 @Mapper
 public interface Usermapper {
 
-    /**
-     * 查询登录信息
-     */
-    @Select("select * from t_user where name=#{name} and password=#{password} ")
-    UserDto findUser_login(@Param("name") String name, @Param("password") String password);
 
     /**
      * 查询所有用户信息

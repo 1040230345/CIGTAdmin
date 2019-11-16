@@ -1,6 +1,7 @@
 package com.cigt.service;
 
 import com.cigt.dto.UserDto;
+import com.cigt.dto.adminDto;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface UserService {
     /**
      * 登录校验
      */
-    UserDto checkLogin(String name,String password);
+    adminDto checkLogin(String account, String password);
 
     /**
      * 查询所有用户信息
