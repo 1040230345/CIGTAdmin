@@ -29,7 +29,7 @@ public class userController {
      */
     @RequestMapping("/login")
     @ResponseBody
-    public Map<String, String> login(@RequestParam(required = false) String remember, String account , String password, Model model, HttpServletResponse response, HttpServletRequest request) {
+    public Map<String, String> login(@RequestParam(required = false) String remember, String account, String password, Model model, HttpServletResponse response, HttpServletRequest request) {
         System.out.println(account);
         System.out.println(password);
         Map<String, String> map = new HashMap<>();
@@ -44,24 +44,15 @@ public class userController {
             //发送给浏览器
             //  response.addCookie(cookie);
             // 获取Session
-            //HttpSession session=request.getSession();
+            HttpSession session=request.getSession();
             //添加到session里面
-            // session.setAttribute("User_id",userDto.getId());
+            session.setAttribute("Admin",adminDto);
             map.put("loginSuccess", "success");
             return map;
         }
 //      model.addAttribute("login_error","请检查密码后再次尝试登陆，谢谢");
         map.put("login_error", "请检查密码后再次尝试登陆，谢谢");
         return map;
-    }
-
-    /**
-     * 登录成功后
-     */
-    @PostMapping(value = "/login")
-    public String requestLogin(){
-        System.out.println("登录成功");
-        return "home";
     }
 
     /**
