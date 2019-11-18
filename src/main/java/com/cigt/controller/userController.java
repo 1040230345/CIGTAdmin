@@ -31,6 +31,8 @@ public class userController {
     @RequestMapping("/login")
     @ResponseBody
     public Map<String, String> login(@RequestParam(required = false) String remember, String account , String password, Model model, HttpServletResponse response, HttpServletRequest request) {
+        System.out.println(account);
+        System.out.println(password);
         Map<String, String> map = new HashMap<>();
         //验证登录账号密码
         adminDto adminDto = adminmapper.findUser_login(account,password);

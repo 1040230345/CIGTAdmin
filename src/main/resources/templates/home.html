@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>广科闲置交易系统-后台</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        body{
+            font-family: "Microsoft YaHei UI";
+            margin: 0;
+            padding: 0;
+        }
+        #app{
+            width: 100%;
+            height: 100%;
+        }
+        .el-container{
+            height: 722px;
+        }
+        .el-aside{
+            background-color: #545c64;
+        }
+        .el-header{
+            padding-left: 0;
+        }
+        .el-main{
+            padding-left: 0;
+        }
+        .addUser,.editUser,.deleteUser{
+            width: 100%;
+            height: 100%;
+        }
+        .el-footer{
+            padding-left: 0;
+            border-top: 1px solid #d2d6de;
+            text-align: center;
+            line-height: 60px;
+        }
+        .el-header .el-menu{
+            display: flex;
+            flex-direction: row-reverse;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-aside width="15%">
+<!--            侧边导航-->
+            <el-menu
+                    default-active="2"
+                    class="el-menu-vertical-demo"
+                    @select="handleShow"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b">
+                <el-submenu index="1">
+                    <template slot="title">
+                        <i class="el-icon-user-solid"></i>
+                        <span>用户管理</span>
+                    </template>
+                    <el-menu-item-group>
+                        <el-menu-item index="1-1">查看用户</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="1-2">增加用户</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="1-3">删除用户</el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="2">
+                    <template slot="title">
+                        <i class="el-icon-s-goods"></i>
+                        <span>商品管理</span>
+                    </template>
+                    <el-menu-item-group>
+                        <el-menu-item index="2-1">查看商品</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="2-2">增加商品</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="2-3">删除商品</el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="3">
+                    <template slot="title">
+                        <i class="el-icon-s-promotion"></i>
+                        <span>动态管理</span>
+                    </template>
+                    <el-menu-item-group>
+                        <el-menu-item index="3-1">查看动态</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="3-2">增加动态</el-menu-item>
+                    </el-menu-item-group>
+
+                    <el-menu-item-group title="----">
+
+                        <el-menu-item index="3-3">删除动态</el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
+            </el-menu>
+        </el-aside>
+        <el-container>
+            <el-header>
+<!--                头部导航-->
+                <el-menu
+                        :default-active="activeIndex2"
+                        class="el-menu-demo"
+                        mode="horizontal"
+                        @select="handleSelect"
+                        background-color="#545c64"
+                        text-color="#fff"
+                        active-text-color="#ffd04b">
+                    <el-menu-item index="1">个人中心</el-menu-item>
+                    <el-submenu index="2">
+                        <template slot="title">个人中心</template>
+                        <el-menu-item index="2-1">选项1</el-menu-item>
+                        <el-menu-item index="2-2">选项2</el-menu-item>
+                        <el-menu-item index="2-3">选项3</el-menu-item>
+                        <el-submenu index="2-4">
+                            <template slot="title">选项4</template>
+                            <el-menu-item index="2-4-1">选项1</el-menu-item>
+                            <el-menu-item index="2-4-2">选项2</el-menu-item>
+                            <el-menu-item index="2-4-3">选项3</el-menu-item>
+                        </el-submenu>
+                    </el-submenu>
+                    <el-menu-item index="3" disabled>消息中心</el-menu-item>
+                    <el-menu-item index="4"><a href="#" target="_blank">订单管理</a></el-menu-item>
+                </el-menu>
+            </el-header>
+            <el-main>
+<!--                查看用户-->
+                <div class="editUser" v-if="cardVisible.userShow">
+                    <!--                        对话框-->
+<!--                    查看详情-->
+                    <el-dialog
+                            title="详情"
+                            :visible.sync="checkUserdialogVisible"
+                            width="30%"
+                            center>
+                        <ul>
+                            <li>{{checkUserData.id}}</li>
+                            <li>{{checkUserData.name}}</li>
+                            <li>{{checkUserData.image}}</li>
+                            <li>{{checkUserData.password}}</li>
+                            <li>{{checkUserData.address}}</li>
+                            <li>{{checkUserData.sex}}</li>
+                            <li>{{checkUserData.phone}}</li>
+                            <li>{{checkUserData.information_state}}</li>
+                            <li>{{checkUserData.autograph}}</li>
+                            <li>{{checkUserData.created_at}}</li>
+                            <li>{{checkUserData.updated_at}}</li>
+                            <li>{{checkUserData.real_name}}</li>
+                        </ul>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+<!--                    编辑-->
+                    <el-dialog
+                            title="编辑"
+                            :visible.sync="editUserdialogVisible"
+                            width="30%"
+                            center>
+                        <el-form label-width="80px">
+                            <el-form-item label="id">
+                                <el-input type="primary" size="small" v-model="editUserData.id" ></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="姓名">
+                                <el-input type="primary" size="small" v-model="editUserData.name" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="头像">
+                                <el-input type="primary" size="small" v-model="editUserData.image" ></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="密码">
+                                <el-input type="primary" size="small" v-model="editUserData.password" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="地址">
+                                <el-input type="primary" size="small" v-model="editUserData.address" ></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="性别">
+                                <el-input type="primary" size="small" v-model="editUserData.sex" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="电话">
+                                <el-input type="primary" size="small" v-model="editUserData.phone" ></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="状态">
+                                <el-input type="primary" size="small" v-model="editUserData.information_state" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="个性签名">
+                                <el-input type="primary" size="small" v-model="editUserData.autograph" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="真实姓名">
+                                <el-input type="primary" size="small" v-model="editUserData.real_name" ></el-input>
+                            </el-form-item>
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="editUserdialogVisible = false">修 改</el-button>
+                            <el-button type="" @click="editUserdialogVisible = false">放弃修改</el-button>
+                        </span>
+                    </el-dialog>
+                    <el-card>
+                        <div slot="header" class="clearfix header">
+                            <div class="title">查看用户</div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <el-table
+                                    :data="userData"
+                                    stripe
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="id"
+                                        label="ID"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="name"
+                                        label="姓名"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="image"
+                                        label="头像"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="password"
+                                        label="密码"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="address"
+                                        label="地址"
+                                        width="200">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="sex"
+                                        label="性别"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="phone"
+                                        label="电话"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="information_state"
+                                        label="状态"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="autograph"
+                                        label="个性签名"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="created_at"
+                                        label="创建时间"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="updated_at"
+                                        label="更新时间"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="real_name"
+                                        label="真实姓名"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        fixed="right"
+                                        label="操作"
+                                        width="100">
+                                    <template slot-scope="scope">
+                                        <el-button @click="checkUser(scope.row)" type="text" size="small">查看</el-button>
+                                        <el-button @click="editUser(scope.row)" type="text" size="small">修改</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                        <!--                        分页-->
+                        <el-pagination
+                                background
+                                layout="prev, pager, next"
+                                :total="100">
+                        </el-pagination>
+                    </el-card>
+                </div>
+<!--                添加用户-->
+                <div class="editUser" v-if="cardVisible.addUserShow">
+                    <el-card>
+                            <div slot="header" class="clearfix header">
+                                <div class="title">添加用户</div>
+                            </div>
+                            <div>
+                                <el-form :model="addUserFormData" label-width="80px">
+                                    <el-form-item label="id">
+                                        <el-input type="primary" size="large" placeholder="请输入您的账号"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="姓名">
+                                        <el-input type="primary" size="large" placeholder="请输入您的姓名"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="头像">
+                                        <el-input type="primary" size="large" placeholder="请输入您的头像"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="密码">
+                                        <el-input type="primary" size="large" placeholder="请输入您的密码"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="地址">
+                                        <el-input type="primary" size="large" placeholder="请输入您的地址"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="性别">
+                                        <el-input type="primary" size="large" placeholder="请输入您的性别"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="电话">
+                                        <el-input type="primary" size="large" placeholder="请输入您的电话"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="状态">
+                                        <el-input type="primary" size="large" placeholder="请输入您的状态"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="个性签名">
+                                        <el-input type="primary" size="large" placeholder="请输入您的个性签名"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="真实姓名">
+                                        <el-input type="primary" size="large" placeholder="请输入您的真实姓名"></el-input>
+                                    </el-form-item>
+                                    <el-button type="primary">提交</el-button>
+                                </el-form>
+                            </div>
+                    </el-card>
+                </div>
+<!--                删除用户-->
+                <div class="editUser" v-if="cardVisible.deleteUserShow">
+                    <!--                    对话框-->
+                    <!--                    查看详情-->
+                    <el-dialog
+                            title="详情"
+                            :visible.sync="checkUserdialogVisible"
+                            width="30%"
+                            center>
+                        <ul>
+                            <li>{{checkUserData.id}}</li>
+                            <li>{{checkUserData.name}}</li>
+                            <li>{{checkUserData.image}}</li>
+                            <li>{{checkUserData.password}}</li>
+                            <li>{{checkUserData.address}}</li>
+                            <li>{{checkUserData.sex}}</li>
+                            <li>{{checkUserData.phone}}</li>
+                            <li>{{checkUserData.information_state}}</li>
+                            <li>{{checkUserData.autograph}}</li>
+                            <li>{{checkUserData.created_at}}</li>
+                            <li>{{checkUserData.updated_at}}</li>
+                            <li>{{checkUserData.real_name}}</li>
+                        </ul>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+                    <!--                    删除-->
+                    <el-dialog
+                            title="确认删除"
+                            :visible.sync="deleteUserdialogVisible"
+                            width="30%"
+                            center>
+                        <p>您正在删除表格数据！</p>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="deleteUserdialogVisible = false">确认</el-button>
+                            <el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>
+                        </span>
+                    </el-dialog>
+                    <el-card>
+                        <div slot="header" class="clearfix header">
+                            <div class="title">删除用户</div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <el-table
+                                    :data="userData"
+                                    stripe
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="id"
+                                        label="ID"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="name"
+                                        label="姓名"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="image"
+                                        label="头像"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="password"
+                                        label="密码"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="address"
+                                        label="地址"
+                                        width="200">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="sex"
+                                        label="性别"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="phone"
+                                        label="电话"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="information_state"
+                                        label="状态"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="autograph"
+                                        label="个性签名"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="created_at"
+                                        label="创建时间"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="updated_at"
+                                        label="更新时间"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="real_name"
+                                        label="真实姓名"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        fixed="right"
+                                        label="操作"
+                                        width="100">
+                                    <template slot-scope="scope">
+                                        <el-button @click="checkUser(scope.row)" type="text" size="small">查看</el-button>
+                                        <el-button @click="deleteUser(scope.row)" type="text" size="small">删除</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                        <!--                        分页-->
+                        <el-pagination
+                                background
+                                layout="prev, pager, next"
+                                :total="100">
+                        </el-pagination>
+                    </el-card>
+                </div>
+
+                <!--                查看商品-->
+                <div class="editUser" v-if="cardVisible.goodsShow">
+                    <!--                        对话框-->
+                    <!--                    查看详情-->
+                    <el-dialog
+                            title="详情"
+                            :visible.sync="checkGoodsdialogVisible"
+                            width="30%"
+                            center>
+                        <ul>
+                            <li>{{checkGoodsData.id}}</li>
+                            <li>{{checkGoodsData.name}}</li>
+                            <li>{{checkGoodsData.price}}</li>
+                            <li>{{checkGoodsData.images}}</li>
+                            <li>{{checkGoodsData.time}}</li>
+                            <li>{{checkGoodsData.updated_at}}</li>
+                            <li>{{checkGoodsData.user_id}}</li>
+                            <li>{{checkGoodsData.num}}</li>
+                            <li>{{checkGoodsData.category}}</li>
+                        </ul>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+                    <!--                    编辑-->
+                    <el-dialog
+                            title="编辑"
+                            :visible.sync="editUserdialogVisible"
+                            width="30%"
+                            center>
+                        <el-form label-width="80px">
+                            <el-form-item label="商品名称">
+                                <el-input type="primary" size="small" v-model="editUserData.name" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="价格">
+                                <el-input type="primary" size="small" v-model="editUserData.price" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="图片">
+                                <el-input type="primary" size="small" v-model="editUserData.images" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="数量">
+                                <el-input type="primary" size="small" v-model="editUserData.num" ></el-input>
+                            </el-form-item>
+                            <el-form-item label="类别">
+                                <el-input type="primary" size="small" v-model="editUserData.category" ></el-input>
+                            </el-form-item>
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="editUserdialogVisible = false">修 改</el-button>
+                            <el-button type="" @click="editUserdialogVisible = false">放弃修改</el-button>
+                        </span>
+                    </el-dialog>
+                    <el-card>
+                        <div slot="header" class="clearfix header">
+                            <div class="title">查看商品</div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <el-table
+                                    :data="goodsData"
+                                    stripe
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="id"
+                                        label="ID"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="name"
+                                        label="名称"
+                                        width="150">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="price"
+                                        label="价格"
+                                        width="80">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="images"
+                                        label="图片"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="time"
+                                        label="时间"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="updated_at"
+                                        label="更新时间"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="user_id"
+                                        label="用户id"
+                                        width="80">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="num"
+                                        label="数量"
+                                        width="60">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="category"
+                                        label="类别"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        fixed="right"
+                                        label="操作"
+                                        width="100">
+                                    <template slot-scope="scope">
+                                        <el-button @click="checkGoods(scope.row)" type="text" size="small">查看</el-button>
+                                        <el-button @click="editGoods(scope.row)" type="text" size="small">修改</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                        <!--                        分页-->
+                        <el-pagination
+                                background
+                                layout="prev, pager, next"
+                                :total="100">
+                        </el-pagination>
+                    </el-card>
+                </div>
+                <!--                添加商品-->
+                <div class="editUser" v-if="cardVisible.addGoodsShow">
+                    <el-card>
+                        <div slot="header" class="clearfix header">
+                            <div class="title">添加用户</div>
+                        </div>
+                        <div>
+                            <el-form :model="addGoodsFormData" label-width="80px">
+                                <el-form-item label="商品名称">
+                                    <el-input type="primary" size="large" placeholder="请输入您要发布商品名称" v-model="addGoodsFormData.name"></el-input>
+                                </el-form-item>
+                                <el-form-item label="价格">
+                                    <el-input type="primary" size="large" placeholder="请输入您的商品价格" v-model="addGoodsFormData.price"></el-input>
+                                </el-form-item>
+                                <el-form-item label="图片">
+                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.name"></el-input>
+                                </el-form-item>
+                                <el-form-item label="数量">
+                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量" v-model="addGoodsFormData.number"></el-input>
+                                </el-form-item>
+                                <el-form-item label="类别">
+                                    <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>
+                                </el-form-item>
+                                <el-button type="primary">提交</el-button>
+                            </el-form>
+                        </div>
+                    </el-card>
+                </div>
+                <!--                删除商品-->
+                <div class="editUser" v-if="cardVisible.deleteGoodsShow">
+                    <!--                    对话框-->
+                    <!--                    查看详情-->
+                    <el-dialog
+                            title="详情"
+                            :visible.sync="checkGoodsdialogVisible"
+                            width="30%"
+                            center>
+                        <ul>
+                            <li>{{checkGoodsData.id}}</li>
+                            <li>{{checkGoodsData.name}}</li>
+                            <li>{{checkGoodsData.price}}</li>
+                            <li>{{checkGoodsData.images}}</li>
+                            <li>{{checkGoodsData.time}}</li>
+                            <li>{{checkGoodsData.updated_at}}</li>
+                            <li>{{checkGoodsData.user_id}}</li>
+                            <li>{{checkGoodsData.num}}</li>
+                            <li>{{checkGoodsData.category}}</li>
+                        </ul>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="checkGoodsdialogVisible = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+                    <!--                    删除-->
+                    <el-dialog
+                            title="确认删除"
+                            :visible.sync="deleteUserdialogVisible"
+                            width="30%"
+                            center>
+                        <p>您正在删除表格数据！</p>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="deleteUserdialogVisible = false">确认</el-button>
+                            <el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>
+                        </span>
+                    </el-dialog>
+                    <el-card>
+                        <div slot="header" class="clearfix header">
+                            <div class="title">删除用户</div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <el-table
+                                    :data="goodsData"
+                                    stripe
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="id"
+                                        label="ID"
+                                        width="50">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="name"
+                                        label="名称"
+                                        width="150">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="price"
+                                        label="价格"
+                                        width="80">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="images"
+                                        label="图片"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="time"
+                                        label="时间"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="updated_at"
+                                        label="更新时间"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="user_id"
+                                        label="用户id"
+                                        width="80">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="num"
+                                        label="数量"
+                                        width="60">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="category"
+                                        label="类别"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        fixed="right"
+                                        label="操作"
+                                        width="100">
+                                    <template slot-scope="scope">
+                                        <el-button @click="checkGoods(scope.row)" type="text" size="small">查看</el-button>
+                                        <el-button @click="deleteGoods(scope.row)" type="text" size="small">删除</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                        <!--                        分页-->
+                        <el-pagination
+                                background
+                                layout="prev, pager, next"
+                                :total="100">
+                        </el-pagination>
+                    </el-card>
+                </div>
+
+<!--                &lt;!&ndash;                查看动态&ndash;&gt;-->
+<!--                <div class="editUser" v-if="cardVisible.goodsShow">-->
+<!--                    &lt;!&ndash;                        对话框&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    查看详情&ndash;&gt;-->
+<!--                    <el-dialog-->
+<!--                            title="详情"-->
+<!--                            :visible.sync="checkGoodsdialogVisible"-->
+<!--                            width="30%"-->
+<!--                            center>-->
+<!--                        <ul>-->
+<!--                            <li>{{checkGoodsData.id}}</li>-->
+<!--                            <li>{{checkGoodsData.name}}</li>-->
+<!--                            <li>{{checkGoodsData.price}}</li>-->
+<!--                            <li>{{checkGoodsData.images}}</li>-->
+<!--                            <li>{{checkGoodsData.time}}</li>-->
+<!--                            <li>{{checkGoodsData.updated_at}}</li>-->
+<!--                            <li>{{checkGoodsData.user_id}}</li>-->
+<!--                            <li>{{checkGoodsData.num}}</li>-->
+<!--                            <li>{{checkGoodsData.category}}</li>-->
+<!--                        </ul>-->
+<!--                        <span slot="footer" class="dialog-footer">-->
+<!--                            <el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button>-->
+<!--                        </span>-->
+<!--                    </el-dialog>-->
+<!--                    &lt;!&ndash;                    编辑&ndash;&gt;-->
+<!--                    <el-dialog-->
+<!--                            title="编辑"-->
+<!--                            :visible.sync="editUserdialogVisible"-->
+<!--                            width="30%"-->
+<!--                            center>-->
+<!--                        <el-form label-width="80px">-->
+<!--                            <el-form-item label="商品名称">-->
+<!--                                <el-input type="primary" size="small" v-model="editUserData.name" ></el-input>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="价格">-->
+<!--                                <el-input type="primary" size="small" v-model="editUserData.price" ></el-input>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="图片">-->
+<!--                                <el-input type="primary" size="small" v-model="editUserData.images" ></el-input>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="数量">-->
+<!--                                <el-input type="primary" size="small" v-model="editUserData.num" ></el-input>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="类别">-->
+<!--                                <el-input type="primary" size="small" v-model="editUserData.category" ></el-input>-->
+<!--                            </el-form-item>-->
+<!--                        </el-form>-->
+<!--                        <span slot="footer" class="dialog-footer">-->
+<!--                            <el-button type="primary" @click="editUserdialogVisible = false">修 改</el-button>-->
+<!--                            <el-button type="" @click="editUserdialogVisible = false">放弃修改</el-button>-->
+<!--                        </span>-->
+<!--                    </el-dialog>-->
+<!--                    <el-card>-->
+<!--                        <div slot="header" class="clearfix header">-->
+<!--                            <div class="title">查看商品</div>-->
+<!--                        </div>-->
+<!--                        <div style="margin-bottom: 15px;">-->
+<!--                            <el-table-->
+<!--                                    :data="goodsData"-->
+<!--                                    stripe-->
+<!--                                    style="width: 100%">-->
+<!--                                <el-table-column-->
+<!--                                        prop="id"-->
+<!--                                        label="ID"-->
+<!--                                        width="50">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="name"-->
+<!--                                        label="名称"-->
+<!--                                        width="150">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="price"-->
+<!--                                        label="价格"-->
+<!--                                        width="80">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="images"-->
+<!--                                        label="图片"-->
+<!--                                        width="100">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="time"-->
+<!--                                        label="时间"-->
+<!--                                        width="100">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="updated_at"-->
+<!--                                        label="更新时间"-->
+<!--                                        width="100">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="user_id"-->
+<!--                                        label="用户id"-->
+<!--                                        width="80">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="num"-->
+<!--                                        label="数量"-->
+<!--                                        width="60">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="category"-->
+<!--                                        label="类别"-->
+<!--                                        width="100">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        fixed="right"-->
+<!--                                        label="操作"-->
+<!--                                        width="100">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <el-button @click="checkGoods(scope.row)" type="text" size="small">查看</el-button>-->
+<!--                                        <el-button @click="editGoods(scope.row)" type="text" size="small">修改</el-button>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                            </el-table>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;                        分页&ndash;&gt;-->
+<!--                        <el-pagination-->
+<!--                                background-->
+<!--                                layout="prev, pager, next"-->
+<!--                                :total="100">-->
+<!--                        </el-pagination>-->
+<!--                    </el-card>-->
+<!--                </div>-->
+<!--                &lt;!&ndash;                增加动态&ndash;&gt;-->
+<!--                <div class="editUser" v-if="cardVisible.addGoodsShow">-->
+<!--                    <el-card>-->
+<!--                        <div slot="header" class="clearfix header">-->
+<!--                            <div class="title">添加用户</div>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <el-form :model="addGoodsFormData" label-width="80px">-->
+<!--                                <el-form-item label="商品名称">-->
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您要发布商品名称" v-model="addGoodsFormData.name"></el-input>-->
+<!--                                </el-form-item>-->
+<!--                                <el-form-item label="价格">-->
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品价格" v-model="addGoodsFormData.price"></el-input>-->
+<!--                                </el-form-item>-->
+<!--                                <el-form-item label="图片">-->
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.name"></el-input>-->
+<!--                                </el-form-item>-->
+<!--                                <el-form-item label="数量">-->
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量" v-model="addGoodsFormData.number"></el-input>-->
+<!--                                </el-form-item>-->
+<!--                                <el-form-item label="类别">-->
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>-->
+<!--                                </el-form-item>-->
+<!--                                <el-button type="primary">提交</el-button>-->
+<!--                            </el-form>-->
+<!--                        </div>-->
+<!--                    </el-card>-->
+<!--                </div>-->
+<!--                &lt;!&ndash;                删除动态&ndash;&gt;-->
+<!--                <div class="editUser" v-if="cardVisible.deleteGoodsShow">-->
+<!--                    &lt;!&ndash;                    对话框&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    查看详情&ndash;&gt;-->
+<!--                    <el-dialog-->
+<!--                            title="详情"-->
+<!--                            :visible.sync="checkGoodsdialogVisible"-->
+<!--                            width="30%"-->
+<!--                            center>-->
+<!--                        <ul>-->
+<!--                            <li>{{checkGoodsData.id}}</li>-->
+<!--                            <li>{{checkGoodsData.name}}</li>-->
+<!--                            <li>{{checkGoodsData.price}}</li>-->
+<!--                            <li>{{checkGoodsData.images}}</li>-->
+<!--                            <li>{{checkGoodsData.time}}</li>-->
+<!--                            <li>{{checkGoodsData.updated_at}}</li>-->
+<!--                            <li>{{checkGoodsData.user_id}}</li>-->
+<!--                            <li>{{checkGoodsData.num}}</li>-->
+<!--                            <li>{{checkGoodsData.category}}</li>-->
+<!--                        </ul>-->
+<!--                        <span slot="footer" class="dialog-footer">-->
+<!--                            <el-button type="primary" @click="checkGoodsdialogVisible = false">确 定</el-button>-->
+<!--                        </span>-->
+<!--                    </el-dialog>-->
+<!--                    &lt;!&ndash;                    删除&ndash;&gt;-->
+<!--                    <el-dialog-->
+<!--                            title="确认删除"-->
+<!--                            :visible.sync="deleteUserdialogVisible"-->
+<!--                            width="30%"-->
+<!--                            center>-->
+<!--                        <p>您正在删除表格数据！</p>-->
+<!--                        <span slot="footer" class="dialog-footer">-->
+<!--                            <el-button type="primary" @click="deleteUserdialogVisible = false">确认</el-button>-->
+<!--                            <el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>-->
+<!--                        </span>-->
+<!--                    </el-dialog>-->
+<!--                    <el-card>-->
+<!--                        <div slot="header" class="clearfix header">-->
+<!--                            <div class="title">删除用户</div>-->
+<!--                        </div>-->
+<!--                        <div style="margin-bottom: 15px;">-->
+<!--                            <el-table-->
+<!--                                    :data="goodsData"-->
+<!--                                    stripe-->
+<!--                                    style="width: 100%">-->
+<!--                                <el-table-column-->
+<!--                                        prop="id"-->
+<!--                                        label="ID"-->
+<!--                                        width="50">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="name"-->
+<!--                                        label="名称"-->
+<!--                                        width="150">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="price"-->
+<!--                                        label="价格"-->
+<!--                                        width="80">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="images"-->
+<!--                                        label="图片"-->
+<!--                                        width="100">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="time"-->
+<!--                                        label="时间"-->
+<!--                                        width="100">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="updated_at"-->
+<!--                                        label="更新时间"-->
+<!--                                        width="100">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="user_id"-->
+<!--                                        label="用户id"-->
+<!--                                        width="80">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="num"-->
+<!--                                        label="数量"-->
+<!--                                        width="60">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        prop="category"-->
+<!--                                        label="类别"-->
+<!--                                        width="100">-->
+<!--                                </el-table-column>-->
+<!--                                <el-table-column-->
+<!--                                        fixed="right"-->
+<!--                                        label="操作"-->
+<!--                                        width="100">-->
+<!--                                    <template slot-scope="scope">-->
+<!--                                        <el-button @click="checkGoods(scope.row)" type="text" size="small">查看</el-button>-->
+<!--                                        <el-button @click="deleteGoods(scope.row)" type="text" size="small">删除</el-button>-->
+<!--                                    </template>-->
+<!--                                </el-table-column>-->
+<!--                            </el-table>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;                        分页&ndash;&gt;-->
+<!--                        <el-pagination-->
+<!--                                background-->
+<!--                                layout="prev, pager, next"-->
+<!--                                :total="100">-->
+<!--                        </el-pagination>-->
+<!--                    </el-card>-->
+<!--                </div>-->
+
+            </el-main>
+            <el-footer>©<i style="font-weight: 700; font-style: normal;color: #3C8DBC">广东科技学院</i> 2019</el-footer>
+        </el-container>
+    </el-container>
+</div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            mode:'vertical',
+            activeIndex2: '1',
+            checkUserdialogVisible:false,
+            checkGoodsdialogVisible: false,
+            editUserdialogVisible:false,
+            deleteUserdialogVisible:false,
+            cardVisible:{
+                userShow:false,
+                addUserShow:false,
+                deleteUserShow:false,
+                goodsShow:false,
+                addGoodsShow:false,
+                deleteGoodsShow:false,
+            },
+            // user
+            checkUserData:{
+                id:'',
+                name:'',
+                image:'',
+                password:'',
+                address:'',
+                sex:'',
+                phone:'',
+                information_state:'',
+                autograph:'',
+                created_at:'',
+                updated_at:'',
+                real_name:''
+            },
+            editUserData:{
+                id:'',
+                name:'',
+                image:'',
+                password:'',
+                address:'',
+                sex:'',
+                phone:'',
+                information_state:'',
+                autograph:'',
+                created_at:'',
+                updated_at:'',
+                real_name:''
+            },
+            userData:[{
+                id:'1',
+                name:'xxx',
+                image:'tup',
+                password:'123',
+                address:'adad',
+                sex:'dsa',
+                phone:'dsa',
+                information_state:'das',
+                autograph:'das',
+                created_at:'das',
+                updated_at:'das',
+                real_name:'das'
+            }],
+            addUserFormData:{
+                id:'',
+                name:'',
+                image:'',
+                password:'',
+                address:'',
+                sex:'',
+                phone:'',
+                information_state:'',
+                autograph:'',
+                real_name:''
+            },
+            // 商品
+            checkGoodsData:{
+                id:'',
+                name:'',
+                price:'',
+                images:'',
+                time:'',
+                updated_at:'',
+                user_id:'',
+                num:'',
+                category:''
+            },
+            editGoodsData:{
+                id:'',
+                name:'',
+                price:'',
+                images:'',
+                time:'',
+                updated_at:'',
+                user_id:'',
+                num:'',
+                category:''
+            },
+            goodsData:[{
+                id:'1',
+                name:'AJ1 HighOG 小闪电',
+                price:'9999',
+                images:'xxx',
+                time:'xxx',
+                updated_at:'xxxx',
+                user_id:'xxx',
+                num:'1',
+                category:'鞋子'
+            }],
+            addGoodsFormData:{
+                id:'',
+                name:'',
+                price:'',
+                images:'',
+                time:'',
+                updated_at:'',
+                user_id:'',
+                num:'',
+                category:''
+            }
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+            },
+            handleShow(key,keyPath){
+                console.log(key)
+
+                for(i in this.cardVisible){
+                    this.cardVisible[i]=false
+                }
+
+                switch (key) {
+                   case '1-1':
+                       this.cardVisible.userShow = true;
+                       break;
+                   case '1-2':
+                       this.cardVisible.addUserShow = true;
+                       break;
+                   case '1-3':
+                       this.cardVisible.deleteUserShow = true;
+                       break;
+                    case '2-1':
+                        this.cardVisible.goodsShow = true;
+                        break;
+                    case '2-2':
+                        this.cardVisible.addGoodsShow = true;
+                        break;
+                    case '2-3':
+                        this.cardVisible.deleteGoodsShow = true;
+                        break;
+               }
+            },
+            // 用户
+            checkUser(obj){
+                this.checkUserdialogVisible = true;
+                this.checkUserData.id = obj.id;
+                this.checkUserData.name = obj.name;
+                this.checkUserData.image = obj.image;
+                this.checkUserData.password = obj.password;
+                this.checkUserData.address = obj.address;
+                this.checkUserData.sex = obj.sex;
+                this.checkUserData.phone = obj.phone;
+                this.checkUserData.information_state = obj.information_state;
+                this.checkUserData.autograph = obj.autograph;
+                this.checkUserData.created_at = obj.created_at;
+                this.checkUserData.updated_at = obj.updated_at;
+                this.checkUserData.real_name = obj.real_name;
+            },
+            editUser(obj){
+                this.$message({
+                    message: '您正在修改数据，谨慎行事',
+                    type: 'warning'
+                });
+                this.editUserdialogVisible = true;
+                this.editUserData.id = obj.id;
+                this.editUserData.name = obj.name;
+                this.editUserData.image = obj.image;
+                this.editUserData.password = obj.password;
+                this.editUserData.address = obj.address;
+                this.editUserData.sex = obj.sex;
+                this.editUserData.phone = obj.phone;
+                this.editUserData.information_state = obj.information_state;
+                this.editUserData.autograph = obj.autograph;
+                this.editUserData.created_at = obj.created_at;
+                this.editUserData.updated_at = obj.updated_at;
+                this.editUserData.real_name = obj.real_name;
+
+            },
+            deleteUser(obj){
+                this.deleteUserdialogVisible = true
+            },
+            // 商品
+            checkGoods(obj){
+                this.checkGoodsdialogVisible = true;
+                this.checkGoodsData.id = obj.id;
+                this.checkGoodsData.name = obj.name;
+                this.checkGoodsData.price = obj.price;
+                this.checkGoodsData.images = obj.images;
+                this.checkGoodsData.time = obj.time;
+                this.checkGoodsData.updated_at = obj.updated_at;
+                this.checkGoodsData.user_id = obj.user_id;
+                this.checkGoodsData.num = obj.num;
+                this.checkGoodsData.category = obj.category;
+            },
+            editGoods(obj){
+                this.$message({
+                    message: '您正在修改数据，谨慎行事',
+                    type: 'warning'
+                });
+                this.editUserdialogVisible = true;
+                this.editUserData.id = obj.id;
+                this.editUserData.name = obj.name;
+                this.editUserData.price = obj.price;
+                this.editUserData.images = obj.images;
+                this.editUserData.time = obj.time;
+                this.editUserData.updated_at = obj.updated_at;
+                this.editUserData.user_id = obj.user_id;
+                this.editUserData.num = obj.num;
+                this.editUserData.category = obj.category;
+            },
+            deleteGoods(obj){
+                this.deleteUserdialogVisible = true
+            }
+        }
+    })
+</script>
+</html>

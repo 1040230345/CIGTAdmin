@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>01Document</title>
+	<style type="text/css">
+		html{
+			width: 100%;
+			height: 100%;
+		}
+		body{
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			position: relative;
+			background-color: #eee;
+		}
+		.mask{
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 0;
+			background-color: rgb(112, 153, 176);
+			background-image: url("https://y.gtimg.cn/music/photo_new/T002R300x300M000003qcjM32EasIT.jpg?max_age=2592000");
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: 50%;
+			filter: blur(65px);
+			opacity: .6;
+			transform: translateZ(0);
+			width: 100%;
+			height: 100%;
+		}
+		#app{
+			width: 100%;
+			height: 100%;
+		}
+		.center{
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 1;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+		}
+		.loginFrom{
+			margin-top: 200px;
+			width: 470px;
+			height: 500px;
+			text-align: center;
+		}
+		.code{
+			font-family:'Arial';
+			font-style:italic;
+			color:blue;
+			font-size:30px;
+			border:0;
+			padding:2px 3px;
+			letter-spacing:3px;
+			font-weight:bolder;
+			cursor:pointer;
+			width:95px;
+			height:30px;
+			line-height:30px;
+			text-align:center;
+			vertical-align:middle;
+			background-color:#D8B7E3;
+		}
+		.header{
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 引入组件库 -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="mask"></div>
+		<el-container>
+			<el-main>
+				<div class="center">
+				<div class="loginFrom">
+					<el-card>
+						<div slot="header" class="clearfix header">
+							<div style="color: white;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;">登录<i class="el-icon-right"></i></div>
+							<div class="title">校园闲置交易系统</div>
+							<div class="login">登录<i class="el-icon-right"></i></div>
+						</div>
+						<div>
+							<el-form :model="formData" label-width="50px">
+								<el-form-item label="账号">
+									<el-input type="primary" size="large" placeholder="请输入您的账号" v-model="formData.account"></el-input>
+								</el-form-item>
+
+								<el-form-item label="密码">
+									<el-input type="primary" size="large" placeholder="请输入您的账号" v-model="formData.password"></el-input>
+								</el-form-item>
+									<div class="" style="display: flex;justify-content: space-between">
+										<div style="text-align: left;margin-left: -8px;margin-bottom: 20px">
+											<label for="code_a" style="font-size: 14px;margin-right: 12px">验证码</label>
+											<el-input  id="code_a" style="width: 70%;margin: 0;" type="primary" size="large" placeholder="请输入右边的验证码" v-model="formData.code" @keyup.native.13="login"></el-input>
+										</div>
+
+										<div class="code" style="display: flex;justify-content: space-between;flex-direction: column">
+											<div id="checkCode" class="code" @click="createCode(4)" ></div>
+											<span @click="createCode(4)" style="font-size: 9px;">看不清换一张</span>
+										</div>
+									</div>
+									<el-button type="primary" @click="login">登录</el-button>
+							</el-form>
+						</div>
+					</el-card>
+				</div>
+				</div>
+			</el-main>
+		</el-container>
+	</div>
+</body>
+<script type="text/javascript">
+	var app = new Vue({
+		  el: '#app',
+		  data: {
+			  formData:{
+			  	account:'',
+				  password:'',
+				code:''
+			  }
+		  },
+		methods:{
+			createCode(length) {
+				var code = "";
+				var codeLength = parseInt(length); //验证码的长度
+				var checkCode = document.getElementById("checkCode");
+				////所有候选组成验证码的字符，当然也可以用中文的
+				var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+						'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+						'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+				//循环组成验证码的字符串
+				for (var i = 0; i < codeLength; i++)
+				{
+					//获取随机验证码下标
+					var charNum = Math.floor(Math.random() * 62);
+					//组合成指定字符验证码
+					code += codeChars[charNum];
+				}
+				if (checkCode)
+				{
+					//为验证码区域添加样式名
+					checkCode.className = "code";
+					//将生成验证码赋值到显示区
+					checkCode.innerHTML = code;
+				}
+			},
+			validateCode() {
+				//获取显示区生成的验证码
+				var checkCode = document.getElementById("checkCode").innerHTML;
+				//获取输入的验证码
+				if (this.formData.code.length <= 0)
+				{
+					this.$notify({
+						title: '警告',
+						message: '请输入验证码',
+						type: 'warning'
+					});
+				}
+				else if (this.formData.code.toUpperCase() != checkCode.toUpperCase())
+				{
+					this.$notify.error({
+						title: '错误',
+						message: '验证码输入错误'
+					});
+					this.createCode(4);
+				}
+				else
+				{
+					this.$notify({
+						title: '成功',
+						message: '验证通过',
+						type: 'success'
+					});
+					return 1;
+				}
+			},
+			login(){
+				var status=this.validateCode();
+				if (status==1){
+					console.log("验证码验证通过 发送api验证表单");
+					$.ajax({
+						url:'/login',
+						methods: 'post',
+						dataType: 'JSON',
+						data: {
+							account: this.formData.account,
+							password: this.formData.password
+						}
+					}).done(function (data) {
+						console.log(data);
+						window.location.replace("/home");
+					}).fail(function (data) {
+						console.log('error'+data)
+					}).always(function() {
+						console.log("complete");
+					});
+				}
+			}
+		},
+		mounted(){
+			//生成简单验证码
+			this.createCode(4)
+		}
+
+	})
+</script>
+</html>
