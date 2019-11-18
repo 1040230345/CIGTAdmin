@@ -8,13 +8,12 @@ import com.cigt.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +55,39 @@ public class userController {
         return map;
     }
 
+    /**
+     * 登录成功后
+     */
+    @PostMapping(value = "/login")
+    public String requestLogin(){
+        System.out.println("登录成功");
+        return "home";
+    }
+
+    /**
+     * 退出登陆的逻辑页面
+     * @param request
+     * @param response
+     * @return
+     */
+    @GetMapping("/loginout")
+    public String login_out(HttpServletRequest request, HttpServletResponse response){
+        Cookie[] cookies = request.getCookies();
+        if(cookies!=null){
+            for(Cookie cookie:cookies){
+                if(cookie.getName().equals("TOKEN")){
+                    cookie.setValue(null);
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+        }
+        //销毁session
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+        return "redirect:/";
+    }
     /**
      * 查询所有用户--controller
      */
