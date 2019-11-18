@@ -143,17 +143,12 @@
                     <!--                    编辑-->
                     <el-dialog title="编辑" :visible.sync="editUserdialogVisible" width="30%" center>
                         <el-form label-width="80px">
-                            <el-form-item label="id"><el-input type="primary" size="small" v-model="editUserData.id"></el-input></el-form-item>
-
-                            <el-form-item label="姓名"><el-input type="primary" size="small" v-model="editUserData.name"></el-input></el-form-item>
+                            <el-form-item label="用户名"><el-input type="primary" size="small" v-model="editUserData.name"></el-input></el-form-item>
                             <el-form-item label="头像"><el-input type="primary" size="small" v-model="editUserData.image"></el-input></el-form-item>
-
                             <el-form-item label="密码"><el-input type="primary" size="small" v-model="editUserData.password"></el-input></el-form-item>
                             <el-form-item label="地址"><el-input type="primary" size="small" v-model="editUserData.address"></el-input></el-form-item>
-
                             <el-form-item label="性别"><el-input type="primary" size="small" v-model="editUserData.sex"></el-input></el-form-item>
                             <el-form-item label="电话"><el-input type="primary" size="small" v-model="editUserData.phone"></el-input></el-form-item>
-
                             <el-form-item label="状态"><el-input type="primary" size="small" v-model="editUserData.information_state"></el-input></el-form-item>
                             <el-form-item label="个性签名"><el-input type="primary" size="small" v-model="editUserData.autograph"></el-input></el-form-item>
                             <el-form-item label="真实姓名"><el-input type="primary" size="small" v-model="editUserData.real_name"></el-input></el-form-item>
@@ -197,17 +192,16 @@
                         <div slot="header" class="clearfix header"><div class="title">添加用户</div></div>
                         <div>
                             <el-form :model="addUserFormData" label-width="80px">
-                                <el-form-item label="id"><el-input type="primary" size="large" placeholder="请输入您的账号"></el-input></el-form-item>
-                                <el-form-item label="姓名"><el-input type="primary" size="large" placeholder="请输入您的姓名"></el-input></el-form-item>
-                                <el-form-item label="头像"><el-input type="primary" size="large" placeholder="请输入您的头像"></el-input></el-form-item>
-                                <el-form-item label="密码"><el-input type="primary" size="large" placeholder="请输入您的密码"></el-input></el-form-item>
-                                <el-form-item label="地址"><el-input type="primary" size="large" placeholder="请输入您的地址"></el-input></el-form-item>
-                                <el-form-item label="性别"><el-input type="primary" size="large" placeholder="请输入您的性别"></el-input></el-form-item>
-                                <el-form-item label="电话"><el-input type="primary" size="large" placeholder="请输入您的电话"></el-input></el-form-item>
-                                <el-form-item label="状态"><el-input type="primary" size="large" placeholder="请输入您的状态"></el-input></el-form-item>
-                                <el-form-item label="个性签名"><el-input type="primary" size="large" placeholder="请输入您的个性签名"></el-input></el-form-item>
-                                <el-form-item label="真实姓名"><el-input type="primary" size="large" placeholder="请输入您的真实姓名"></el-input></el-form-item>
-                                <el-button type="primary">提交</el-button>
+                                <el-form-item label="姓名"><el-input type="primary" size="large" placeholder="请输入您的姓名" v-model="addUserFormData.name"></el-input></el-form-item>
+                                <el-form-item label="头像"><el-input type="primary" size="large" placeholder="请输入您的头像" v-model="addUserFormData.image"></el-input></el-form-item>
+                                <el-form-item label="密码"><el-input type="primary" size="large" placeholder="请输入您的密码" v-model="addUserFormData.password"></el-input></el-form-item>
+                                <el-form-item label="地址"><el-input type="primary" size="large" placeholder="请输入您的地址" v-model="addUserFormData.address"></el-input></el-form-item>
+                                <el-form-item label="性别"><el-input type="primary" size="large" placeholder="请输入您的性别" v-model="addUserFormData.sex"></el-input></el-form-item>
+                                <el-form-item label="电话"><el-input type="primary" size="large" placeholder="请输入您的电话" v-model="addUserFormData.phone"></el-input></el-form-item>
+                                <el-form-item label="状态"><el-input type="primary" size="large" placeholder="请输入您的状态" v-model="addUserFormData.information_state"></el-input></el-form-item>
+                                <el-form-item label="个性签名"><el-input type="primary" size="large" placeholder="请输入您的个性签名" v-model="addUserFormData.autograph"></el-input></el-form-item>
+                                <el-form-item label="真实姓名"><el-input type="primary" size="large" placeholder="请输入您的真实姓名" v-model="addUserFormData.real_name"></el-input></el-form-item>
+                                <el-button type="primary" @click="sendAddUser">提交</el-button>
                             </el-form>
                         </div>
                     </el-card>
@@ -237,7 +231,7 @@
                     <el-dialog title="确认删除" :visible.sync="deleteUserdialogVisible" width="30%" center>
                         <p>您正在删除表格数据！</p>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="deleteUserdialogVisible = false">确认</el-button>
+									<el-button type="primary" @click="sendDeleteUser">确认</el-button>
 									<el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>
 								</span>
                     </el-dialog>
@@ -405,268 +399,7 @@
                     </el-card>
                 </div>
 
-                <!--                &lt;!&ndash;                查看动态&ndash;&gt;-->
-                <!--                <div class="editUser" v-if="cardVisible.goodsShow">-->
-                <!--                    &lt;!&ndash;                        对话框&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                    查看详情&ndash;&gt;-->
-                <!--                    <el-dialog-->
-                <!--                            title="详情"-->
-                <!--                            :visible.sync="checkGoodsdialogVisible"-->
-                <!--                            width="30%"-->
-                <!--                            center>-->
-                <!--                        <ul>-->
-                <!--                            <li>{{checkGoodsData.id}}</li>-->
-                <!--                            <li>{{checkGoodsData.name}}</li>-->
-                <!--                            <li>{{checkGoodsData.price}}</li>-->
-                <!--                            <li>{{checkGoodsData.images}}</li>-->
-                <!--                            <li>{{checkGoodsData.time}}</li>-->
-                <!--                            <li>{{checkGoodsData.updated_at}}</li>-->
-                <!--                            <li>{{checkGoodsData.user_id}}</li>-->
-                <!--                            <li>{{checkGoodsData.num}}</li>-->
-                <!--                            <li>{{checkGoodsData.category}}</li>-->
-                <!--                        </ul>-->
-                <!--                        <span slot="footer" class="dialog-footer">-->
-                <!--                            <el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button>-->
-                <!--                        </span>-->
-                <!--                    </el-dialog>-->
-                <!--                    &lt;!&ndash;                    编辑&ndash;&gt;-->
-                <!--                    <el-dialog-->
-                <!--                            title="编辑"-->
-                <!--                            :visible.sync="editUserdialogVisible"-->
-                <!--                            width="30%"-->
-                <!--                            center>-->
-                <!--                        <el-form label-width="80px">-->
-                <!--                            <el-form-item label="商品名称">-->
-                <!--                                <el-input type="primary" size="small" v-model="editUserData.name" ></el-input>-->
-                <!--                            </el-form-item>-->
-                <!--                            <el-form-item label="价格">-->
-                <!--                                <el-input type="primary" size="small" v-model="editUserData.price" ></el-input>-->
-                <!--                            </el-form-item>-->
-                <!--                            <el-form-item label="图片">-->
-                <!--                                <el-input type="primary" size="small" v-model="editUserData.images" ></el-input>-->
-                <!--                            </el-form-item>-->
-                <!--                            <el-form-item label="数量">-->
-                <!--                                <el-input type="primary" size="small" v-model="editUserData.num" ></el-input>-->
-                <!--                            </el-form-item>-->
-                <!--                            <el-form-item label="类别">-->
-                <!--                                <el-input type="primary" size="small" v-model="editUserData.category" ></el-input>-->
-                <!--                            </el-form-item>-->
-                <!--                        </el-form>-->
-                <!--                        <span slot="footer" class="dialog-footer">-->
-                <!--                            <el-button type="primary" @click="editUserdialogVisible = false">修 改</el-button>-->
-                <!--                            <el-button type="" @click="editUserdialogVisible = false">放弃修改</el-button>-->
-                <!--                        </span>-->
-                <!--                    </el-dialog>-->
-                <!--                    <el-card>-->
-                <!--                        <div slot="header" class="clearfix header">-->
-                <!--                            <div class="title">查看商品</div>-->
-                <!--                        </div>-->
-                <!--                        <div style="margin-bottom: 15px;">-->
-                <!--                            <el-table-->
-                <!--                                    :data="goodsData"-->
-                <!--                                    stripe-->
-                <!--                                    style="width: 100%">-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="id"-->
-                <!--                                        label="ID"-->
-                <!--                                        width="50">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="name"-->
-                <!--                                        label="名称"-->
-                <!--                                        width="150">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="price"-->
-                <!--                                        label="价格"-->
-                <!--                                        width="80">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="images"-->
-                <!--                                        label="图片"-->
-                <!--                                        width="100">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="time"-->
-                <!--                                        label="时间"-->
-                <!--                                        width="100">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="updated_at"-->
-                <!--                                        label="更新时间"-->
-                <!--                                        width="100">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="user_id"-->
-                <!--                                        label="用户id"-->
-                <!--                                        width="80">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="num"-->
-                <!--                                        label="数量"-->
-                <!--                                        width="60">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="category"-->
-                <!--                                        label="类别"-->
-                <!--                                        width="100">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        fixed="right"-->
-                <!--                                        label="操作"-->
-                <!--                                        width="100">-->
-                <!--                                    <template slot-scope="scope">-->
-                <!--                                        <el-button @click="checkGoods(scope.row)" type="text" size="small">查看</el-button>-->
-                <!--                                        <el-button @click="editGoods(scope.row)" type="text" size="small">修改</el-button>-->
-                <!--                                    </template>-->
-                <!--                                </el-table-column>-->
-                <!--                            </el-table>-->
-                <!--                        </div>-->
-                <!--                        &lt;!&ndash;                        分页&ndash;&gt;-->
-                <!--                        <el-pagination-->
-                <!--                                background-->
-                <!--                                layout="prev, pager, next"-->
-                <!--                                :total="100">-->
-                <!--                        </el-pagination>-->
-                <!--                    </el-card>-->
-                <!--                </div>-->
-                <!--                &lt;!&ndash;                增加动态&ndash;&gt;-->
-                <!--                <div class="editUser" v-if="cardVisible.addGoodsShow">-->
-                <!--                    <el-card>-->
-                <!--                        <div slot="header" class="clearfix header">-->
-                <!--                            <div class="title">添加用户</div>-->
-                <!--                        </div>-->
-                <!--                        <div>-->
-                <!--                            <el-form :model="addGoodsFormData" label-width="80px">-->
-                <!--                                <el-form-item label="商品名称">-->
-                <!--                                    <el-input type="primary" size="large" placeholder="请输入您要发布商品名称" v-model="addGoodsFormData.name"></el-input>-->
-                <!--                                </el-form-item>-->
-                <!--                                <el-form-item label="价格">-->
-                <!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品价格" v-model="addGoodsFormData.price"></el-input>-->
-                <!--                                </el-form-item>-->
-                <!--                                <el-form-item label="图片">-->
-                <!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.name"></el-input>-->
-                <!--                                </el-form-item>-->
-                <!--                                <el-form-item label="数量">-->
-                <!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量" v-model="addGoodsFormData.number"></el-input>-->
-                <!--                                </el-form-item>-->
-                <!--                                <el-form-item label="类别">-->
-                <!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>-->
-                <!--                                </el-form-item>-->
-                <!--                                <el-button type="primary">提交</el-button>-->
-                <!--                            </el-form>-->
-                <!--                        </div>-->
-                <!--                    </el-card>-->
-                <!--                </div>-->
-                <!--                &lt;!&ndash;                删除动态&ndash;&gt;-->
-                <!--                <div class="editUser" v-if="cardVisible.deleteGoodsShow">-->
-                <!--                    &lt;!&ndash;                    对话框&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                    查看详情&ndash;&gt;-->
-                <!--                    <el-dialog-->
-                <!--                            title="详情"-->
-                <!--                            :visible.sync="checkGoodsdialogVisible"-->
-                <!--                            width="30%"-->
-                <!--                            center>-->
-                <!--                        <ul>-->
-                <!--                            <li>{{checkGoodsData.id}}</li>-->
-                <!--                            <li>{{checkGoodsData.name}}</li>-->
-                <!--                            <li>{{checkGoodsData.price}}</li>-->
-                <!--                            <li>{{checkGoodsData.images}}</li>-->
-                <!--                            <li>{{checkGoodsData.time}}</li>-->
-                <!--                            <li>{{checkGoodsData.updated_at}}</li>-->
-                <!--                            <li>{{checkGoodsData.user_id}}</li>-->
-                <!--                            <li>{{checkGoodsData.num}}</li>-->
-                <!--                            <li>{{checkGoodsData.category}}</li>-->
-                <!--                        </ul>-->
-                <!--                        <span slot="footer" class="dialog-footer">-->
-                <!--                            <el-button type="primary" @click="checkGoodsdialogVisible = false">确 定</el-button>-->
-                <!--                        </span>-->
-                <!--                    </el-dialog>-->
-                <!--                    &lt;!&ndash;                    删除&ndash;&gt;-->
-                <!--                    <el-dialog-->
-                <!--                            title="确认删除"-->
-                <!--                            :visible.sync="deleteUserdialogVisible"-->
-                <!--                            width="30%"-->
-                <!--                            center>-->
-                <!--                        <p>您正在删除表格数据！</p>-->
-                <!--                        <span slot="footer" class="dialog-footer">-->
-                <!--                            <el-button type="primary" @click="deleteUserdialogVisible = false">确认</el-button>-->
-                <!--                            <el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>-->
-                <!--                        </span>-->
-                <!--                    </el-dialog>-->
-                <!--                    <el-card>-->
-                <!--                        <div slot="header" class="clearfix header">-->
-                <!--                            <div class="title">删除用户</div>-->
-                <!--                        </div>-->
-                <!--                        <div style="margin-bottom: 15px;">-->
-                <!--                            <el-table-->
-                <!--                                    :data="goodsData"-->
-                <!--                                    stripe-->
-                <!--                                    style="width: 100%">-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="id"-->
-                <!--                                        label="ID"-->
-                <!--                                        width="50">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="name"-->
-                <!--                                        label="名称"-->
-                <!--                                        width="150">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="price"-->
-                <!--                                        label="价格"-->
-                <!--                                        width="80">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="images"-->
-                <!--                                        label="图片"-->
-                <!--                                        width="100">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="time"-->
-                <!--                                        label="时间"-->
-                <!--                                        width="100">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="updated_at"-->
-                <!--                                        label="更新时间"-->
-                <!--                                        width="100">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="user_id"-->
-                <!--                                        label="用户id"-->
-                <!--                                        width="80">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="num"-->
-                <!--                                        label="数量"-->
-                <!--                                        width="60">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        prop="category"-->
-                <!--                                        label="类别"-->
-                <!--                                        width="100">-->
-                <!--                                </el-table-column>-->
-                <!--                                <el-table-column-->
-                <!--                                        fixed="right"-->
-                <!--                                        label="操作"-->
-                <!--                                        width="100">-->
-                <!--                                    <template slot-scope="scope">-->
-                <!--                                        <el-button @click="checkGoods(scope.row)" type="text" size="small">查看</el-button>-->
-                <!--                                        <el-button @click="deleteGoods(scope.row)" type="text" size="small">删除</el-button>-->
-                <!--                                    </template>-->
-                <!--                                </el-table-column>-->
-                <!--                            </el-table>-->
-                <!--                        </div>-->
-                <!--                        &lt;!&ndash;                        分页&ndash;&gt;-->
-                <!--                        <el-pagination-->
-                <!--                                background-->
-                <!--                                layout="prev, pager, next"-->
-                <!--                                :total="100">-->
-                <!--                        </el-pagination>-->
-                <!--                    </el-card>-->
-                <!--                </div>-->
+
             </el-main>
             <el-footer>
                 ©
@@ -697,6 +430,8 @@
             },
             // user
             userLoading: true,
+                //暂时存放删除id
+                deleteID:'',
             checkUserData: {
                 id: '',
                 name: '',
@@ -742,7 +477,6 @@
                 }
             ],
             addUserFormData: {
-                id: '',
                 name: '',
                 image: '',
                 password: '',
@@ -803,25 +537,7 @@
         },
         watch: {
             'cardVisible.userShow': function(e) {
-                $.ajax({
-                    url: '/findAllUserInfo',
-                    method: 'POST',
-                    dataType: 'JSON',
-                    data: {}
-                })
-                    .done(data => {
-                        this.userData = [];
-                        for (index in data.findAllUser) {
-                            this.userData.push(data.findAllUser[index]);
-                        }
-                        this.userLoading = false;
-                    })
-                    .error(function(data) {
-                        console.log('error' + data);
-                    })
-                    .complete(function(data) {
-                        console.log('complete');
-                    });
+                this.refreshUser()
             }
         },
         methods: {
@@ -855,6 +571,28 @@
                 }
             },
             // 用户
+            // 更新用户数据
+            refreshUser(){
+                $.ajax({
+                    url: '/api/findAllUserInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {}
+                })
+                    .done(data => {
+                        this.userData = [];
+                        for (index in data.findAllUser) {
+                            this.userData.push(data.findAllUser[index]);
+                        }
+                        this.userLoading = false;
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
+            },
             checkUser(obj) {
                 this.checkUserdialogVisible = true;
                 this.checkUserData.id = obj.id;
@@ -869,6 +607,37 @@
                 this.checkUserData.created_at = obj.created_at;
                 this.checkUserData.updated_at = obj.updated_at;
                 this.checkUserData.real_name = obj.real_name;
+            },//查看用户表格
+            sendAddUser(){
+                $.ajax({
+                    url: '/api/insertUserInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        name:this.addUserFormData.name,
+                        image:this.addUserFormData.image,
+                        password:this.addUserFormData.password,
+                        address:this.addUserFormData.address,
+                        sex:this.addUserFormData.sex,
+                        phone:this.addUserFormData.phone,
+                        information_state:this.addUserFormData.information_state,
+                        autograph:this.addUserFormData.autograph,
+                        real_name:this.addUserFormData.real_name
+                    }
+                })
+                    .done(data => {
+                        this.$notify({
+                            title: '成功',
+                            message: '添加成功',
+                            type: 'success'
+                        });
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
             },
             editUser(obj) {
                 this.$message({
@@ -888,24 +657,24 @@
                 this.editUserData.created_at = obj.created_at;
                 this.editUserData.updated_at = obj.updated_at;
                 this.editUserData.real_name = obj.real_name;
-            },
+            },//查看编辑用户对话框
             sendEditUser(){
                 editUserdialogVisible = false;
                 $.ajax({
-                    url: '/updateUserInfo',
+                    url: '/api/updateUserInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        id:'1',
-                        name:'a',
-                        image:'a',
-                        password:'a',
-                        address:'a',
-                        sex:'a',
-                        phone:'a',
-                        information_state:'1',
-                        autograph:'a',
-                        real_name:'a'
+                        id:this.editUserData.id,
+                        name:this.editUserData.name,
+                        image:this.editUserData.image,
+                        password:this.editUserData.password,
+                        address:this.editUserData.address,
+                        sex:this.editUserData.sex,
+                        phone:this.editUserData.phone,
+                        information_state:this.editUserData.information_state,
+                        autograph:this.editUserData.autograph,
+                        real_name:this.editUserData.real_name
                     }
                 })
                     .done((data) => {
@@ -918,20 +687,24 @@
                         console.log('complete');
                     });
             },
+
             deleteUser(obj) {
                 this.deleteUserdialogVisible = true;
-            },
+                this.deleteID=obj.id;
+            },//查看删除用户表格
             sendDeleteUser(){
                 $.ajax({
-                    url: '/delectUserInfo',
+                    url: '/api/delectUserInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        id:'1'
+                        id:this.deleteID
                     }
                 })
                     .done((data) => {
-                        console.log(data)
+                        console.log(data);
+                        this.deleteUserdialogVisible = false;
+                        this.refreshUser()
                     })
                     .error(function(data) {
                         console.log('error' + data);
