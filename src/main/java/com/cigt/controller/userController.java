@@ -59,7 +59,7 @@ public class userController {
     /**
      * 查询所有用户--controller
      */
-    @PostMapping("/findAllUserInfo")
+    @PostMapping("/api/findAllUserInfo")
     @ResponseBody
     public Map allUser(){
         Map map = new HashMap<>();
@@ -75,7 +75,7 @@ public class userController {
     /**
      *查询单个用户
      */
-    @PostMapping("/findAllUserInfo/{name}")
+    @PostMapping("/api/findAllUserInfo/{name}")
     @ResponseBody
     public Map oneUser(String name){
         Map map = new HashMap<>();
@@ -90,7 +90,7 @@ public class userController {
     /**
      * 修改用户信息---controller
      */
-    @PostMapping("/updateUserInfo")
+    @PostMapping("/api/updateUserInfo")
     @ResponseBody
     public Map updateUser(UserDto userDto){
         Map map =new HashMap();
@@ -108,7 +108,7 @@ public class userController {
     /**
      * 插入操作
      */
-    @PostMapping("/insertUserInfo")
+    @PostMapping("/api/insertUserInfo")
     @ResponseBody
     public Map insertUser(UserDto userDto){
         Map map = new HashMap();
@@ -118,6 +118,10 @@ public class userController {
             return map;
         }catch (Exception e){
             System.out.println(e);
+            if(userDto.getName() == null || userDto.getPassword() == null || userDto.getInformation_state() == null ){
+                map.put("insertUser","name or password or information_state is null ");
+                return map;
+            }
             map.put("insertUser","false");
             return map;
         }
@@ -126,7 +130,7 @@ public class userController {
     /**
      * 删除操作
      */
-    @PostMapping("/delectUserInfo")
+    @PostMapping("/api/delectUserInfo")
     @ResponseBody
     public Map delectUser(int id){
         Map map = new HashMap();

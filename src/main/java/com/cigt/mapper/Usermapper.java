@@ -24,14 +24,19 @@ public interface Usermapper {
     /**
      * 插入用户信息
      */
-    @Insert(" INSERT INTO t_user (name,address,phone,Information_state,updated_at,real_name ) VALUES ( #{name},#{address},#{phone},#{Information_state},#{updated_at},#{real_name} ) ")
+    @Insert(" INSERT INTO t_user (name,image,password,address,sex,phone,Information_state,created_at,updated_at,real_name ) VALUES ( #{name},#{image},#{password},#{address},#{sex},#{phone},#{Information_state},#{created_at},#{updated_at},#{real_name} ) ")
     int insertUser(UserDto userDto);
 
     /**
      * 修改用户信息
      */
-    @Update(" UPDATE t_user SET real_name=#{real_name},image=#{image},address=#{address},sex=#{sex},phone=#{phone},autograph=#{autograph},Information_state = #{Information_state}，updated_at=#{updated_at} where id = #{id}")
+    @Update(" UPDATE t_user SET name=#{name},image=#{image},password=#{password},address=#{address},sex=#{sex},phone=#{phone},real_name=#{real_name},autograph=#{autograph},Information_state = #{Information_state},updated_at=#{updated_at} where id = #{id}")
     int updateUser(UserDto userDto);
+
+    /**
+     * 修改用户修改日期
+     */
+
 
     /**
      * 删除用户信息

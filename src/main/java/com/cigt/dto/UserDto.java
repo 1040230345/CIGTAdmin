@@ -11,7 +11,7 @@ public class UserDto {
     private  String address;
     private  String  sex;
     private String phone;
-    private  int Information_state;
+    private  String Information_state;
     private  String autograph;
     private String created_at;
     private String updated_at;
