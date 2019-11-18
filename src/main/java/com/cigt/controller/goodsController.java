@@ -22,7 +22,7 @@ public class goodsController {
      * 查询所有商品
      * @return
      */
-    @PostMapping("/findAllGoodsInfo")
+    @PostMapping("/api/findAllGoodsInfo")
     @ResponseBody
     public Map allGoods(){
         Map map = new HashMap<>();
@@ -38,7 +38,7 @@ public class goodsController {
     /**
      * 查询单个商品
      */
-    @PostMapping("/findGoodsByNameInfo")
+    @PostMapping("/api/findGoodsByNameInfo")
     @ResponseBody
     public Map findGoodsByName(String name){
         Map map = new HashMap();
@@ -54,7 +54,7 @@ public class goodsController {
     /**
      * 修改商品信息
      */
-    @PostMapping("/updateGoodsInfo")
+    @PostMapping("/api/updateGoodsInfo")
     @ResponseBody
     public Map updateGoods(GoodsDto goodsDto){
         Map map = new HashMap();
@@ -74,7 +74,7 @@ public class goodsController {
     /**
      * 插入商品信息
      */
-    @PostMapping("/insertGoodsInfo")
+    @PostMapping("/api/insertGoodsInfo")
     @ResponseBody
     public Map insertGoods(GoodsDto goodsDto){
         Map map = new HashMap();
@@ -93,7 +93,7 @@ public class goodsController {
     /**
      * 删除商品信息
      */
-    @PostMapping("/delectGoodsInfo")
+    @PostMapping("/api/delectGoodsInfo")
     @ResponseBody
     public Map delectGoods(int id){
         Map map = new HashMap();

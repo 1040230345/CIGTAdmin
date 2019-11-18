@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService{
     public UserDto updateUser(UserDto userDto) {
         //赋值更新时间
         userDto.setUpdated_at(getTime_util.GetNowTime_util());
+        System.out.println(userDto.getUpdated_at());
         int num = usermapper.updateUser(userDto);
         if ( num>0 ){
             return userDto;
@@ -84,6 +85,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDto register(UserDto userDto) {
         // 赋值修改时间
+        userDto.setCreated_at(getTime_util.GetNowTime_util());
         userDto.setUpdated_at(getTime_util.GetNowTime_util());
         //插入数据库
         int num = usermapper.insertUser(userDto);
