@@ -142,16 +142,34 @@
                     </el-dialog>
                     <!--                    编辑-->
                     <el-dialog title="编辑" :visible.sync="editUserdialogVisible" width="30%" center>
-                        <el-form label-width="80px">
-                            <el-form-item label="用户名"><el-input type="primary" size="small" v-model="editUserData.name"></el-input></el-form-item>
-                            <el-form-item label="头像"><el-input type="primary" size="small" v-model="editUserData.image"></el-input></el-form-item>
-                            <el-form-item label="密码"><el-input type="primary" size="small" v-model="editUserData.password"></el-input></el-form-item>
-                            <el-form-item label="地址"><el-input type="primary" size="small" v-model="editUserData.address"></el-input></el-form-item>
-                            <el-form-item label="性别"><el-input type="primary" size="small" v-model="editUserData.sex"></el-input></el-form-item>
-                            <el-form-item label="电话"><el-input type="primary" size="small" v-model="editUserData.phone"></el-input></el-form-item>
-                            <el-form-item label="状态"><el-input type="primary" size="small" v-model="editUserData.information_state"></el-input></el-form-item>
-                            <el-form-item label="个性签名"><el-input type="primary" size="small" v-model="editUserData.autograph"></el-input></el-form-item>
-                            <el-form-item label="真实姓名"><el-input type="primary" size="small" v-model="editUserData.real_name"></el-input></el-form-item>
+                        <el-form label-width="80px" :model="editUserData">
+                            <el-form-item label="用户名" :rules="[
+                              { required: true, message: '用户名不能为空',trigger:['blur','change']}
+                            ]" prop="name">
+                                <el-input type="primary" size="small" v-model="editUserData.name"></el-input></el-form-item>
+                            <el-form-item label="头像">
+                                <el-input type="primary" size="small" v-model="editUserData.image"></el-input></el-form-item>
+                            <el-form-item label="密码" :rules="[
+                              { required: true, message: '密码不能为空',trigger:['blur','change']}
+                            ]" prop="password">
+                                <el-input type="primary" size="small" v-model="editUserData.password"></el-input></el-form-item>
+                            <el-form-item label="地址">
+                                <el-input type="primary" size="small" v-model="editUserData.address"></el-input></el-form-item>
+                            <el-form-item label="性别">
+                                <el-input type="primary" size="small" v-model="editUserData.sex"></el-input></el-form-item>
+                            <el-form-item label="电话">
+                                <el-input type="primary" size="small" v-model="editUserData.phone"></el-input></el-form-item>
+                            <el-form-item label="状态" :rules="[
+                              { required: true, message: '状态不能为空',trigger:['blur','change']}
+                            ]" prop="information_state">
+                                <el-tooltip class="item" effect="dark" content="状态只能为数字，0为不公开，1为公开" placement="right">
+                                <el-input type="primary" size="small" v-model.number="editUserData.information_state"></el-input>
+                                </el-tooltip>
+                            </el-form-item>
+                            <el-form-item label="个性签名">
+                                <el-input type="primary" size="small" v-model="editUserData.autograph"></el-input></el-form-item>
+                            <el-form-item label="真实姓名">
+                                <el-input type="primary" size="small" v-model="editUserData.real_name"></el-input></el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
 									<el-button type="primary" @click="sendEditUser">修 改</el-button>
@@ -192,15 +210,33 @@
                         <div slot="header" class="clearfix header"><div class="title">添加用户</div></div>
                         <div>
                             <el-form :model="addUserFormData" label-width="80px">
-                                <el-form-item label="姓名"><el-input type="primary" size="large" placeholder="请输入您的姓名" v-model="addUserFormData.name"></el-input></el-form-item>
-                                <el-form-item label="头像"><el-input type="primary" size="large" placeholder="请输入您的头像" v-model="addUserFormData.image"></el-input></el-form-item>
-                                <el-form-item label="密码"><el-input type="primary" size="large" placeholder="请输入您的密码" v-model="addUserFormData.password"></el-input></el-form-item>
-                                <el-form-item label="地址"><el-input type="primary" size="large" placeholder="请输入您的地址" v-model="addUserFormData.address"></el-input></el-form-item>
-                                <el-form-item label="性别"><el-input type="primary" size="large" placeholder="请输入您的性别" v-model="addUserFormData.sex"></el-input></el-form-item>
-                                <el-form-item label="电话"><el-input type="primary" size="large" placeholder="请输入您的电话" v-model="addUserFormData.phone"></el-input></el-form-item>
-                                <el-form-item label="状态"><el-input type="primary" size="large" placeholder="请输入您的状态" v-model="addUserFormData.information_state"></el-input></el-form-item>
-                                <el-form-item label="个性签名"><el-input type="primary" size="large" placeholder="请输入您的个性签名" v-model="addUserFormData.autograph"></el-input></el-form-item>
-                                <el-form-item label="真实姓名"><el-input type="primary" size="large" placeholder="请输入您的真实姓名" v-model="addUserFormData.real_name"></el-input></el-form-item>
+                                <el-form-item label="用户名" :rules="[
+                              { required: true, message: '用户名不能为空',trigger:['blur','change']}
+                            ]" prop="name">
+                                    <el-input type="primary" size="large" placeholder="请输入您的姓名" v-model="addUserFormData.name"></el-input></el-form-item>
+                                <el-form-item label="头像">
+                                    <el-input type="primary" size="large" placeholder="请输入您的头像" v-model="addUserFormData.image"></el-input></el-form-item>
+                                <el-form-item label="密码" :rules="[
+                              { required: true, message: '用户名不能为空',trigger:['blur','change']}
+                            ]" prop="password">
+                                    <el-input type="primary" size="large" placeholder="请输入您的密码" v-model="addUserFormData.password"></el-input></el-form-item>
+                                <el-form-item label="地址">
+                                    <el-input type="primary" size="large" placeholder="请输入您的地址" v-model="addUserFormData.address"></el-input></el-form-item>
+                                <el-form-item label="性别">
+                                    <el-input type="primary" size="large" placeholder="请输入您的性别" v-model="addUserFormData.sex"></el-input></el-form-item>
+                                <el-form-item label="电话">
+                                    <el-input type="primary" size="large" placeholder="请输入您的电话" v-model="addUserFormData.phone"></el-input></el-form-item>
+                                <el-form-item label="状态" :rules="[
+                              { required: true, message: '用户名不能为空',trigger:['blur','change']}
+                            ]" prop="information_state">
+                                    <el-tooltip class="item" effect="dark" content="状态只能为数字，0为不公开，1为公开" placement="right">
+                                    <el-input type="primary" size="large" placeholder="请输入您的状态" v-model.number="addUserFormData.information_state"></el-input>
+                                    </el-tooltip>
+                                </el-form-item>
+                                <el-form-item label="个性签名">
+                                    <el-input type="primary" size="large" placeholder="请输入您的个性签名" v-model="addUserFormData.autograph"></el-input></el-form-item>
+                                <el-form-item label="真实姓名">
+                                    <el-input type="primary" size="large" placeholder="请输入您的真实姓名" v-model="addUserFormData.real_name"></el-input></el-form-item>
                                 <el-button type="primary" @click="sendAddUser">提交</el-button>
                             </el-form>
                         </div>
@@ -235,22 +271,23 @@
 									<el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>
 								</span>
                     </el-dialog>
+                    <!--                    表格主体-->
                     <el-card>
                         <div slot="header" class="clearfix header"><div class="title">删除用户</div></div>
                         <div style="margin-bottom: 15px;">
                             <el-table :data="userData" stripe style="width: 100%">
-                                <el-table-column prop="id" label="ID" width="50"></el-table-column>
-                                <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-                                <el-table-column prop="image" label="头像" width="100"></el-table-column>
-                                <el-table-column prop="password" label="密码" width="100"></el-table-column>
-                                <el-table-column prop="address" label="地址" width="200"></el-table-column>
-                                <el-table-column prop="sex" label="性别" width="50"></el-table-column>
-                                <el-table-column prop="phone" label="电话" width="100"></el-table-column>
-                                <el-table-column prop="information_state" label="状态" width="50"></el-table-column>
-                                <el-table-column prop="autograph" label="个性签名" width="100"></el-table-column>
-                                <el-table-column prop="created_at" label="创建时间" width="50"></el-table-column>
-                                <el-table-column prop="updated_at" label="更新时间" width="50"></el-table-column>
-                                <el-table-column prop="real_name" label="真实姓名" width="50"></el-table-column>
+                                <el-table-column prop="id" label="ID"></el-table-column>
+                                <el-table-column prop="name" label="姓名"></el-table-column>
+                                <el-table-column prop="image" label="头像"></el-table-column>
+                                <el-table-column prop="password" label="密码"></el-table-column>
+                                <el-table-column prop="address" label="地址"></el-table-column>
+                                <el-table-column prop="sex" label="性别"></el-table-column>
+                                <el-table-column prop="phone" label="电话"></el-table-column>
+                                <el-table-column prop="information_state" label="状态"></el-table-column>
+                                <el-table-column prop="autograph" label="个性签名"></el-table-column>
+                                <el-table-column prop="created_at" label="创建时间" width="170px"></el-table-column>
+                                <el-table-column prop="updated_at" label="更新时间" width="170px"></el-table-column>
+                                <el-table-column prop="real_name" label="真实姓名"></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="100">
                                     <template slot-scope="scope">
                                         <el-button @click="checkUser(scope.row)" type="text" size="small">查看</el-button>
@@ -399,7 +436,6 @@
                     </el-card>
                 </div>
 
-
             </el-main>
             <el-footer>
                 ©
@@ -538,6 +574,9 @@
         watch: {
             'cardVisible.userShow': function(e) {
                 this.refreshUser()
+            },
+            'cardVisible.deleteUserShow': function(e) {
+                this.refreshUser()
             }
         },
         methods: {
@@ -631,6 +670,8 @@
                             message: '添加成功',
                             type: 'success'
                         });
+                        this.refreshUser();
+                        this.handleShow('1-1')
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -659,7 +700,7 @@
                 this.editUserData.real_name = obj.real_name;
             },//查看编辑用户对话框
             sendEditUser(){
-                editUserdialogVisible = false;
+                this.editUserdialogVisible = false;
                 $.ajax({
                     url: '/api/updateUserInfo',
                     method: 'POST',
@@ -679,6 +720,12 @@
                 })
                     .done((data) => {
                         console.log(data)
+                        this.$notify({
+                            title: '成功',
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                        this.refreshUser()
                     })
                     .error(function(data) {
                         console.log('error' + data);
