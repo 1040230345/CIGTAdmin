@@ -217,7 +217,7 @@
                                 <el-form-item label="头像">
                                     <el-input type="primary" size="large" placeholder="请输入您的头像" v-model="addUserFormData.image"></el-input></el-form-item>
                                 <el-form-item label="密码" :rules="[
-                              { required: true, message: '用户名不能为空',trigger:['blur','change']}
+                              { required: true, message: '密码不能为空',trigger:['blur','change']}
                             ]" prop="password">
                                     <el-input type="primary" size="large" placeholder="请输入您的密码" v-model="addUserFormData.password"></el-input></el-form-item>
                                 <el-form-item label="地址">
@@ -227,7 +227,7 @@
                                 <el-form-item label="电话">
                                     <el-input type="primary" size="large" placeholder="请输入您的电话" v-model="addUserFormData.phone"></el-input></el-form-item>
                                 <el-form-item label="状态" :rules="[
-                              { required: true, message: '用户名不能为空',trigger:['blur','change']}
+                              { required: true, message: '状态不能为空',trigger:['blur','change']}
                             ]" prop="information_state">
                                     <el-tooltip class="item" effect="dark" content="状态只能为数字，0为不公开，1为公开" placement="right">
                                     <el-input type="primary" size="large" placeholder="请输入您的状态" v-model.number="addUserFormData.information_state"></el-input>
@@ -305,7 +305,7 @@
                 <div class="editUser" v-if="cardVisible.goodsShow">
                     <!--                        对话框-->
                     <!--                    查看详情-->
-                    <el-dialog title="详情" :visible.sync="checkGoodsdialogVisible" width="30%" center>
+                    <el-dialog title="详情" :visible.sync="checkGoodsDialogVisible" width="30%" center>
                         <ul>
                             <li>{{ checkGoodsData.id }}</li>
                             <li>{{ checkGoodsData.name }}</li>
@@ -317,26 +317,26 @@
                             <li>{{ checkGoodsData.num }}</li>
                             <li>{{ checkGoodsData.category }}</li>
                         </ul>
-                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button></span>
+                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
                     </el-dialog>
                     <!--                    编辑-->
-                    <el-dialog title="编辑" :visible.sync="editUserdialogVisible" width="30%" center>
+                    <el-dialog title="编辑" :visible.sync="editGoodsDialogVisible" width="30%" center>
                         <el-form label-width="80px">
-                            <el-form-item label="商品名称"><el-input type="primary" size="small" v-model="editUserData.name"></el-input></el-form-item>
-                            <el-form-item label="价格"><el-input type="primary" size="small" v-model="editUserData.price"></el-input></el-form-item>
-                            <el-form-item label="图片"><el-input type="primary" size="small" v-model="editUserData.images"></el-input></el-form-item>
-                            <el-form-item label="数量"><el-input type="primary" size="small" v-model="editUserData.num"></el-input></el-form-item>
-                            <el-form-item label="类别"><el-input type="primary" size="small" v-model="editUserData.category"></el-input></el-form-item>
+                            <el-form-item label="商品名称"><el-input type="primary" size="small" v-model="editGoodsData.name"></el-input></el-form-item>
+                            <el-form-item label="价格"><el-input type="primary" size="small" v-model="editGoodsData.price"></el-input></el-form-item>
+                            <el-form-item label="图片"><el-input type="primary" size="small" v-model="editGoodsData.images"></el-input></el-form-item>
+                            <el-form-item label="数量"><el-input type="primary" size="small" v-model="editGoodsData.num"></el-input></el-form-item>
+                            <el-form-item label="类别"><el-input type="primary" size="small" v-model="editGoodsData.category"></el-input></el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="editUserdialogVisible = false">修 改</el-button>
-									<el-button type="" @click="editUserdialogVisible = false">放弃修改</el-button>
+									<el-button type="primary" @click="sendEditGoods">修 改</el-button>
+									<el-button type="" @click="editGoodsDialogVisible = false">放弃修改</el-button>
 								</span>
                     </el-dialog>
                     <el-card>
                         <div slot="header" class="clearfix header"><div class="title">查看商品</div></div>
                         <div style="margin-bottom: 15px;">
-                            <el-table :data="goodsData" stripe style="width: 100%">
+                            <el-table v-loading="goodsLoading" :data="goodsData" stripe style="width: 100%">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
                                 <el-table-column prop="name" label="名称" width="150"></el-table-column>
                                 <el-table-column prop="price" label="价格" width="80"></el-table-column>
@@ -361,9 +361,12 @@
                 <!--                添加商品-->
                 <div class="editUser" v-if="cardVisible.addGoodsShow">
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">添加用户</div></div>
+                        <div slot="header" class="clearfix header"><div class="title">添加商品</div></div>
                         <div>
                             <el-form :model="addGoodsFormData" label-width="80px">
+                                <el-form-item label="用户id">
+                                    <el-input type="primary" size="large" placeholder="请输入用户id" v-model="addGoodsFormData.user_id"></el-input>
+                                </el-form-item>
                                 <el-form-item label="商品名称">
                                     <el-input type="primary" size="large" placeholder="请输入您要发布商品名称" v-model="addGoodsFormData.name"></el-input>
                                 </el-form-item>
@@ -371,15 +374,15 @@
                                     <el-input type="primary" size="large" placeholder="请输入您的商品价格" v-model="addGoodsFormData.price"></el-input>
                                 </el-form-item>
                                 <el-form-item label="图片">
-                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.name"></el-input>
+                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.images"></el-input>
                                 </el-form-item>
                                 <el-form-item label="数量">
-                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量" v-model="addGoodsFormData.number"></el-input>
+                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量" v-model="addGoodsFormData.num"></el-input>
                                 </el-form-item>
                                 <el-form-item label="类别">
                                     <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>
                                 </el-form-item>
-                                <el-button type="primary">提交</el-button>
+                                <el-button type="primary" @click="sendAddGoods">提交</el-button>
                             </el-form>
                         </div>
                     </el-card>
@@ -388,7 +391,7 @@
                 <div class="editUser" v-if="cardVisible.deleteGoodsShow">
                     <!--                    对话框-->
                     <!--                    查看详情-->
-                    <el-dialog title="详情" :visible.sync="checkGoodsdialogVisible" width="30%" center>
+                    <el-dialog title="详情" :visible.sync="checkGoodsDialogVisible" width="30%" center>
                         <ul>
                             <li>{{ checkGoodsData.id }}</li>
                             <li>{{ checkGoodsData.name }}</li>
@@ -400,14 +403,14 @@
                             <li>{{ checkGoodsData.num }}</li>
                             <li>{{ checkGoodsData.category }}</li>
                         </ul>
-                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsdialogVisible = false">确 定</el-button></span>
+                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
                     </el-dialog>
                     <!--                    删除-->
-                    <el-dialog title="确认删除" :visible.sync="deleteUserdialogVisible" width="30%" center>
+                    <el-dialog title="确认删除" :visible.sync="deleteGoodsDialogVisible" width="30%" center>
                         <p>您正在删除表格数据！</p>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="deleteUserdialogVisible = false">确认</el-button>
-									<el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>
+									<el-button type="primary" @click="deleteGoodsDialogVisible = false">确认</el-button>
+									<el-button type="" @click="deleteGoodsDialogVisible = false">取消</el-button>
 								</span>
                     </el-dialog>
                     <el-card>
@@ -453,9 +456,12 @@
             mode: 'vertical',
             activeIndex2: '1',
             checkUserdialogVisible: false,
-            checkGoodsdialogVisible: false,
             editUserdialogVisible: false,
             deleteUserdialogVisible: false,
+
+            checkGoodsDialogVisible: false,
+            editGoodsDialogVisible: false,
+            deleteGoodsDialogVisible: false,
             cardVisible: {
                 userShow: false,
                 addUserShow: false,
@@ -524,6 +530,9 @@
                 real_name: ''
             },
             // 商品
+            goodsLoading: true,
+                //暂时存放删除id
+                deleteGoodsID:'',
             checkGoodsData: {
                 id: '',
                 name: '',
@@ -560,12 +569,9 @@
                 }
             ],
             addGoodsFormData: {
-                id: '',
                 name: '',
                 price: '',
                 images: '',
-                time: '',
-                updated_at: '',
                 user_id: '',
                 num: '',
                 category: ''
@@ -577,6 +583,12 @@
             },
             'cardVisible.deleteUserShow': function(e) {
                 this.refreshUser()
+            },
+            'cardVisible.goodsShow': function(e) {
+                this.refreshGoods()
+            },
+            'cardVisible.deleteGoodsShow': function(e) {
+                this.refreshGoods()
             }
         },
         methods: {
@@ -646,7 +658,7 @@
                 this.checkUserData.created_at = obj.created_at;
                 this.checkUserData.updated_at = obj.updated_at;
                 this.checkUserData.real_name = obj.real_name;
-            },//查看用户表格
+            },//查看用户详情对话框
             sendAddUser(){
                 $.ajax({
                     url: '/api/insertUserInfo',
@@ -670,7 +682,6 @@
                             message: '添加成功',
                             type: 'success'
                         });
-                        this.refreshUser();
                         this.handleShow('1-1')
                     })
                     .error(function(data) {
@@ -734,7 +745,6 @@
                         console.log('complete');
                     });
             },
-
             deleteUser(obj) {
                 this.deleteUserdialogVisible = true;
                 this.deleteID=obj.id;
@@ -761,8 +771,29 @@
                     });
             },
             // 商品
+            refreshGoods(){
+                $.ajax({
+                    url: '/api/findAllGoodsInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {}
+                })
+                    .done(data => {
+                        this.goodsData = [];
+                        for (index in data.findAllGoods) {
+                            this.goodsData.push(data.findAllGoods[index]);
+                        }
+                        this.goodsLoading = false;
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
+            },
             checkGoods(obj) {
-                this.checkGoodsdialogVisible = true;
+                this.checkGoodsDialogVisible = true;
                 this.checkGoodsData.id = obj.id;
                 this.checkGoodsData.name = obj.name;
                 this.checkGoodsData.price = obj.price;
@@ -772,26 +803,107 @@
                 this.checkGoodsData.user_id = obj.user_id;
                 this.checkGoodsData.num = obj.num;
                 this.checkGoodsData.category = obj.category;
+            },//查看商品详情对话框
+            sendAddGoods(){
+                $.ajax({
+                    url: '/api/insertGoodsInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        name:this.addGoodsFormData.name,
+                        price:this.addGoodsFormData.price,
+                        images:this.addGoodsFormData.images,
+                        num:this.addGoodsFormData.num,
+                        user_id:this.addGoodsFormData.user_id,
+                        category:this.addGoodsFormData.category
+                    }
+                })
+                    .done(data => {
+                        this.$notify({
+                            title: '成功',
+                            message: '添加成功',
+                            type: 'success'
+                        });
+                        this.handleShow('2-1')
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
             },
             editGoods(obj) {
                 this.$message({
                     message: '您正在修改数据，谨慎行事',
                     type: 'warning'
                 });
-                this.editUserdialogVisible = true;
-                this.editUserData.id = obj.id;
-                this.editUserData.name = obj.name;
-                this.editUserData.price = obj.price;
-                this.editUserData.images = obj.images;
-                this.editUserData.time = obj.time;
-                this.editUserData.updated_at = obj.updated_at;
-                this.editUserData.user_id = obj.user_id;
-                this.editUserData.num = obj.num;
-                this.editUserData.category = obj.category;
+                this.editGoodsDialogVisible = true;
+                this.editGoodsData.id = obj.id;
+                this.editGoodsData.name = obj.name;
+                this.editGoodsData.price = obj.price;
+                this.editGoodsData.images = obj.images;
+                this.editGoodsData.num = obj.num;
+                this.editGoodsData.user_id = obj.user_id;
+                this.editGoodsData.category = obj.category;
+            },//查看编辑商品对话框
+            sendEditGoods(){
+                this.editGoodsDialogVisible = false;
+                $.ajax({
+                    url: '/api/updateGoodsInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        id:this.editGoodsData.id,
+                        name:this.editGoodsData.name,
+                        price:this.editGoodsData.price,
+                        images:this.editGoodsData.images,
+                        num:this.editGoodsData.num,
+                        category:this.editGoodsData.category
+                    }
+                })
+                    .done((data) => {
+                        console.log(data)
+                        this.$notify({
+                            title: '成功',
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                        this.refreshGoods()
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
             },
             deleteGoods(obj) {
-                this.deleteUserdialogVisible = true;
-            }
+                this.deleteGoodsDialogVisible = true;
+                this.deleteGoodsID=obj.id;
+            },//查看删除商品表格
+            sendDeleteGoods(){
+                $.ajax({
+                    url: '/api/delectUserInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        id:this.deleteGoodsID
+                    }
+                })
+                    .done((data) => {
+                        console.log(data);
+                        this.deleteGoodsDialogVisible = false;
+                        this.refreshUser()
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
+            },
+
         }
     });
 </script>
