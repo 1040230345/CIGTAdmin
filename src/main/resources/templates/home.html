@@ -97,25 +97,15 @@
                         text-color="#fff"
                         active-text-color="#ffd04b"
                 >
-                    <el-menu-item index="1">个人中心</el-menu-item>
                     <el-submenu index="2">
                         <template slot="title">
                             个人中心
                         </template>
-                        <el-menu-item index="2-1">选项1</el-menu-item>
+                        <el-menu-item index="2-1" @click="sendLoginOut">退出登录</el-menu-item>
                         <el-menu-item index="2-2">选项2</el-menu-item>
                         <el-menu-item index="2-3">选项3</el-menu-item>
-                        <el-submenu index="2-4">
-                            <template slot="title">
-                                选项4
-                            </template>
-                            <el-menu-item index="2-4-1">选项1</el-menu-item>
-                            <el-menu-item index="2-4-2">选项2</el-menu-item>
-                            <el-menu-item index="2-4-3">选项3</el-menu-item>
-                        </el-submenu>
                     </el-submenu>
                     <el-menu-item index="3" disabled>消息中心</el-menu-item>
-                    <el-menu-item index="4"><a href="#" target="_blank">订单管理</a></el-menu-item>
                 </el-menu>
             </el-header>
             <el-main>
@@ -409,12 +399,12 @@
                     <el-dialog title="确认删除" :visible.sync="deleteGoodsDialogVisible" width="30%" center>
                         <p>您正在删除表格数据！</p>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="deleteGoodsDialogVisible = false">确认</el-button>
+									<el-button type="primary" @click="sendDeleteGoods">确认</el-button>
 									<el-button type="" @click="deleteGoodsDialogVisible = false">取消</el-button>
 								</span>
                     </el-dialog>
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">删除用户</div></div>
+                        <div slot="header" class="clearfix header"><div class="title">删除商品</div></div>
                         <div style="margin-bottom: 15px;">
                             <el-table :data="goodsData" stripe style="width: 100%">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
@@ -621,6 +611,10 @@
                         break;
                 }
             },
+            //退出登录
+            sendLoginOut(){
+                window.location.replace('/loginout');
+            },
             // 用户
             // 更新用户数据
             refreshUser(){
@@ -803,6 +797,7 @@
                 this.checkGoodsData.user_id = obj.user_id;
                 this.checkGoodsData.num = obj.num;
                 this.checkGoodsData.category = obj.category;
+                console.log(obj)
             },//查看商品详情对话框
             sendAddGoods(){
                 $.ajax({
@@ -884,7 +879,7 @@
             },//查看删除商品表格
             sendDeleteGoods(){
                 $.ajax({
-                    url: '/api/delectUserInfo',
+                    url: '/api/delectGoodsInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
@@ -894,7 +889,7 @@
                     .done((data) => {
                         console.log(data);
                         this.deleteGoodsDialogVisible = false;
-                        this.refreshUser()
+                        this.refreshGoods()
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -903,7 +898,6 @@
                         console.log('complete');
                     });
             },
-
         }
     });
 </script>
