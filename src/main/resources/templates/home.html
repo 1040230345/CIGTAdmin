@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="/static/animate.css">
     <style>
         body {
             font-family: 'Microsoft YaHei UI';
@@ -26,10 +27,11 @@
             background-color: #545c64;
         }
         .el-header {
-            padding-left: 0;
+            padding:0!important;
         }
         .el-main {
-            padding-left: 0;
+            padding:15px 15px;
+            overflow-x: hidden;
         }
         .addUser,
         .editUser,
@@ -110,7 +112,7 @@
             </el-header>
             <el-main>
                 <!--                查看用户-->
-                <div class="editUser" v-if="cardVisible.userShow">
+                <div class="editUser animated shake" v-if="cardVisible.userShow">
                     <!--                        对话框-->
                     <!--                    查看详情-->
                     <el-dialog title="详情" :visible.sync="checkUserdialogVisible" width="30%" center>
@@ -292,7 +294,7 @@
                 </div>
 
                 <!--                查看商品-->
-                <div class="editUser" v-if="cardVisible.goodsShow">
+                <div class="editUser animated pulse" v-if="cardVisible.goodsShow">
                     <!--                        对话框-->
                     <!--                    查看详情-->
                     <el-dialog title="详情" :visible.sync="checkGoodsDialogVisible" width="30%" center>
@@ -493,20 +495,7 @@
                 real_name: ''
             },
             userData: [
-                {
-                    id: '1',
-                    name: 'xxx',
-                    image: 'tup',
-                    password: '123',
-                    address: 'adad',
-                    sex: 'dsa',
-                    phone: 'dsa',
-                    information_state: 'das',
-                    autograph: 'das',
-                    created_at: 'das',
-                    updated_at: 'das',
-                    real_name: 'das'
-                }
+
             ],
             addUserFormData: {
                 name: '',
@@ -546,17 +535,7 @@
                 category: ''
             },
             goodsData: [
-                {
-                    id: '1',
-                    name: 'AJ1 HighOG 小闪电',
-                    price: '9999',
-                    images: 'xxx',
-                    time: 'xxx',
-                    updated_at: 'xxxx',
-                    user_id: 'xxx',
-                    num: '1',
-                    category: '鞋子'
-                }
+
             ],
             addGoodsFormData: {
                 name: '',
