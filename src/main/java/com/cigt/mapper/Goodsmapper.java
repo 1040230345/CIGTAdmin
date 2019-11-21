@@ -23,7 +23,7 @@ public interface Goodsmapper {
     /**
      * 修改单个商品信息
      */
-    @Update(" update t_goods SET name=#{name},price=#{price},images=#{images},num=#{num},time=#{time},category=#{category},updated_at=#{updated_at} where id = #{id} ")
+    @Update(" update t_goods SET name=#{name},price=#{price},images=#{images},num=#{num},category=#{category},updated_at=#{updated_at} where id = #{id} ")
     int updateById(GoodsDto goodsDto);
 
     /**

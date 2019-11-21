@@ -24,7 +24,7 @@ public interface Usermapper {
     /**
      * 插入用户信息
      */
-    @Insert(" INSERT INTO t_user (name,image,password,address,sex,phone,Information_state,created_at,updated_at,real_name ) VALUES ( #{name},#{image},#{password},#{address},#{sex},#{phone},#{Information_state},#{created_at},#{updated_at},#{real_name} ) ")
+    @Insert(" INSERT INTO t_user (name,image,password,address,sex,phone,autograph,Information_state,created_at,updated_at,real_name ) VALUES ( #{name},#{image},#{password},#{address},#{sex},#{phone},#{autograph},#{Information_state},#{created_at},#{updated_at},#{real_name} ) ")
     int insertUser(UserDto userDto);
 
     /**

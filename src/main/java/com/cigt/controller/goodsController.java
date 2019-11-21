@@ -3,6 +3,8 @@ package com.cigt.controller;
 import com.cigt.dto.GoodsDto;
 import com.cigt.dto.UserDto;
 import com.cigt.service.GoodsService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Api(tags="商品操作接口（管理员操作）")
 public class goodsController {
 
     @Autowired
@@ -23,6 +26,7 @@ public class goodsController {
      * @return
      */
     @PostMapping("/api/findAllGoodsInfo")
+    @ApiOperation(value = "查询所有商品信息",httpMethod = "POST")
     @ResponseBody
     public Map allGoods(){
         Map map = new HashMap<>();
@@ -39,6 +43,7 @@ public class goodsController {
      * 查询单个商品
      */
     @PostMapping("/api/findGoodsByNameInfo")
+    @ApiOperation(value = "查询单个商品信息",httpMethod = "POST")
     @ResponseBody
     public Map findGoodsByName(String name){
         Map map = new HashMap();
@@ -55,6 +60,7 @@ public class goodsController {
      * 修改商品信息
      */
     @PostMapping("/api/updateGoodsInfo")
+    @ApiOperation(value = "修改商品信息",httpMethod = "POST")
     @ResponseBody
     public Map updateGoods(GoodsDto goodsDto){
         Map map = new HashMap();
@@ -75,6 +81,7 @@ public class goodsController {
      * 插入商品信息
      */
     @PostMapping("/api/insertGoodsInfo")
+    @ApiOperation(value = "插入商品信息",httpMethod = "POST")
     @ResponseBody
     public Map insertGoods(GoodsDto goodsDto){
         Map map = new HashMap();
@@ -94,6 +101,7 @@ public class goodsController {
      * 删除商品信息
      */
     @PostMapping("/api/delectGoodsInfo")
+    @ApiOperation(value = "删除用户信息",httpMethod = "POST")
     @ResponseBody
     public Map delectGoods(int id){
         Map map = new HashMap();
