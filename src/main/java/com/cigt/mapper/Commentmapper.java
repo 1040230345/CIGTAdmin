@@ -14,7 +14,7 @@ public interface Commentmapper {
     /**
      * 查询所有评论
      */
-    @Select("select goods_id,user_id,content,reply_user_id from t_comment")
+    @Select("select id,goods_id,user_id,content,reply_user_id from t_comment")
     List<commentDto> findAllcomment();
 
     /**
