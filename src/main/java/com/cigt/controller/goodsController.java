@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -112,6 +113,80 @@ public class goodsController {
         }catch (Exception e){
             System.out.println(e);
             map.put("delectGoods","false");
+            return map;
+        }
+    }
+
+    /**
+     * 查询商品分类
+     */
+    @GetMapping("/api/findCategoryInfo")
+    @ApiOperation(value = "查询商品分类",httpMethod = "Get")
+    @ResponseBody
+    public  Map findCategory(){
+        Map map = new HashMap();
+        List<GoodsDto> list = goodsService.findCategory();
+        if(list != null ){
+            map.put("findCategory",list);
+            return map;
+        }
+        map.put("findCategory","false");
+        return map;
+    }
+
+    /**
+     * 插入商品分类
+     */
+    @GetMapping("/api/insertCategoryInfo")
+    @ApiOperation(value = "插入商品分类",httpMethod = "Get",notes = "传入category")
+    @ResponseBody
+    public  Map insertCategory(String category){
+        Map map = new HashMap();
+        try{
+            goodsService.insertCategory(category);
+            map.put("insertCategory","true");
+            return map;
+        }catch (Exception e){
+            System.out.println(e);
+            map.put("insertCategory","false");
+            return map;
+        }
+    }
+
+    /**
+     * 修改商品种类
+     */
+    @GetMapping("/api/updateCategoryInfo")
+    @ApiOperation(value = "修改商品分类",httpMethod = "Get",notes = "传入category")
+    @ResponseBody
+    public Map updateCategory(GoodsDto goodsDto){
+        Map map = new HashMap();
+        try{
+            goodsService.updateCategory(goodsDto);
+            map.put("updateCategory","true");
+            return map;
+        }catch (Exception e){
+            System.out.println(e);
+            map.put("updateCategory","false");
+            return map;
+        }
+    }
+
+    /**
+     * 删除商品种类
+     */
+    @GetMapping("/api/deleteCategoryInfo")
+    @ApiOperation(value = "删除商品种类",httpMethod = "Get",notes = "传入id")
+    @ResponseBody
+    public  Map deleteCategory(int id){
+        Map map = new HashMap();
+        try{
+            goodsService.deleteCategory(id);
+            map.put("deleteCategory","ture");
+            return map;
+        }catch (Exception e){
+            System.out.println(e);
+            map.put("deleteCategory","false");
             return map;
         }
     }

@@ -33,4 +33,24 @@ public interface GoodsService {
      */
     boolean delectGoods(int id);
 
+    /**
+     * 查询商品种类
+     */
+    List<GoodsDto> findCategory();
+
+    /**
+     * 插入商品种类
+     */
+    boolean insertCategory(String category);
+
+    /**
+     * 修改商品种类
+     */
+    GoodsDto updateCategory(GoodsDto goodsDto);
+
+    /**
+     * 删除商品种类
+     */
+    boolean deleteCategory(int id);
 }
+

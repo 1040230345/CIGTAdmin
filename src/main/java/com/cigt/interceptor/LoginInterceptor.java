@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class LoginInterceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //每一个项目对于登陆的实现逻辑都有所区别，我这里使用最简单的Session提取User来验证登陆。
+        //Session提取User来验证登陆。
         HttpSession session = request.getSession();
         //放入session
         adminDto adminDto = (adminDto) session.getAttribute("Admin");

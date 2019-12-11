@@ -90,4 +90,55 @@ public class GoodsServiceImpl  implements GoodsService{
         }
         return false;
     }
+
+    /**
+     * 查询商品种类
+     * @return
+     */
+    @Override
+    public List<GoodsDto> findCategory() {
+        List<GoodsDto> list = goodsmapper.findCategory();
+        if(list != null ){
+            return  list;
+        }
+        return null;
+    }
+
+    /**
+     * 插入商品种类
+     * @param category
+     * @return
+     */
+    @Override
+    public boolean insertCategory(String category) {
+        int num = goodsmapper.insertCategory(category);
+        if( num > 0 ){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 修改商品种类
+     */
+    @Override
+    public GoodsDto updateCategory(GoodsDto goodsDto) {
+        int num = goodsmapper.updateCategory(goodsDto);
+        if ( num > 0 ){
+            return goodsDto;
+        }
+        return null;
+    }
+
+    /**
+     * 删除商品种类
+     */
+    @Override
+    public boolean deleteCategory(int id) {
+        int num = goodsmapper.deleteCategory(id);
+        if( num >0 ){
+            return true;
+        }
+        return false;
+    }
 }

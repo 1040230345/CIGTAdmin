@@ -37,4 +37,28 @@ public interface Goodsmapper {
      */
     @Delete(" DELETE FROM t_goods WHERE id= #{id} ")
     int delectGoodsById(int id);
+
+    /**
+     * 查询商品种类
+     */
+    @Select("select * from t_category")
+    List<GoodsDto> findCategory();
+
+    /**
+     * 插入商品种类
+     */
+    @Insert( "INSERT INTO t_category (category) VALUES (#{category}) ")
+    int insertCategory(String category);
+
+    /**
+     * 修改商品种类
+     */
+    @Update(" update t_category SET category=#{category} where id = #{id} ")
+    int updateCategory(GoodsDto goodsDto);
+
+    /**
+     * 删除商品种类
+     */
+    @Delete(" DELETE FROM t_category WHERE id= #{id} ")
+    int deleteCategory(int id);
 }
