@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <title>广科闲置交易系统-后台</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+    <link rel="stylesheet" href="/static/index.css" />
+    <script src="/static/vue.js"></script>
+    <script type="text/javascript" src="/static/jquery.min.js"></script>
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="/static/index.js"></script>
     <link rel="stylesheet" href="/static/animate.css">
     <style>
         body {
@@ -169,11 +169,19 @@
 								</span>
                     </el-dialog>
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">查看用户</div></div>
+                        <div slot="header" class="clearfix" style="display: flex;justify-content: space-between">
+                            <span>查看用户</span>
+                            <div style="width:30%">
+                                <label for="userSearch" style="font-style: normal">搜索：</label>
+                                <el-input id="userSearch" style="width:70%"  placeholder="搜索单个用户">
+                                    <i slot="suffix" class="el-input__icon el-icon-search" ></i>
+                                </el-input>
+                            </div>
+                        </div>
                         <div style="margin-bottom: 15px;">
                             <el-table v-loading="userLoading" :data="userData" stripe style="width: 100%">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
-                                <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+                                <el-table-column prop="name" label="用户名" width="100"></el-table-column>
                                 <el-table-column prop="image" label="头像" width="100"></el-table-column>
                                 <el-table-column prop="password" label="密码" width="100"></el-table-column>
                                 <el-table-column prop="address" label="地址"></el-table-column>
@@ -269,7 +277,7 @@
                         <div style="margin-bottom: 15px;">
                             <el-table :data="userData" stripe style="width: 100%">
                                 <el-table-column prop="id" label="ID"></el-table-column>
-                                <el-table-column prop="name" label="姓名"></el-table-column>
+                                <el-table-column prop="name" label="用户名"></el-table-column>
                                 <el-table-column prop="image" label="头像"></el-table-column>
                                 <el-table-column prop="password" label="密码"></el-table-column>
                                 <el-table-column prop="address" label="地址"></el-table-column>
