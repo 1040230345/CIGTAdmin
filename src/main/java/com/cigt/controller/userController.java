@@ -42,13 +42,6 @@ public class userController {
         //验证登录账号密码
         adminDto adminDto = adminmapper.findUser_login(account,password);
         if (adminDto != null) {
-            //创建token，缓存用户数据
-            //  String token = userService.updateCookie(userDto);
-            //model.addAttribute("USER",userDto);
-            //创建新cookie
-            //  Cookie cookie = new Cookie("TOKEN",token);
-            //发送给浏览器
-            //  response.addCookie(cookie);
             // 获取Session
             HttpSession session=request.getSession();
             //添加到session里面
@@ -64,22 +57,11 @@ public class userController {
     /**
      * 退出登陆的逻辑页面
      * @param request
-     * @param response
      * @return
      */
     @GetMapping("/loginout")
     @ApiOperation(value = "登出信息")
-    public String login_out(HttpServletRequest request, HttpServletResponse response){
-        Cookie[] cookies = request.getCookies();
-        if(cookies!=null){
-            for(Cookie cookie:cookies){
-                if(cookie.getName().equals("TOKEN")){
-                    cookie.setValue(null);
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
-                }
-            }
-        }
+    public String login_out(HttpServletRequest request){
         //销毁session
         HttpSession session = request.getSession();
         session.invalidate();

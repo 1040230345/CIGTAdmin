@@ -17,13 +17,15 @@ public interface Goodsmapper {
     /**
      * 查询单个商品信息
      */
-    @Select(" select * from t_goods where name like #{name} ")
+    @Select(" select * from t_goods where name like %#{name}% ")
     GoodsDto findByName(@Param("name") String name);
 
     /**
      * 修改单个商品信息
      */
-    @Update(" update t_goods SET name=#{name},price=#{price},images=#{images},num=#{num},category=#{category},updated_at=#{updated_at} where id = #{id} ")
+    @Update(" update t_goods SET name=#{name},price=#{price},images=#{images},num=#{num}," +
+            "category=#{category},updated_at=#{updated_at},status=#{status}," +
+            "banner_image1=#{banner_image1},banner_image2=#{banner_image2},banner_image3=#{banner_image3} where id = #{id} ")
     int updateById(GoodsDto goodsDto);
 
     /**
@@ -61,4 +63,6 @@ public interface Goodsmapper {
      */
     @Delete(" DELETE FROM t_category WHERE id= #{id} ")
     int deleteCategory(int id);
+
+
 }

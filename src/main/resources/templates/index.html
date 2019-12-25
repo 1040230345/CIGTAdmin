@@ -268,25 +268,44 @@
 				var status = this.validateCode();
 				if (status == 1) {
 					console.log('验证码验证通过 发送api验证表单');
-					$.ajax({
-						url: '/login',
-						methods: 'post',
-						dataType: 'JSON',
-						data: {
-							account: this.formData.account,
-							password: this.formData.password
-						}
-					})
-							.done(function(data) {
-								console.log(data);
-								window.location.replace('/home');
-							})
-							.fail(function(data) {
-								console.log('error' + data);
-							})
-							.always(function() {
-								console.log('complete');
-							});
+                    $.ajax({
+                        url: '/login',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            account: this.formData.account,
+                            password: this.formData.password
+						},
+                    })
+                        .done(function(data) {
+                            console.log(data);
+                            window.location.replace('/home');
+                        })
+                        .fail(function() {
+                            console.log("error");
+                        })
+                        .always(function() {
+                            console.log("complete");
+                        });
+					// $.ajax({
+					// 	url: '/login',
+					// 	type: 'POST',
+					// 	dataType: 'JSON',
+					// 	data: {
+					// 	    account: this.formData.account,
+					// 		password: this.formData.password
+					// 	}
+					// })
+					// 		.done(function(data) {
+					// 			console.log(data);
+					// 			window.location.replace('/home');
+					// 		})
+					// 		.fail(function(data) {
+					// 			console.log('error' + data);
+					// 		})
+					// 		.always(function() {
+					// 			console.log('complete');
+					// 		});
 				}
 			}
 		},

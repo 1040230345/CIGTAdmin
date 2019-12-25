@@ -1,7 +1,9 @@
 package com.cigt.controller;
 
+import com.cigt.base.R;
 import com.cigt.dto.GoodsDto;
 import com.cigt.dto.UserDto;
+import com.cigt.service.FileUpService;
 import com.cigt.service.GoodsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +25,8 @@ public class goodsController {
 
     @Autowired
     GoodsService goodsService;
+    @Autowired
+    FileUpService fileUpService;
 
     /**
      * 查询所有商品
@@ -189,5 +195,15 @@ public class goodsController {
             map.put("deleteCategory","false");
             return map;
         }
+    }
+
+    /**
+     * 管理员上传图片
+     */
+    @PostMapping("/upGoodsImage")
+    @ApiOperation("管理员上传图片")
+    public R upGoodsImage(@RequestParam("fileName")MultipartFile goodsImage,
+                          int type){
+        return fileUpService.upload(goodsImage,type);
     }
 }

@@ -12,6 +12,10 @@ public class GoodsDto {
     private  String  updated_at;
     private int num;
     private String category;
+    private String banner_image1;
+    private String banner_image2;
+    private String banner_image3;
+    private String status;
     private int user_id;
 }
 ;

@@ -2,18 +2,20 @@ package com.cigt.controller;
 
 import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import springfox.documentation.annotations.ApiIgnore;
 
+
+@ApiIgnore //Swagger屏蔽此接口！
 @Controller
-@Api(tags="首页接口（管理员操作）")
 public class indexController {
-    @PostMapping("/home")
+    @RequestMapping("/home")
     public String toLogin(){
         return "home";
     }
-
-    @PostMapping("/index")
+    @RequestMapping("/index")
     public String toIndex(){
         return "index";
     }

@@ -20,7 +20,7 @@ public class WebAppConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //登录拦截的管理器
-       registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/","/error","/static/**","/login","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
+       //registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/","/error","/static/**","/login","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
