@@ -36,6 +36,7 @@
         .el-main {
             padding:15px 15px;
             overflow-x: hidden;
+            background-color: #f6f8fa;
         }
         .el-main::-webkit-scrollbar{
             width: 0!important;
@@ -385,7 +386,8 @@
                             <li class="ycenter">商品图片：<el-image
                                     style="width: 30px; height: 30px"
                                     :src="checkGoodsData.images"
-                                    fit="cover">
+                                    fit="cover"
+                                    >
                             </el-image></li>
                             <li>创建时间：{{ checkGoodsData.time }}</li>
                             <li>更新时间：{{ checkGoodsData.updated_at }}</li>
@@ -689,12 +691,9 @@
             },
             handleSelect(key, keyPath) {},
             handleShow(key, keyPath) {
-                console.log(key);
-
                 for (i in this.cardVisible) {
                     this.cardVisible[i] = false;
                 }
-
                 switch (key) {
                     case '1-1':
                         this.cardVisible.userShow = true;
@@ -723,6 +722,8 @@
             // 用户
             // 更新用户数据
             refreshUser(){
+                this.goodsData =[];
+                this.userData = [];
                 $.ajax({
                     url: '/api/findAllUserInfo',
                     method: 'POST',
@@ -730,7 +731,6 @@
                     data: {}
                 })
                     .done(data => {
-                        this.userData = [];
                         for (let index in data.findAllUser) {
                             this.userData.push(data.findAllUser[index]);
                         }
@@ -871,6 +871,8 @@
             },
             // 商品
             refreshGoods(){
+                this.userData = [];
+                this.goodsData = [];
                 $.ajax({
                     url: '/api/findAllGoodsInfo',
                     method: 'POST',
@@ -878,7 +880,6 @@
                     data: {}
                 })
                     .done(data => {
-                        this.goodsData = [];
                         for (let index in data.findAllGoods) {
                             this.goodsData.push(data.findAllGoods[index]);
                         }
@@ -902,7 +903,6 @@
                 this.checkGoodsData.user_id = obj.user_id;
                 this.checkGoodsData.num = obj.num;
                 this.checkGoodsData.category = obj.category;
-                console.log(obj)
             },//查看商品详情对话框
             sendAddGoods(){
                 $.ajax({
