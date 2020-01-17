@@ -15,6 +15,7 @@
             font-family: 'Microsoft YaHei UI';
             margin: 0;
             padding: 0;
+            font-size: 14px;
         }
         #app {
             width: 100%;
@@ -26,12 +27,18 @@
         .el-aside {
             background-color: #545c64;
         }
+        .el-aside::-webkit-scrollbar{
+            width: 0!important;
+        }
         .el-header {
             padding:0!important;
         }
         .el-main {
             padding:15px 15px;
             overflow-x: hidden;
+        }
+        .el-main::-webkit-scrollbar{
+            width: 0!important;
         }
         .addUser,
         .editUser,
@@ -48,6 +55,48 @@
         .el-header .el-menu {
             display: flex;
             flex-direction: row-reverse;
+        }
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+        .xcenter{
+            display: flex;
+            justify-content: center;
+        }
+        .ycenter{
+            display: flex;
+            align-items: center;
+        }
+        .checkUl{
+            line-height: 30px;
+            list-style: none;
         }
     </style>
 </head>
@@ -95,40 +144,39 @@
                         class="el-menu-demo"
                         mode="horizontal"
                         @select="handleSelect"
-                        background-color="#545c64"
-                        text-color="#fff"
+                        background-color="#24292E"
+                        text-color="#FFFFFF"
                         active-text-color="#ffd04b"
                 >
                     <el-submenu index="2">
                         <template slot="title">
                             个人中心
                         </template>
-                        <el-menu-item index="2-1" @click="sendLoginOut">退出登录</el-menu-item>
-                        <el-menu-item index="2-2">选项2</el-menu-item>
-                        <el-menu-item index="2-3">选项3</el-menu-item>
+                        <el-menu-item index="2-1" style="text-align: center">欢迎进入闲置交易系统后台！</el-menu-item>
+                        <el-menu-item index="2-2" style="text-align: center">选项2</el-menu-item>
+                        <el-menu-item index="2-3" @click="sendLoginOut" style="text-align: center">退出登录</el-menu-item>
                     </el-submenu>
-                    <el-menu-item index="3" disabled>消息中心</el-menu-item>
                 </el-menu>
             </el-header>
             <el-main>
                 <!--                查看用户-->
-                <div class="editUser animated shake" v-if="cardVisible.userShow">
+                <div class="editUser" v-if="cardVisible.userShow">
                     <!--                        对话框-->
                     <!--                    查看详情-->
                     <el-dialog title="详情" :visible.sync="checkUserdialogVisible" width="30%" center>
-                        <ul>
-                            <li>{{ checkUserData.id }}</li>
-                            <li>{{ checkUserData.name }}</li>
-                            <li>{{ checkUserData.image }}</li>
-                            <li>{{ checkUserData.password }}</li>
-                            <li>{{ checkUserData.address }}</li>
-                            <li>{{ checkUserData.sex }}</li>
-                            <li>{{ checkUserData.phone }}</li>
-                            <li>{{ checkUserData.information_state }}</li>
-                            <li>{{ checkUserData.autograph }}</li>
-                            <li>{{ checkUserData.created_at }}</li>
-                            <li>{{ checkUserData.updated_at }}</li>
-                            <li>{{ checkUserData.real_name }}</li>
+                        <ul class="checkUl">
+                            <li>id：{{ checkUserData.id }}</li>
+                            <li>用户名：{{ checkUserData.name }}</li>
+                            <li class="ycenter">头像：<el-avatar :size="30" :src="checkUserData.image" fit="cover"></el-avatar></li>
+                            <li>密码：{{ checkUserData.password }}</li>
+                            <li>地址：{{ checkUserData.address }}</li>
+                            <li>性别：{{ checkUserData.sex }}</li>
+                            <li>电话：{{ checkUserData.phone }}</li>
+                            <li>状态：{{ checkUserData.information_state }}</li>
+                            <li>个性签名：{{ checkUserData.autograph }}</li>
+                            <li>创建时间：{{ checkUserData.created_at }}</li>
+                            <li>更新时间：{{ checkUserData.updated_at }}</li>
+                            <li>真实姓名：{{ checkUserData.real_name }}</li>
                         </ul>
                         <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button></span>
                     </el-dialog>
@@ -171,37 +219,43 @@
                     <el-card>
                         <div slot="header" class="clearfix" style="display: flex;justify-content: space-between">
                             <span>查看用户</span>
-                            <div style="width:30%">
-                                <label for="userSearch" style="font-style: normal">搜索：</label>
-                                <el-input id="userSearch" style="width:70%"  placeholder="搜索单个用户">
-                                    <i slot="suffix" class="el-input__icon el-icon-search" ></i>
-                                </el-input>
-                            </div>
+<!--                            <div style="width:30%">-->
+<!--                                <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>-->
+<!--                                <el-input id="userSearch" style="width:70%"  placeholder="搜索单个用户">-->
+<!--                                    <i slot="suffix" class="el-input__icon el-icon-search" ></i>-->
+<!--                                </el-input>-->
+<!--                            </div>-->
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table v-loading="userLoading" :data="userData" stripe style="width: 100%">
+                            <el-table v-loading="userLoading" :data="userData" style="width: 100%" :row-class-name="tableRowClassName">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
                                 <el-table-column prop="name" label="用户名" width="100"></el-table-column>
-                                <el-table-column prop="image" label="头像" width="100"></el-table-column>
+                                <el-table-column prop="image" label="头像" width="100">
+                                    <template slot-scope="scope">
+                                        <el-avatar :size="50" :src="scope.row.image" fit="cover"></el-avatar>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column prop="password" label="密码" width="100"></el-table-column>
                                 <el-table-column prop="address" label="地址"></el-table-column>
                                 <el-table-column prop="sex" label="性别" width="50"></el-table-column>
                                 <el-table-column prop="phone" label="电话"></el-table-column>
                                 <el-table-column prop="information_state" label="状态" width="50"></el-table-column>
                                 <el-table-column prop="autograph" label="个性签名"></el-table-column>
-                                <el-table-column prop="created_at" label="创建时间"></el-table-column>
-                                <el-table-column prop="updated_at" label="更新时间"></el-table-column>
+                                <el-table-column prop="created_at" label="创建时间" width="175"></el-table-column>
+                                <el-table-column prop="updated_at" label="更新时间" width="175"></el-table-column>
                                 <el-table-column prop="real_name" label="真实姓名"></el-table-column>
-                                <el-table-column fixed="right" label="操作" width="100">
+                                <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkUser(scope.row)" type="text" size="small">查看</el-button>
-                                        <el-button @click="editUser(scope.row)" type="text" size="small">修改</el-button>
+                                        <el-button @click="checkUser(scope.row)" type="" size="mini">查看</el-button>
+                                        <el-button @click="editUser(scope.row)" type="danger" size="mini">修改</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
-                        <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                        <div class="xcenter">
+                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                        </div>
                     </el-card>
                 </div>
                 <!--                添加用户-->
@@ -215,7 +269,17 @@
                             ]" prop="name">
                                     <el-input type="primary" size="large" placeholder="请输入您的姓名" v-model="addUserFormData.name"></el-input></el-form-item>
                                 <el-form-item label="头像">
-                                    <el-input type="primary" size="large" placeholder="请输入您的头像" v-model="addUserFormData.image"></el-input></el-form-item>
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的头像" v-model=""></el-input>-->
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="https://jsonplaceholder.typicode.com/posts/"
+                                            :show-file-list="false"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    </el-upload>
+                                </el-form-item>
                                 <el-form-item label="密码" :rules="[
                               { required: true, message: '密码不能为空',trigger:['blur','change']}
                             ]" prop="password">
@@ -237,7 +301,9 @@
                                     <el-input type="primary" size="large" placeholder="请输入您的个性签名" v-model="addUserFormData.autograph"></el-input></el-form-item>
                                 <el-form-item label="真实姓名">
                                     <el-input type="primary" size="large" placeholder="请输入您的真实姓名" v-model="addUserFormData.real_name"></el-input></el-form-item>
-                                <el-button type="primary" @click="sendAddUser">提交</el-button>
+                                <div class="xcenter">
+                                    <el-button type="primary" @click="sendAddUser">提交</el-button>
+                                </div>
                             </el-form>
                         </div>
                     </el-card>
@@ -247,19 +313,19 @@
                     <!--                    对话框-->
                     <!--                    查看详情-->
                     <el-dialog title="详情" :visible.sync="checkUserdialogVisible" width="30%" center>
-                        <ul>
-                            <li>{{ checkUserData.id }}</li>
-                            <li>{{ checkUserData.name }}</li>
-                            <li>{{ checkUserData.image }}</li>
-                            <li>{{ checkUserData.password }}</li>
-                            <li>{{ checkUserData.address }}</li>
-                            <li>{{ checkUserData.sex }}</li>
-                            <li>{{ checkUserData.phone }}</li>
-                            <li>{{ checkUserData.information_state }}</li>
-                            <li>{{ checkUserData.autograph }}</li>
-                            <li>{{ checkUserData.created_at }}</li>
-                            <li>{{ checkUserData.updated_at }}</li>
-                            <li>{{ checkUserData.real_name }}</li>
+                        <ul class="checkUl">
+                            <li>id：{{ checkUserData.id }}</li>
+                            <li>用户名：{{ checkUserData.name }}</li>
+                            <li class="ycenter">头像：<el-avatar :size="30" :src="checkUserData.image" fit="cover"></el-avatar></li>
+                            <li>密码：{{ checkUserData.password }}</li>
+                            <li>地址：{{ checkUserData.address }}</li>
+                            <li>性别：{{ checkUserData.sex }}</li>
+                            <li>电话：{{ checkUserData.phone }}</li>
+                            <li>状态：{{ checkUserData.information_state }}</li>
+                            <li>个性签名：{{ checkUserData.autograph }}</li>
+                            <li>创建时间：{{ checkUserData.created_at }}</li>
+                            <li>更新时间：{{ checkUserData.updated_at }}</li>
+                            <li>真实姓名：{{ checkUserData.real_name }}</li>
                         </ul>
                         <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button></span>
                     </el-dialog>
@@ -275,10 +341,14 @@
                     <el-card>
                         <div slot="header" class="clearfix header"><div class="title">删除用户</div></div>
                         <div style="margin-bottom: 15px;">
-                            <el-table :data="userData" stripe style="width: 100%">
+                            <el-table :data="userData" style="width: 100%" :row-class-name="tableRowClassName">
                                 <el-table-column prop="id" label="ID"></el-table-column>
                                 <el-table-column prop="name" label="用户名"></el-table-column>
-                                <el-table-column prop="image" label="头像"></el-table-column>
+                                <el-table-column prop="image" label="头像">
+                                    <template slot-scope="scope">
+                                        <el-avatar :size="50" :src="scope.row.image" fit="cover"></el-avatar>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column prop="password" label="密码"></el-table-column>
                                 <el-table-column prop="address" label="地址"></el-table-column>
                                 <el-table-column prop="sex" label="性别"></el-table-column>
@@ -297,25 +367,31 @@
                             </el-table>
                         </div>
                         <!--                        分页-->
-                        <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                        <div class="xcenter">
+                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                        </div>
                     </el-card>
                 </div>
 
                 <!--                查看商品-->
-                <div class="editUser animated pulse" v-if="cardVisible.goodsShow">
+                <div class="editUser" v-if="cardVisible.goodsShow">
                     <!--                        对话框-->
                     <!--                    查看详情-->
                     <el-dialog title="详情" :visible.sync="checkGoodsDialogVisible" width="30%" center>
-                        <ul>
-                            <li>{{ checkGoodsData.id }}</li>
-                            <li>{{ checkGoodsData.name }}</li>
-                            <li>{{ checkGoodsData.price }}</li>
-                            <li>{{ checkGoodsData.images }}</li>
-                            <li>{{ checkGoodsData.time }}</li>
-                            <li>{{ checkGoodsData.updated_at }}</li>
-                            <li>{{ checkGoodsData.user_id }}</li>
-                            <li>{{ checkGoodsData.num }}</li>
-                            <li>{{ checkGoodsData.category }}</li>
+                        <ul class="checkUl">
+                            <li>id：{{ checkGoodsData.id }}</li>
+                            <li>商品名称：{{ checkGoodsData.name }}</li>
+                            <li>商品价格：{{ checkGoodsData.price }}</li>
+                            <li class="ycenter">商品图片：<el-image
+                                    style="width: 30px; height: 30px"
+                                    :src="checkGoodsData.images"
+                                    fit="cover">
+                            </el-image></li>
+                            <li>创建时间：{{ checkGoodsData.time }}</li>
+                            <li>更新时间：{{ checkGoodsData.updated_at }}</li>
+                            <li>用户id：{{ checkGoodsData.user_id }}</li>
+                            <li>商品数量：{{ checkGoodsData.num }}</li>
+                            <li>商品分类：{{ checkGoodsData.category }}</li>
                         </ul>
                         <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
                     </el-dialog>
@@ -336,26 +412,36 @@
                     <el-card>
                         <div slot="header" class="clearfix header"><div class="title">查看商品</div></div>
                         <div style="margin-bottom: 15px;">
-                            <el-table v-loading="goodsLoading" :data="goodsData" stripe style="width: 100%">
+                            <el-table v-loading="goodsLoading" :data="goodsData" style="width: 100%" :row-class-name="tableRowClassName">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
                                 <el-table-column prop="name" label="名称" width="150"></el-table-column>
                                 <el-table-column prop="price" label="价格" width="80"></el-table-column>
-                                <el-table-column prop="images" label="图片" width="100"></el-table-column>
-                                <el-table-column prop="time" label="时间" width="100"></el-table-column>
-                                <el-table-column prop="updated_at" label="更新时间" width="100"></el-table-column>
+                                <el-table-column prop="images" label="图片" width="100">
+                                    <template slot-scope="scope">
+                                        <el-image
+                                                style="width: 100px; height: 100px"
+                                                :src="scope.row.images"
+                                                fit="cover">
+                                        </el-image>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="time" label="时间" width="175"></el-table-column>
+                                <el-table-column prop="updated_at" label="更新时间" width="175"></el-table-column>
                                 <el-table-column prop="user_id" label="用户id" width="80"></el-table-column>
                                 <el-table-column prop="num" label="数量" width="60"></el-table-column>
                                 <el-table-column prop="category" label="类别" width="100"></el-table-column>
-                                <el-table-column fixed="right" label="操作" width="100">
+                                <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkGoods(scope.row)" type="text" size="small">查看</el-button>
-                                        <el-button @click="editGoods(scope.row)" type="text" size="small">修改</el-button>
+                                        <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
+                                        <el-button @click="editGoods(scope.row)" type="danger" size="mini">修改</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
-                        <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                        <div class="xcenter">
+                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                        </div>
                     </el-card>
                 </div>
                 <!--                添加商品-->
@@ -374,7 +460,16 @@
                                     <el-input type="primary" size="large" placeholder="请输入您的商品价格" v-model="addGoodsFormData.price"></el-input>
                                 </el-form-item>
                                 <el-form-item label="图片">
-                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.images"></el-input>
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.images"></el-input>-->
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="https://jsonplaceholder.typicode.com/posts/"
+                                            :show-file-list="false"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    </el-upload>
                                 </el-form-item>
                                 <el-form-item label="数量">
                                     <el-input type="primary" size="large" placeholder="请输入您的商品数量" v-model="addGoodsFormData.num"></el-input>
@@ -382,7 +477,9 @@
                                 <el-form-item label="类别">
                                     <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>
                                 </el-form-item>
-                                <el-button type="primary" @click="sendAddGoods">提交</el-button>
+                                <div class="xcenter">
+                                    <el-button type="primary" @click="sendAddGoods">提交</el-button>
+                                </div>
                             </el-form>
                         </div>
                     </el-card>
@@ -392,16 +489,20 @@
                     <!--                    对话框-->
                     <!--                    查看详情-->
                     <el-dialog title="详情" :visible.sync="checkGoodsDialogVisible" width="30%" center>
-                        <ul>
-                            <li>{{ checkGoodsData.id }}</li>
-                            <li>{{ checkGoodsData.name }}</li>
-                            <li>{{ checkGoodsData.price }}</li>
-                            <li>{{ checkGoodsData.images }}</li>
-                            <li>{{ checkGoodsData.time }}</li>
-                            <li>{{ checkGoodsData.updated_at }}</li>
-                            <li>{{ checkGoodsData.user_id }}</li>
-                            <li>{{ checkGoodsData.num }}</li>
-                            <li>{{ checkGoodsData.category }}</li>
+                        <ul class="checkUl">
+                            <li>id：{{ checkGoodsData.id }}</li>
+                            <li>商品名称：{{ checkGoodsData.name }}</li>
+                            <li>商品价格：{{ checkGoodsData.price }}</li>
+                            <li class="ycenter">商品图片：<el-image
+                                    style="width: 30px; height: 30px"
+                                    :src="checkGoodsData.images"
+                                    fit="cover">
+                            </el-image></li>
+                            <li>创建时间：{{ checkGoodsData.time }}</li>
+                            <li>更新时间：{{ checkGoodsData.updated_at }}</li>
+                            <li>用户id：{{ checkGoodsData.user_id }}</li>
+                            <li>商品数量：{{ checkGoodsData.num }}</li>
+                            <li>商品分类：{{ checkGoodsData.category }}</li>
                         </ul>
                         <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
                     </el-dialog>
@@ -416,26 +517,36 @@
                     <el-card>
                         <div slot="header" class="clearfix header"><div class="title">删除商品</div></div>
                         <div style="margin-bottom: 15px;">
-                            <el-table :data="goodsData" stripe style="width: 100%">
+                            <el-table :data="goodsData" :row-class-name="tableRowClassName" style="width: 100%">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
                                 <el-table-column prop="name" label="名称" width="150"></el-table-column>
                                 <el-table-column prop="price" label="价格" width="80"></el-table-column>
-                                <el-table-column prop="images" label="图片" width="100"></el-table-column>
-                                <el-table-column prop="time" label="时间" width="100"></el-table-column>
-                                <el-table-column prop="updated_at" label="更新时间" width="100"></el-table-column>
+                                <el-table-column prop="images" label="图片" width="100">
+                                    <template slot-scope="scope">
+                                        <el-image
+                                                style="width: 100px; height: 100px"
+                                                :src="scope.row.images"
+                                                fit="cover">
+                                        </el-image>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="time" label="时间" width="175"></el-table-column>
+                                <el-table-column prop="updated_at" label="更新时间" width="175"></el-table-column>
                                 <el-table-column prop="user_id" label="用户id" width="80"></el-table-column>
                                 <el-table-column prop="num" label="数量" width="60"></el-table-column>
                                 <el-table-column prop="category" label="类别" width="100"></el-table-column>
-                                <el-table-column fixed="right" label="操作" width="100">
+                                <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkGoods(scope.row)" type="text" size="small">查看</el-button>
-                                        <el-button @click="deleteGoods(scope.row)" type="text" size="small">删除</el-button>
+                                        <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
+                                        <el-button @click="deleteGoods(scope.row)" type="danger" size="mini">删除</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
-                        <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                        <div class="xcenter">
+                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                        </div>
                     </el-card>
                 </div>
 
@@ -569,6 +680,13 @@
             }
         },
         methods: {
+            tableRowClassName({row, rowIndex}){
+                if (rowIndex%2 != 0 && rowIndex%4 === 1) {
+                    return 'warning-row';
+                } else if (rowIndex % 2 != 0) {
+                    return 'success-row';
+                }
+            },
             handleSelect(key, keyPath) {},
             handleShow(key, keyPath) {
                 console.log(key);
@@ -613,7 +731,7 @@
                 })
                     .done(data => {
                         this.userData = [];
-                        for (index in data.findAllUser) {
+                        for (let index in data.findAllUser) {
                             this.userData.push(data.findAllUser[index]);
                         }
                         this.userLoading = false;
@@ -761,7 +879,7 @@
                 })
                     .done(data => {
                         this.goodsData = [];
-                        for (index in data.findAllGoods) {
+                        for (let index in data.findAllGoods) {
                             this.goodsData.push(data.findAllGoods[index]);
                         }
                         this.goodsLoading = false;
