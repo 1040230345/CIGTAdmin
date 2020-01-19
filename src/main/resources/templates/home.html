@@ -566,6 +566,7 @@
     var app = new Vue({
         el: '#app',
         data: {
+            imageUrl:'',//图片上传地址
             mode: 'vertical',
             activeIndex2: '1',
             checkUserdialogVisible: false,
@@ -682,6 +683,8 @@
             }
         },
         methods: {
+            handleAvatarSuccess(){},//图片上传成功
+            beforeAvatarUpload(){},//图片上传前
             tableRowClassName({row, rowIndex}){
                 if (rowIndex%2 != 0 && rowIndex%4 === 1) {
                     return 'warning-row';
