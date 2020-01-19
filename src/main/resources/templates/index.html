@@ -76,7 +76,33 @@
 			user-select:none;
 		}
 		.mybtn{
-
+			display: inline-block;
+			line-height: 1;
+			white-space: nowrap;
+			cursor: pointer;
+			background: #FFF;
+			border: 1px solid #DCDFE6;
+			color: #606266;
+			-webkit-appearance: none;
+			text-align: center;
+			box-sizing: border-box;
+			outline: 0;
+			margin: 0;
+			-webkit-transition: .1s;
+			transition: .1s;
+			font-weight: 500;
+			padding: 12px 20px;
+			font-size: 14px;
+			border-radius: 4px;
+		}
+		.mybtn:hover{
+			background-color: #67c23a;
+			border-color: white;
+			transition: all 0.2s;
+			color: white;
+		}
+		.el-card__body{
+			padding: 40px 50px!important;
 		}
 	</style>
 	<script src="/static/vue.js"></script>
@@ -137,7 +163,7 @@
 									</div>
 								</div>
 								<div style="text-align: center">
-								<el-button class="mybtn" @click="login">登录</el-button>
+								<div class="mybtn" @click="login">登录</div>
 								</div>
 							</el-form>
 						</div>

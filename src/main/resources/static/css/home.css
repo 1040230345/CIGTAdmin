@@ -1,0 +1,104 @@
+
+html,body {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 300;
+    height: 100%;
+    width: 100%;
+}
+#app {
+    width: 100%;
+    height: 100%;
+}
+.el-container {
+    height: 100%;
+}
+.el-aside {
+    background-color: #545c64;
+}
+.el-aside::-webkit-scrollbar{
+    width: 0!important;
+}
+.el-header {
+    padding:0!important;
+}
+.el-main {
+    padding:15px 15px;
+    overflow-x: hidden;
+    background-color: #f6f8fa;
+}
+.el-main::-webkit-scrollbar{
+    width: 0!important;
+}
+.addUser,
+.editUser,
+.deleteUser {
+    width: 100%;
+    height: 100%;
+}
+.el-footer {
+    padding-left: 0;
+    border-top: 1px solid #d2d6de;
+    text-align: center;
+    line-height: 60px;
+}
+.el-header .el-menu {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.el-table .warning-row {
+    background: oldlace;
+}
+
+.el-table .success-row {
+    background: #f0f9eb;
+}
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+}
+.xcenter{
+    display: flex;
+    justify-content: center;
+}
+.ycenter{
+    display: flex;
+    align-items: center;
+}
+.checkUl{
+    line-height: 30px;
+    list-style: none;
+}
+.navtitle{
+    height: 61px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+}
+.el-main .el-card{
+    transition: all 0.2s;
+}

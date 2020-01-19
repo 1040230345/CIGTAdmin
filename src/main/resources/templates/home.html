@@ -3,123 +3,23 @@
 <head>
     <meta charset="UTF-8" />
     <title>广科闲置交易系统-后台</title>
+    <script src="/static/vue.js"></script>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="/static/index.css" />
-    <script src="/static/vue.js"></script>
-    <script type="text/javascript" src="/static/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/home.css">
     <!-- 引入组件库 -->
     <script src="/static/index.js"></script>
     <link rel="stylesheet" href="/static/animate.css">
-    <style>
-        body {
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-            margin: 0;
-            padding: 0;
-            font-size: 14px;
-            font-weight: 300;
-        }
-        #app {
-            width: 100%;
-            height: 100%;
-        }
-        .el-container {
-            height: 722px;
-        }
-        .el-aside {
-            background-color: #545c64;
-        }
-        .el-aside::-webkit-scrollbar{
-            width: 0!important;
-        }
-        .el-header {
-            padding:0!important;
-        }
-        .el-main {
-            padding:15px 15px;
-            overflow-x: hidden;
-            background-color: #f6f8fa;
-        }
-        .el-main::-webkit-scrollbar{
-            width: 0!important;
-        }
-        .addUser,
-        .editUser,
-        .deleteUser {
-            width: 100%;
-            height: 100%;
-        }
-        .el-footer {
-            padding-left: 0;
-            border-top: 1px solid #d2d6de;
-            text-align: center;
-            line-height: 60px;
-        }
-        .el-header .el-menu {
-            display: flex;
-            flex-direction: row-reverse;
-        }
-        .el-table .warning-row {
-            background: oldlace;
-        }
-
-        .el-table .success-row {
-            background: #f0f9eb;
-        }
-        .avatar-uploader .el-upload {
-            border: 1px dashed #d9d9d9;
-            border-radius: 6px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        .avatar-uploader .el-upload:hover {
-            border-color: #409EFF;
-        }
-        .avatar-uploader-icon {
-            font-size: 28px;
-            color: #8c939d;
-            width: 178px;
-            height: 178px;
-            line-height: 178px;
-            text-align: center;
-        }
-        .avatar {
-            width: 178px;
-            height: 178px;
-            display: block;
-        }
-        .xcenter{
-            display: flex;
-            justify-content: center;
-        }
-        .ycenter{
-            display: flex;
-            align-items: center;
-        }
-        .checkUl{
-            line-height: 30px;
-            list-style: none;
-        }
-        .title{
-            height: 61px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-            color: white;
-        }
-    </style>
 </head>
 <body>
 <div id="app">
     <el-container>
-        <el-aside width="15%">
+        <el-aside width="10%">
             <!--            侧边导航-->
-            <div class="title">
+            <div class="navtitle">
                 广科闲置交易系统
             </div>
-            <el-menu default-active="2" class="el-menu-vertical-demo" @select="handleShow" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+            <el-menu default-active="1-1" class="el-menu-vertical-demo" @select="handleShow" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
                 <el-submenu index="1">
                     <template slot="title">
                         <i class="el-icon-user-solid"></i>
@@ -137,16 +37,6 @@
                     <el-menu-item-group><el-menu-item index="2-1">查看商品</el-menu-item></el-menu-item-group>
                     <el-menu-item-group title="----"><el-menu-item index="2-2">增加商品</el-menu-item></el-menu-item-group>
                     <el-menu-item-group title="----"><el-menu-item index="2-3">删除商品</el-menu-item></el-menu-item-group>
-                </el-submenu>
-                <el-submenu index="3">
-                    <template slot="title">
-                        <i class="el-icon-s-promotion"></i>
-                        <span>动态管理</span>
-                    </template>
-                    <el-menu-item-group><el-menu-item index="3-1">查看动态</el-menu-item></el-menu-item-group>
-                    <el-menu-item-group title="----"><el-menu-item index="3-2">增加动态</el-menu-item></el-menu-item-group>
-
-                    <el-menu-item-group title="----"><el-menu-item index="3-3">删除动态</el-menu-item></el-menu-item-group>
                 </el-submenu>
             </el-menu>
         </el-aside>
@@ -268,7 +158,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="100" page-size="3"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -372,10 +262,10 @@
                                 <el-table-column prop="created_at" label="创建时间" width="170px"></el-table-column>
                                 <el-table-column prop="updated_at" label="更新时间" width="170px"></el-table-column>
                                 <el-table-column prop="real_name" label="真实姓名"></el-table-column>
-                                <el-table-column fixed="right" label="操作" width="100">
+                                <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkUser(scope.row)" type="text" size="small">查看</el-button>
-                                        <el-button @click="deleteUser(scope.row)" type="text" size="small">删除</el-button>
+                                        <el-button @click="checkUser(scope.row)" type="" size="mini">查看</el-button>
+                                        <el-button @click="deleteUser(scope.row)" type="danger" size="mini">删除</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -579,6 +469,7 @@
     var app = new Vue({
         el: '#app',
         data: {
+            iscollapse:false,
             imageUrl:'',//图片上传地址
             mode: 'vertical',
             activeIndex2: '1',
@@ -1029,3 +920,4 @@
     });
 </script>
 </html>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
