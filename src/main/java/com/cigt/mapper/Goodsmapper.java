@@ -11,8 +11,15 @@ public interface Goodsmapper {
     /**
      *查询所有商品信息
      */
-    @Select(" select * from t_goods ")
-    List<GoodsDto> findAll();
+    @Select(" select * from t_goods limit #{index},#{pageSize} ")
+    List<GoodsDto> findAll(@Param("index")int index,
+                           @Param("pageSize")int pageSize);
+
+    /**
+     * 计算总记录数值
+     */
+    @Select("SELECT count(*) FROM t_goods")
+    int countGoods();
 
     /**
      * 查询单个商品信息
