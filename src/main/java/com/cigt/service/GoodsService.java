@@ -11,7 +11,7 @@ public interface GoodsService {
     /**
      * 查询所有商品信息
      */
-    List<GoodsDto> allGoods();
+    List<GoodsDto> allGoods(int currPagePara, int pageSizePara);
 
     /**
      *查询单个商品信息

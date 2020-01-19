@@ -3,12 +3,15 @@ package com.cigt.controller;
 import com.cigt.base.R;
 import com.cigt.dto.GoodsDto;
 import com.cigt.dto.UserDto;
+import com.cigt.mapper.Goodsmapper;
+import com.cigt.my_util.PageUtils;
 import com.cigt.service.FileUpService;
 import com.cigt.service.GoodsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +30,8 @@ public class goodsController {
     GoodsService goodsService;
     @Autowired
     FileUpService fileUpService;
+    @Autowired
+    Goodsmapper goodsmapper;
 
     /**
      * 查询所有商品
@@ -35,9 +40,14 @@ public class goodsController {
     @PostMapping("/api/findAllGoodsInfo")
     @ApiOperation(value = "查询所有商品信息",httpMethod = "POST")
     @ResponseBody
-    public Map allGoods(){
+    public Map allGoods(int currPage, int pageSize, Model model){
+        int totalCount = goodsmapper.countGoods();
+        PageUtils pageUtils = new PageUtils(currPage,pageSize,totalCount);
+        System.out.println(currPage+"     "+pageUtils.getTotalPage());
+        model.addAttribute("currPage", currPage); //当前页
+        model.addAttribute("totalPage", pageUtils.getTotalPage()); //总页数
         Map map = new HashMap<>();
-        List<GoodsDto> list = goodsService.allGoods();
+        List<GoodsDto> list = goodsService.allGoods(currPage,pageSize);
         if(list != null ){
             map.put("findAllGoods",list);
             return map;
@@ -202,6 +212,7 @@ public class goodsController {
      */
     @PostMapping("/upGoodsImage")
     @ApiOperation("管理员上传图片")
+    @ResponseBody
     public R upGoodsImage(@RequestParam("fileName")MultipartFile goodsImage,
                           int type){
         return fileUpService.upload(goodsImage,type);

@@ -3,6 +3,7 @@ package com.cigt.service;
 import com.cigt.dto.GoodsDto;
 import com.cigt.mapper.Goodsmapper;
 import com.cigt.my_util.GetTime_util;
+import com.cigt.my_util.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,15 @@ public class GoodsServiceImpl  implements GoodsService{
      * @return
      */
     @Override
-    public List<GoodsDto> allGoods() {
-        List<GoodsDto> list = goodsmapper.findAll();
-        if(list != null ){
-            return  list;
-        }
-        return null;
+    public List<GoodsDto> allGoods(int currPage, int pageSize) {
+        int index = currPage * pageSize - pageSize;
+        List<GoodsDto> list = goodsmapper.findAll(index,pageSize);
+        return list;
+//        List<GoodsDto> list = goodsmapper.findAll();
+//        if(list != null ){
+//            return  list;
+//        }
+//        return null;
     }
 
     /**
