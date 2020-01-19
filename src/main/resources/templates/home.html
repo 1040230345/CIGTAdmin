@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="/static/animate.css">
     <style>
         body {
-            font-family: 'Microsoft YaHei UI';
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             margin: 0;
             padding: 0;
             font-size: 14px;
+            font-weight: 300;
         }
         #app {
             width: 100%;
@@ -99,6 +100,15 @@
             line-height: 30px;
             list-style: none;
         }
+        .title{
+            height: 61px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -106,6 +116,9 @@
     <el-container>
         <el-aside width="15%">
             <!--            侧边导航-->
+            <div class="title">
+                广科闲置交易系统
+            </div>
             <el-menu default-active="2" class="el-menu-vertical-demo" @select="handleShow" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
                 <el-submenu index="1">
                     <template slot="title">
@@ -702,6 +715,7 @@
             },
             handleSelect(key, keyPath) {},
             handleShow(key, keyPath) {
+                console.log(key)
                 for (let i in this.cardVisible) {
                     this.cardVisible[i] = false;
                 }
@@ -716,6 +730,7 @@
                         this.cardVisible.deleteUserShow = true;
                         break;
                     case '2-1':
+                        this.cardVisible.userShow = false;
                         this.cardVisible.goodsShow = true;
                         break;
                     case '2-2':
