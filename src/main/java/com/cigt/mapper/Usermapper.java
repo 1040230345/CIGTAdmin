@@ -12,8 +12,15 @@ public interface Usermapper {
     /**
      * 查询所有用户信息
      */
-    @Select(" select * from t_user ")
-    List<UserDto> findAllUser();
+    @Select(" select * from t_user limit #{index},#{pageSize} ")
+    List<UserDto> findAllUser(@Param("index")int index,
+                              @Param("pageSize")int pageSize);
+
+    /**
+     * 计算总记录数值
+     */
+    @Select("SELECT count(*) FROM t_user")
+    int countGoods();
 
     /**
      *查询单个用户信息

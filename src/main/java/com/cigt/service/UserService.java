@@ -16,7 +16,7 @@ public interface UserService {
     /**
      * 查询所有用户信息
      */
-    List<UserDto> allUser();
+    List<UserDto> allUser(int currPagePara, int pageSizePara);
 
     /**
      *查询单个用户信息

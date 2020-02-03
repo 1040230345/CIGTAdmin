@@ -38,12 +38,15 @@ public class UserServiceImpl implements UserService{
      * 查询所有用户
      * @return
      */
-    public List<UserDto> allUser(){
-        List<UserDto> list = usermapper.findAllUser();
-        if(list != null ){
-            return  list;
-        }
-        return null;
+    public List<UserDto> allUser(int currPage, int pageSize){
+        int index = currPage * pageSize - pageSize;
+        List<UserDto> list = usermapper.findAllUser(index,pageSize);
+        return list;
+
+//        List<UserDto> list = usermapper.findAllUser();
+//        if(list != null ){
+//            return  list;
+//        }
     }
 
     /**

@@ -44,12 +44,12 @@ public class goodsController {
         int totalCount = goodsmapper.countGoods();
         PageUtils pageUtils = new PageUtils(currPage,pageSize,totalCount);
         System.out.println(currPage+"     "+pageUtils.getTotalPage());
-        model.addAttribute("currPage", currPage); //当前页
-        model.addAttribute("totalPage", pageUtils.getTotalPage()); //总页数
         Map map = new HashMap<>();
         List<GoodsDto> list = goodsService.allGoods(currPage,pageSize);
         if(list != null ){
             map.put("findAllGoods",list);
+            map.put("currPage",currPage);
+            map.put("TotalPage",pageUtils.getTotalPage());
             return map;
         }
         map.put("findAllGoods","false");

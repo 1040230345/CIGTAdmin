@@ -14,13 +14,15 @@ public interface Commentmapper {
     /**
      * 查询所有评论
      */
-    @Select("select id,goods_id,user_id,content,reply_user_id from t_comment")
+    @Select("select tc.id,tg.name goods_name,tu.name user_name,content,pid " +
+            "from t_comment tc JOIN t_goods tg ON tc.goods_id=tg.id " +
+            "JOIN t_user tu ON tc.user_id=tu.id")
     List<commentDto> findAllcomment();
 
     /**
      * 删除评论
      */
-    @Delete("delete from t_comment where id =#{id}")
+    @Delete("delete from t_comment where id =#{id} or pid = #{id}")
     int deleteComment(@Param("id") int id);
 
 }

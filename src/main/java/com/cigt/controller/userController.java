@@ -3,6 +3,8 @@ package com.cigt.controller;
 import com.cigt.dto.UserDto;
 import com.cigt.dto.adminDto;
 import com.cigt.mapper.Adminmapper;
+import com.cigt.mapper.Usermapper;
+import com.cigt.my_util.PageUtils;
 import com.cigt.service.UserService;
 import com.cigt.service.UserServiceImpl;
 import io.swagger.annotations.Api;
@@ -29,6 +31,10 @@ public class userController {
     private UserService userService;
     @Autowired
     private Adminmapper adminmapper;
+    @Autowired
+    private Usermapper usermapper;
+
+
     /**
      * 登录--controller
      */
@@ -73,11 +79,16 @@ public class userController {
     @PostMapping("/api/findAllUserInfo")
     @ApiOperation(value = "查询用户信息")
     @ResponseBody
-    public Map allUser(){
+    public Map allUser(int currPage, int pageSize, Model model){
+        int totalCount =usermapper.countGoods();
+        PageUtils pageUtils = new PageUtils(currPage,pageSize,totalCount);
+        System.out.println(currPage+"     "+pageUtils.getTotalPage());
         Map map = new HashMap<>();
-        List<UserDto> list = userService.allUser();
+        List<UserDto> list = userService.allUser(currPage,pageSize);
         if(list != null ){
             map.put("findAllUser",list);
+            map.put("currPage",currPage);//当前页
+            map.put("TotalPage",pageUtils.getTotalPage());//总页数
             return map;
         }
         map.put("findAllUser","false");
