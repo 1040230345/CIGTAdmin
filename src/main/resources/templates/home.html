@@ -185,9 +185,12 @@
                                             class="avatar-uploader"
                                             action="http://localhost:8080/upGoodsImage"
                                             :show-file-list="false"
-                                            :on-success="handleAvatarSuccess"
-                                            :before-upload="beforeAvatarUpload">
-                                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                            :auto-upload="true"
+                                            name="fileName"
+                                            :data="userImageData"
+                                            :on-success="uhandleAvatarSuccess"
+                                            :before-upload="ubeforeAvatarUpload">
+                                        <img v-if="addUserFormData.image" :src="addUserFormData.image" class="avatar">
                                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                     </el-upload>
                                 </el-form-item>
@@ -373,13 +376,29 @@
                                 </el-form-item>
                                 <el-form-item label="图片">
 <!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.images"></el-input>-->
+<!--                                    <el-upload-->
+<!--                                            class="avatar-uploader"-->
+<!--                                            action="http://localhost:8080/upGoodsImage"-->
+<!--                                            :show-file-list="false"-->
+<!--                                            :auto-upload="true"-->
+<!--                                            name="fileName"-->
+<!--                                            :data="userImageData"-->
+<!--                                            :on-success="uhandleAvatarSuccess"-->
+<!--                                            :before-upload="ubeforeAvatarUpload">-->
+<!--                                        <img v-if="addUserFormData.image" :src="addUserFormData.image" class="avatar">-->
+<!--                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+<!--                                    </el-upload>-->
                                     <el-upload
                                             class="avatar-uploader"
-                                            action="https://jsonplaceholder.typicode.com/posts/"
+                                            action="http://localhost:8080/upGoodsImage"
                                             :show-file-list="false"
-                                            :on-success="handleAvatarSuccess"
-                                            :before-upload="beforeAvatarUpload">
-                                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                            :auto-upload="true"
+                                            name="fileName"
+                                            :on-success="ghandleAvatarSuccess"
+                                            :before-upload="gbeforeAvatarUpload"
+                                            :data="goodImageData"
+                                    >
+                                        <img v-if="addGoodsFormData.images" :src="addGoodsFormData.images" class="avatar">
                                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                     </el-upload>
                                 </el-form-item>
@@ -476,8 +495,13 @@
     var app = new Vue({
         el: '#app',
         data: {
+            goodImageData:{
+                type: 2
+            },
+            userImageData:{
+                type: 1
+            },
             iscollapse:false,
-            imageUrl:'',//图片上传地址
             mode: 'vertical',
             activeIndex2: '1',
             checkUserdialogVisible: false,
@@ -614,10 +638,24 @@
             findUserPage(e){
                 this.refreshUser(e);
             },
-            handleAvatarSuccess(){
-                console.log("上传完成")
-            },//图片上传成功
-            beforeAvatarUpload(){
+            ghandleAvatarSuccess(res, file) {
+                console.log(res);
+                if (res.code == 0){
+                    console.log(res.msg)
+                    this.addGoodsFormData.images = res.msg;
+                }
+            },//上传成功
+            gbeforeAvatarUpload(){
+                console.log("上传前")
+            },//图片上传前
+            uhandleAvatarSuccess(res, file) {
+                console.log(res);
+                if (res.code == 0){
+                    console.log(res.msg)
+                    this.addUserFormData.image = res.msg;
+                }
+            },//上传成功
+            ubeforeAvatarUpload(){
                 console.log("上传前")
             },//图片上传前
             tableRowClassName({row, rowIndex}){
