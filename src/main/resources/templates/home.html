@@ -38,6 +38,14 @@
                     <el-menu-item-group title="----"><el-menu-item index="2-2">增加商品</el-menu-item></el-menu-item-group>
                     <el-menu-item-group title="----"><el-menu-item index="2-3">删除商品</el-menu-item></el-menu-item-group>
                 </el-submenu>
+                <el-submenu index="3">
+                    <template slot="title">
+                        <i class="el-icon-user-solid"></i>
+                        <span>留言管理</span>
+                    </template>
+                    <el-menu-item-group><el-menu-item index="3-1">查看留言</el-menu-item></el-menu-item-group>
+                    <el-menu-item-group title="----"><el-menu-item index="3-2">删除留言</el-menu-item></el-menu-item-group>
+                </el-submenu>
             </el-menu>
         </el-aside>
         <el-container>
@@ -157,7 +165,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="100" :current-change="findUserPage"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -175,7 +183,7 @@
 <!--                                    <el-input type="primary" size="large" placeholder="请输入您的头像" v-model=""></el-input>-->
                                     <el-upload
                                             class="avatar-uploader"
-                                            action="https://jsonplaceholder.typicode.com/posts/"
+                                            action="http://localhost:8080/upGoodsImage"
                                             :show-file-list="false"
                                             :on-success="handleAvatarSuccess"
                                             :before-upload="beforeAvatarUpload">
@@ -594,8 +602,16 @@
             }
         },
         methods: {
-            handleAvatarSuccess(){},//图片上传成功
-            beforeAvatarUpload(){},//图片上传前
+            findUserPage(e){
+                console.log("改变");
+                console.log(e)
+            },
+            handleAvatarSuccess(){
+                console.log("上传完成")
+            },//图片上传成功
+            beforeAvatarUpload(){
+                console.log("上传前")
+            },//图片上传前
             tableRowClassName({row, rowIndex}){
                 if (rowIndex%2 != 0 && rowIndex%4 === 1) {
                     return 'warning-row';
@@ -651,7 +667,10 @@
                     url: '/api/findAllUserInfo',
                     method: 'POST',
                     dataType: 'JSON',
-                    data: {}
+                    data: {
+                        currPage:1,
+                        pageSize:10,
+                    }
                 })
                     .done(data => {
                         this.userData = data.findAllUser;
@@ -798,7 +817,10 @@
                     url: '/api/findAllGoodsInfo',
                     method: 'POST',
                     dataType: 'JSON',
-                    data: {}
+                    data: {
+                        currPage:1,
+                        pageSize:10,
+                    }
                 })
                     .done(data => {
                         this.goodsData = data.findAllGoods;
