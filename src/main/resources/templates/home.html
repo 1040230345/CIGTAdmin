@@ -165,7 +165,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100" :current-change="findUserPage"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="findUserPage"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -279,7 +279,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="deleteUserPage"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -352,7 +352,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="findGoodPage"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -457,7 +457,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="deleteGoodPage"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -602,9 +602,17 @@
             }
         },
         methods: {
+            deleteGoodPage(e){
+                this.refreshGoods(e);
+            },
+            findGoodPage(e){
+                this.refreshGoods(e);
+            },
+            deleteUserPage(e){
+                this.refreshUser(e);
+            },
             findUserPage(e){
-                console.log("改变");
-                console.log(e)
+                this.refreshUser(e);
             },
             handleAvatarSuccess(){
                 console.log("上传完成")
@@ -660,15 +668,18 @@
             },
             // 用户
             // 更新用户数据
-            refreshUser(){
+            refreshUser(page){
                 this.goodsData =[];
                 this.userData = [];
+                if (typeof page != "number") {
+                    page = 1;
+                }
                 $.ajax({
                     url: '/api/findAllUserInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        currPage:1,
+                        currPage:page,
                         pageSize:10,
                     }
                 })
@@ -810,15 +821,18 @@
                     });
             },
             // 商品
-            refreshGoods(){
+            refreshGoods(page){
                 this.userData = [];
                 this.goodsData = [];
+                if (typeof page != "number") {
+                    page = 1;
+                }
                 $.ajax({
                     url: '/api/findAllGoodsInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        currPage:1,
+                        currPage:page,
                         pageSize:10,
                     }
                 })
