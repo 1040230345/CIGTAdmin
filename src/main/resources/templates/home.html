@@ -483,53 +483,17 @@
 
                 <!--                查看评论-->
                 <div class="editUser" v-if="cardVisible.commentsShow">
-                    <!--                        对话框-->
-                    <!--                    查看详情-->
-                    <el-dialog title="详情" :visible.sync="checkGoodsDialogVisible" width="30%" center>
-                        <ul class="checkUl">
-                            <li>id：{{ checkGoodsData.id }}</li>
-                            <li>商品名称：{{ checkGoodsData.name }}</li>
-                            <li>商品价格：{{ checkGoodsData.price }}</li>
-                            <li class="ycenter">商品图片：<el-image
-                                    style="width: 30px; height: 30px"
-                                    :src="checkGoodsData.images"
-                                    fit="cover"
-                            >
-                            </el-image></li>
-                            <li>创建时间：{{ checkGoodsData.time }}</li>
-                            <li>更新时间：{{ checkGoodsData.updated_at }}</li>
-                            <li>用户id：{{ checkGoodsData.user_id }}</li>
-                            <li>商品数量：{{ checkGoodsData.num }}</li>
-                            <li>商品分类：{{ checkGoodsData.category }}</li>
-                        </ul>
-                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
-                    </el-dialog>
-                    <!--                    编辑-->
-                    <el-dialog title="编辑" :visible.sync="editGoodsDialogVisible" width="30%" center>
-                        <el-form label-width="80px">
-                            <el-form-item label="商品名称"><el-input type="primary" size="small" v-model="editGoodsData.name"></el-input></el-form-item>
-                            <el-form-item label="价格"><el-input type="primary" size="small" v-model="editGoodsData.price"></el-input></el-form-item>
-                            <el-form-item label="图片"><el-input type="primary" size="small" v-model="editGoodsData.images"></el-input></el-form-item>
-                            <el-form-item label="数量"><el-input type="primary" size="small" v-model="editGoodsData.num"></el-input></el-form-item>
-                            <el-form-item label="类别"><el-input type="primary" size="small" v-model="editGoodsData.category"></el-input></el-form-item>
-                        </el-form>
-                        <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="sendEditGoods">修 改</el-button>
-									<el-button type="" @click="editGoodsDialogVisible = false">放弃修改</el-button>
-								</span>
-                    </el-dialog>
                     <el-card>
                         <div slot="header" class="clearfix header"><div class="title">查看留言</div></div>
                         <div style="margin-bottom: 15px;">
-                            <el-table v-loading="userLoading" :data="commentsData" style="width: 100%" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-                                <el-table-column prop="id" label="ID" width="50"></el-table-column>
+                            <el-table v-loading="userLoading" :data="commentsData"  style="width: 100%" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
+                                <el-table-column prop="id" label="ID" width="100"></el-table-column>
                                 <el-table-column prop="goods_name" label="商品" width="150"></el-table-column>
                                 <el-table-column prop="user_name" label="评论用户" width="80"></el-table-column>
                                 <el-table-column prop="content" label="评论内容" width=""></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
-                                        <el-button @click="editGoods(scope.row)" type="danger" size="mini">修改</el-button>
+                                        <el-button @click="editComments(scope.row)" type="danger" size="mini">修改</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -542,46 +506,24 @@
                 </div>
                 <!--                删除评论-->
                 <div class="editUser" v-if="cardVisible.deleteCommentsShow">
-                    <!--                    对话框-->
-                    <!--                    查看详情-->
-                    <el-dialog title="详情" :visible.sync="checkGoodsDialogVisible" width="30%" center>
-                        <ul class="checkUl">
-                            <li>id：{{ checkGoodsData.id }}</li>
-                            <li>商品名称：{{ checkGoodsData.name }}</li>
-                            <li>商品价格：{{ checkGoodsData.price }}</li>
-                            <li class="ycenter">商品图片：<el-image
-                                    style="width: 30px; height: 30px"
-                                    :src="checkGoodsData.images"
-                                    fit="cover">
-                            </el-image></li>
-                            <li>创建时间：{{ checkGoodsData.time }}</li>
-                            <li>更新时间：{{ checkGoodsData.updated_at }}</li>
-                            <li>用户id：{{ checkGoodsData.user_id }}</li>
-                            <li>商品数量：{{ checkGoodsData.num }}</li>
-                            <li>商品分类：{{ checkGoodsData.category }}</li>
-                        </ul>
-                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
-                    </el-dialog>
-                    <!--                    删除-->
-                    <el-dialog title="确认删除" :visible.sync="deleteGoodsDialogVisible" width="30%" center>
+                    <el-dialog title="确认删除" :visible.sync="deleteCommentsDialogVisible" width="30%" center>
                         <p>您正在删除表格数据！</p>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="sendDeleteGoods">确认</el-button>
-									<el-button type="" @click="deleteGoodsDialogVisible = false">取消</el-button>
+									<el-button type="primary" @click="sendDeleteComments">确认</el-button>
+									<el-button type="" @click="deleteCommentsDialogVisible = false">取消</el-button>
 								</span>
                     </el-dialog>
                     <el-card>
                         <div slot="header" class="clearfix header"><div class="title">删除商品</div></div>
                         <div style="margin-bottom: 15px;">
-                            <el-table v-loading="userLoading" :data="commentsData" style="width: 100%" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-                                <el-table-column prop="id" label="ID" width="50"></el-table-column>
+                            <el-table v-loading="userLoading" :data="commentsData" style="width: 100%" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
+                                <el-table-column prop="id" label="ID" width="100"></el-table-column>
                                 <el-table-column prop="goods_name" label="商品" width="150"></el-table-column>
                                 <el-table-column prop="user_name" label="评论用户" width="80"></el-table-column>
                                 <el-table-column prop="content" label="评论内容" width=""></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
-                                        <el-button @click="deleteGoods(scope.row)" type="danger" size="mini">删除</el-button>
+                                        <el-button @click="deleteComments(scope.row)" type="danger" size="mini">删除</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -621,6 +563,8 @@
             editUserdialogVisible: false,
             deleteUserdialogVisible: false,
 
+            deleteCommentsDialogVisible:false,
+            deleteCommentsID:'',//暂时存放要删除的评论id
             checkGoodsDialogVisible: false,
             editGoodsDialogVisible: false,
             deleteGoodsDialogVisible: false,
@@ -1147,10 +1091,17 @@
                         for (let i in data.findAllcomment) {
                             if (data.findAllcomment[i].pid == 0){
                                 this.commentsData.push(data.findAllcomment[i]);
-                            }else{
-
+                            }
+                            if (data.findAllcomment[i].pid != 0){
+                                for (let j in this.commentsData){
+                                    if (this.commentsData[j].id == data.findAllcomment[i].pid){
+                                        this.commentsData[j].children = [];
+                                        this.commentsData[j].children.push(data.findAllcomment[i]);
+                                    }
+                                }
                             }
                         }
+                        console.log(this.commentsData)
                         this.userLoading = false;
                     })
                     .error(function(data) {
@@ -1159,6 +1110,35 @@
                     .complete(function(data) {
                         console.log('complete');
                     });
+            },
+            deleteComments(r){
+                // console.log(r)
+                this.deleteCommentsDialogVisible = true;
+                this.deleteCommentsID = r.id;
+            },
+            sendDeleteComments(){
+                $.ajax({
+                    url: '/api/delectCommentInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        id: this.deleteCommentsID
+                    }
+                })
+                    .done(data => {
+                        console.log(data)
+                        this.deleteCommentsDialogVisible = false;
+                        this.refreshComment()
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
+            },
+            editComments(){
+                this.$message.error('此功能尚未开放');
             }
         }
     });
