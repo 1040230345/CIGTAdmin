@@ -204,12 +204,12 @@
                                     <el-input type="primary" size="large" placeholder="请输入您的性别" v-model="addUserFormData.sex"></el-input></el-form-item>
                                 <el-form-item label="电话">
                                     <el-input type="primary" size="large" placeholder="请输入您的电话" v-model="addUserFormData.phone"></el-input></el-form-item>
-                                <el-form-item label="状态" :rules="[
-                              { required: true, message: '状态不能为空',trigger:['blur','change']}
-                            ]" prop="information_state">
-                                    <el-tooltip class="item" effect="dark" content="状态只能为数字，0为不公开，1为公开" placement="right">
-                                    <el-input type="primary" size="large" placeholder="请输入您的状态" v-model.number="addUserFormData.information_state"></el-input>
-                                    </el-tooltip>
+                                <el-form-item label="状态">
+                                    <el-switch
+                                            v-model="stateSwitch"
+                                            active-color="#13ce66"
+                                            inactive-color="#ff4949">
+                                    </el-switch>
                                 </el-form-item>
                                 <el-form-item label="个性签名">
                                     <el-input type="primary" size="large" placeholder="请输入您的个性签名" v-model="addUserFormData.autograph"></el-input></el-form-item>
@@ -620,10 +620,11 @@
                 address: '',
                 sex: '',
                 phone: '',
-                information_state: '',
+                information_state: 0,
                 autograph: '',
                 real_name: ''
             },
+            stateSwitch: true,
             // 商品
             goodsLoading: true,
                 //暂时存放删除id
@@ -691,6 +692,14 @@
             'cardVisible.deleteCommentsShow': function(e) {
                 if (e) {
                     this.refreshComment()
+                }
+            },
+            stateSwitch:function (e) {
+                console.log(e)
+                if (e) {
+                    this.addUserFormData.information_state = 1;
+                }else {
+                    this.addUserFormData.information_state = 0;
                 }
             }
         },
