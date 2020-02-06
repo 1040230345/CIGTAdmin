@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService{
      * @return
      */
     @Override
-    public UserDto findUserByName(String name) {
-        UserDto userDto =usermapper.findByName(name);
+    public List<UserDto>  findUserByName(String name) {
+        List<UserDto>  userDto =usermapper.findByName(name);
         if(userDto != null ){
             return userDto;
         }
@@ -95,7 +95,6 @@ public class UserServiceImpl implements UserService{
         // System.out.println(userDto.toString());
         if(num>0){
             //获取用户信息
-            userDto = usermapper.findByName(userDto.getName());
             if(userDto!=null){
                 //boolean bl = mkdirCookie(userDto.getId());
                 return userDto;

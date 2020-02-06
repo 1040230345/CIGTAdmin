@@ -21,7 +21,7 @@ public interface UserService {
     /**
      *查询单个用户信息
      */
-    UserDto findUserByName(String name);
+    List<UserDto>  findUserByName(String name);
 
     /**
      * 修改用户信息

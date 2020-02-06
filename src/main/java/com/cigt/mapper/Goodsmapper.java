@@ -24,8 +24,8 @@ public interface Goodsmapper {
     /**
      * 查询单个商品信息
      */
-    @Select(" select * from t_goods where name like %#{name}% ")
-    GoodsDto findByName(@Param("name") String name);
+    @Select(" select * from t_goods where name like '%${name}%'  ")
+    List<GoodsDto> findByName(@Param("name") String name);
 
     /**
      * 修改单个商品信息

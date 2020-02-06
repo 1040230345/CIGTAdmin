@@ -39,8 +39,8 @@ public class GoodsServiceImpl  implements GoodsService{
      * @return
      */
     @Override
-    public GoodsDto findGoodsByName(String name) {
-        GoodsDto goodsDto = goodsmapper.findByName(name);
+    public  List<GoodsDto> findGoodsByName(String name) {
+        List<GoodsDto> goodsDto = goodsmapper.findByName(name);
         if ( goodsDto != null){
             return goodsDto;
         }
