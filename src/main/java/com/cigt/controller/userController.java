@@ -103,11 +103,14 @@ public class userController {
     @ResponseBody
     public Map oneUser(String name){
         Map map = new HashMap<>();
-        UserDto userDto = userService.findUserByName(name);
+        List<UserDto>  userDto = userService.findUserByName(name);
+        System.out.println(userDto);
         if( userDto != null ){
             map.put("findAllUserByName",userDto);
         }
-        map.put("findAllUserByName","名字不存在");
+        else {
+            map.put("findAllUserByName","名字不存在");
+        }
         return map;
     }
 

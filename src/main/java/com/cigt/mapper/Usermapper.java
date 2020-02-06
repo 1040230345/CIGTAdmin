@@ -25,8 +25,8 @@ public interface Usermapper {
     /**
      *查询单个用户信息
      */
-    @Select("select * from t_user where  name LIKE #{name} ")
-    UserDto findByName(@Param("name") String name);
+    @Select("select * from t_user where name LIKE '%${name}%'")
+    List<UserDto> findByName(@Param("name") String name);
 
     /**
      * 插入用户信息

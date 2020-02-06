@@ -64,7 +64,7 @@ public class goodsController {
     @ResponseBody
     public Map findGoodsByName(String name){
         Map map = new HashMap();
-        GoodsDto goodsDto = goodsService.findGoodsByName(name);
+        List<GoodsDto> goodsDto = goodsService.findGoodsByName(name);
         if (goodsDto != null ){
             map.put("findGoodsByid",goodsDto);
             return map;

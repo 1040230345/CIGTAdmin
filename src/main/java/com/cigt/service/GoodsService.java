@@ -16,7 +16,7 @@ public interface GoodsService {
     /**
      *查询单个商品信息
      */
-    GoodsDto findGoodsByName(String name);
+    List<GoodsDto> findGoodsByName(String name);
 
     /**
      * 修改商品信息
