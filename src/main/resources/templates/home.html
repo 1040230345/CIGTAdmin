@@ -129,13 +129,25 @@
                     </el-dialog>
                     <el-card>
                         <div slot="header" class="clearfix" style="display: flex;justify-content: space-between">
-                            <span>查看用户</span>
+                            <div style="line-height: 40px" class="tableTitle">查看用户</div>
 <!--                            <div style="width:30%">-->
 <!--                                <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>-->
 <!--                                <el-input id="userSearch" style="width:70%"  placeholder="搜索单个用户">-->
 <!--                                    <i slot="suffix" class="el-input__icon el-icon-search" ></i>-->
 <!--                                </el-input>-->
 <!--                            </div>-->
+                            <div style="width: 30%;">
+                                <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
+                                <el-autocomplete
+                                        id="userSearch"
+                                        class="inline-input"
+                                        v-model="state2"
+                                        :fetch-suggestions="querySearch"
+                                        placeholder="请输入搜索用户名"
+                                        :trigger-on-focus="false"
+                                        @select="handleSelect"
+                                ></el-autocomplete>
+                            </div>
                         </div>
                         <div style="margin-bottom: 15px;">
                             <el-table v-loading="userLoading" :data="userData" style="width: 100%" :row-class-name="tableRowClassName" fit>
@@ -172,8 +184,8 @@
                 <!--                添加用户-->
                 <div class="editUser" v-if="cardVisible.addUserShow">
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">添加用户</div></div>
-                        <div>
+                        <div slot="header" class="clearfix header"><div class="tableTitle">添加用户</div></div>
+                        <div class="addUserForm">
                             <el-form :model="addUserFormData" label-width="80px">
                                 <el-form-item label="用户名" :rules="[
                               { required: true, message: '用户名不能为空',trigger:['blur','change']}
@@ -201,7 +213,10 @@
                                 <el-form-item label="地址">
                                     <el-input type="primary" size="large" placeholder="请输入您的地址" v-model="addUserFormData.address"></el-input></el-form-item>
                                 <el-form-item label="性别">
-                                    <el-input type="primary" size="large" placeholder="请输入您的性别" v-model="addUserFormData.sex"></el-input></el-form-item>
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的性别" v-model="addUserFormData.sex"></el-input>-->
+                                    <el-radio v-model="addUserFormData.sex" label="男">男</el-radio>
+                                    <el-radio v-model="addUserFormData.sex" label="女">女</el-radio>
+                                </el-form-item>
                                 <el-form-item label="电话">
                                     <el-input type="primary" size="large" placeholder="请输入您的电话" v-model="addUserFormData.phone"></el-input></el-form-item>
                                 <el-form-item label="状态">
@@ -253,7 +268,7 @@
                     </el-dialog>
                     <!--                    表格主体-->
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">删除用户</div></div>
+                        <div slot="header" class="clearfix header"><div class="tableTitle">删除用户</div></div>
                         <div style="margin-bottom: 15px;">
                             <el-table :data="userData" style="width: 100%" :row-class-name="tableRowClassName">
                                 <el-table-column prop="id" label="ID"></el-table-column>
@@ -306,7 +321,7 @@
                             <li>更新时间：{{ checkGoodsData.updated_at }}</li>
                             <li>用户id：{{ checkGoodsData.user_id }}</li>
                             <li>商品数量：{{ checkGoodsData.num }}</li>
-                            <li>商品分类：{{ checkGoodsData.category }}</li>
+                            <li>商品分类：{{ checkGoodsData.showCategory }}</li>
                         </ul>
                         <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
                     </el-dialog>
@@ -317,7 +332,17 @@
                             <el-form-item label="价格"><el-input type="primary" size="small" v-model="editGoodsData.price"></el-input></el-form-item>
                             <el-form-item label="图片"><el-input type="primary" size="small" v-model="editGoodsData.images"></el-input></el-form-item>
                             <el-form-item label="数量"><el-input type="primary" size="small" v-model="editGoodsData.num"></el-input></el-form-item>
-                            <el-form-item label="类别"><el-input type="primary" size="small" v-model="editGoodsData.category"></el-input></el-form-item>
+                            <el-form-item label="类别">
+<!--                                <el-input type="primary" size="small" v-model="editGoodsData.category"></el-input>-->
+                                <el-select v-model="editGoodsData.category" clearable placeholder="请选择">
+                                    <el-option
+                                            v-for="item in options"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
 									<el-button type="primary" @click="sendEditGoods">修 改</el-button>
@@ -325,7 +350,27 @@
 								</span>
                     </el-dialog>
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">查看商品</div></div>
+                        <div slot="header" class="clearfix" style="display: flex;justify-content: space-between">
+                        <div style="line-height: 40px" class="tableTitle">查看商品</div>
+                        <!--                            <div style="width:30%">-->
+                        <!--                                <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>-->
+                        <!--                                <el-input id="userSearch" style="width:70%"  placeholder="搜索单个用户">-->
+                        <!--                                    <i slot="suffix" class="el-input__icon el-icon-search" ></i>-->
+                        <!--                                </el-input>-->
+                        <!--                            </div>-->
+                        <div style="width: 30%;">
+                            <label for="goodSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
+                            <el-autocomplete
+                                    id="goodSearch"
+                                    class="inline-input"
+                                    v-model="state2"
+                                    :fetch-suggestions="querySearch"
+                                    placeholder="请输入搜索商品名"
+                                    :trigger-on-focus="false"
+                                    @select="handleSelect"
+                            ></el-autocomplete>
+                        </div>
+                    </div>
                         <div style="margin-bottom: 15px;">
                             <el-table v-loading="goodsLoading" :data="goodsData" style="width: 100%" :row-class-name="tableRowClassName">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
@@ -344,7 +389,7 @@
                                 <el-table-column prop="updated_at" label="更新时间" width="175"></el-table-column>
                                 <el-table-column prop="user_id" label="用户id" width="80"></el-table-column>
                                 <el-table-column prop="num" label="数量" width="60"></el-table-column>
-                                <el-table-column prop="category" label="类别" width="100"></el-table-column>
+                                <el-table-column prop="showCategory" label="类别" width="100"></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
                                         <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
@@ -362,11 +407,11 @@
                 <!--                添加商品-->
                 <div class="editUser" v-if="cardVisible.addGoodsShow">
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">添加商品</div></div>
-                        <div>
+                        <div slot="header" class="clearfix header"><div class="tableTitle">添加商品</div></div>
+                        <div class="addGoodsForm">
                             <el-form :model="addGoodsFormData" label-width="80px">
                                 <el-form-item label="用户id">
-                                    <el-input type="primary" size="large" placeholder="请输入用户id" v-model="addGoodsFormData.user_id"></el-input>
+                                    <el-input type="primary" size="large" placeholder="请输入发布此商品的用户id" v-model="addGoodsFormData.user_id"></el-input>
                                 </el-form-item>
                                 <el-form-item label="商品名称">
                                     <el-input type="primary" size="large" placeholder="请输入您要发布商品名称" v-model="addGoodsFormData.name"></el-input>
@@ -375,19 +420,6 @@
                                     <el-input type="primary" size="large" placeholder="请输入您的商品价格" v-model="addGoodsFormData.price"></el-input>
                                 </el-form-item>
                                 <el-form-item label="图片">
-<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品图片" v-model="addGoodsFormData.images"></el-input>-->
-<!--                                    <el-upload-->
-<!--                                            class="avatar-uploader"-->
-<!--                                            action="http://localhost:8080/upGoodsImage"-->
-<!--                                            :show-file-list="false"-->
-<!--                                            :auto-upload="true"-->
-<!--                                            name="fileName"-->
-<!--                                            :data="userImageData"-->
-<!--                                            :on-success="uhandleAvatarSuccess"-->
-<!--                                            :before-upload="ubeforeAvatarUpload">-->
-<!--                                        <img v-if="addUserFormData.image" :src="addUserFormData.image" class="avatar">-->
-<!--                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
-<!--                                    </el-upload>-->
                                     <el-upload
                                             class="avatar-uploader"
                                             action="/upGoodsImage"
@@ -406,7 +438,15 @@
                                     <el-input type="primary" size="large" placeholder="请输入您的商品数量" v-model="addGoodsFormData.num"></el-input>
                                 </el-form-item>
                                 <el-form-item label="类别">
-                                    <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>-->
+                                    <el-select v-model="addGoodsFormData.category" clearable placeholder="请选择">
+                                        <el-option
+                                                v-for="item in options"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
                                 <div class="xcenter">
                                     <el-button type="primary" @click="sendAddGoods">提交</el-button>
@@ -433,7 +473,7 @@
                             <li>更新时间：{{ checkGoodsData.updated_at }}</li>
                             <li>用户id：{{ checkGoodsData.user_id }}</li>
                             <li>商品数量：{{ checkGoodsData.num }}</li>
-                            <li>商品分类：{{ checkGoodsData.category }}</li>
+                            <li>商品分类：{{ checkGoodsData.showCategory }}</li>
                         </ul>
                         <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
                     </el-dialog>
@@ -446,7 +486,7 @@
 								</span>
                     </el-dialog>
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">删除商品</div></div>
+                        <div slot="header" class="clearfix header"><div class="tableTitle">删除商品</div></div>
                         <div style="margin-bottom: 15px;">
                             <el-table :data="goodsData" :row-class-name="tableRowClassName" style="width: 100%">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
@@ -465,7 +505,7 @@
                                 <el-table-column prop="updated_at" label="更新时间" width="175"></el-table-column>
                                 <el-table-column prop="user_id" label="用户id" width="80"></el-table-column>
                                 <el-table-column prop="num" label="数量" width="60"></el-table-column>
-                                <el-table-column prop="category" label="类别" width="100"></el-table-column>
+                                <el-table-column prop="showCategory" label="类别" width="100"></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
                                         <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
@@ -484,7 +524,7 @@
                 <!--                查看评论-->
                 <div class="editUser" v-if="cardVisible.commentsShow">
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">查看留言</div></div>
+                        <div slot="header" class="clearfix header"><div class="tableTitle">查看留言</div></div>
                         <div style="margin-bottom: 15px;">
                             <el-table v-loading="userLoading" :data="commentsData"  style="width: 100%" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
                                 <el-table-column prop="id" label="ID" width="100"></el-table-column>
@@ -514,7 +554,7 @@
 								</span>
                     </el-dialog>
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="title">删除评论</div></div>
+                        <div slot="header" class="clearfix header"><div class="tableTitle">删除评论</div></div>
                         <div style="margin-bottom: 15px;">
                             <el-table v-loading="userLoading" :data="commentsData" style="width: 100%" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
                                 <el-table-column prop="id" label="ID" width="100"></el-table-column>
@@ -549,6 +589,28 @@
     var app = new Vue({
         el: '#app',
         data: {
+            options: [{
+                value: '1',
+                label: '服装衣物'
+            }, {
+                value: '2',
+                label: '书籍课本'
+            }, {
+                value: '3',
+                label: '电子产品'
+            }, {
+                value: '4',
+                label: '实用家具'
+            }, {
+                value: '5',
+                label: '零食饮品'
+            },{
+                value: '6',
+                label: '爱情文学'
+            },{
+                value: '0',
+                label: '其他物品'
+            }],
         commentsData :[],
         goodImageData:{
                 type: 2
@@ -618,7 +680,7 @@
                 image: '',
                 password: '',
                 address: '',
-                sex: '',
+                sex: '男',
                 phone: '',
                 information_state: 0,
                 autograph: '',
@@ -654,6 +716,7 @@
             goodsData: [
 
             ],
+            // showCategory:'',
             addGoodsFormData: {
                 name: '',
                 price: '',
@@ -964,6 +1027,31 @@
                 })
                     .done(data => {
                         this.goodsData = data.findAllGoods;
+                        for (let i in this.goodsData) {
+                            switch (this.goodsData[i].category) {
+                                case '0':
+                                    this.goodsData[i].showCategory = "其他物品";
+                                    break;
+                                case '1':
+                                    this.goodsData[i].showCategory = "服装衣物";
+                                    break;
+                                case '2':
+                                    this.goodsData[i].showCategory = "书籍课本";
+                                    break;
+                                case '3':
+                                    this.goodsData[i].showCategory = "电子产品";
+                                    break;
+                                case '4':
+                                    this.goodsData[i].showCategory = "实用家具";
+                                    break;
+                                case '5':
+                                    this.goodsData[i].showCategory = "零食饮品";
+                                    break;
+                                case '6':
+                                    this.goodsData[i].showCategory = "爱情文学";
+                                    break;
+                            }
+                        }
                         this.goodsLoading = false;
                     })
                     .error(function(data) {
@@ -983,7 +1071,7 @@
                 this.checkGoodsData.updated_at = obj.updated_at;
                 this.checkGoodsData.user_id = obj.user_id;
                 this.checkGoodsData.num = obj.num;
-                this.checkGoodsData.category = obj.category;
+                this.checkGoodsData.showCategory = obj.showCategory;
             },//查看商品详情对话框
             sendAddGoods(){
                 $.ajax({
@@ -1040,7 +1128,8 @@
                         price:this.editGoodsData.price,
                         images:this.editGoodsData.images,
                         num:this.editGoodsData.num,
-                        category:this.editGoodsData.category
+                        category:this.editGoodsData.category,
+                        status:1
                     }
                 })
                     .done((data) => {

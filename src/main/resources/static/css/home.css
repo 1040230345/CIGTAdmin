@@ -102,3 +102,11 @@ html,body {
 .el-main .el-card{
     transition: all 0.2s;
 }
+.addGoodsForm .el-input,.addUserForm .el-input{
+    width: 90%;
+}
+.tableTitle{
+    font-weight: 400;
+    font-size: 22px;
+    color: #1f2f3d;
+}
