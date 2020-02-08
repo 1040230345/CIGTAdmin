@@ -103,7 +103,7 @@ html,body {
     transition: all 0.2s;
 }
 .addGoodsForm .el-input,.addUserForm .el-input{
-    width: 90%;
+    /*width: 90%;*/
 }
 .tableTitle{
     font-weight: 400;

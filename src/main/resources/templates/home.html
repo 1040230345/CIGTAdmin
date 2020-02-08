@@ -130,23 +130,17 @@
                     <el-card>
                         <div slot="header" class="clearfix" style="display: flex;justify-content: space-between">
                             <div style="line-height: 40px" class="tableTitle">查看用户</div>
-<!--                            <div style="width:30%">-->
-<!--                                <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>-->
-<!--                                <el-input id="userSearch" style="width:70%"  placeholder="搜索单个用户">-->
-<!--                                    <i slot="suffix" class="el-input__icon el-icon-search" ></i>-->
-<!--                                </el-input>-->
-<!--                            </div>-->
                             <div style="width: 30%;">
                                 <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
-                                <el-autocomplete
+                                <el-input
                                         id="userSearch"
                                         class="inline-input"
-                                        v-model="state2"
-                                        :fetch-suggestions="querySearch"
+                                        v-model="userSearch"
                                         placeholder="请输入搜索用户名"
-                                        :trigger-on-focus="false"
-                                        @select="handleSelect"
-                                ></el-autocomplete>
+                                        @keyup.enter.native = "searchUser"
+                                        clearable
+                                        style="width: 60%;"
+                                ></el-input>
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
@@ -177,7 +171,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="findUserPage"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findUserPage" v-if="paginationShow"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -268,7 +262,20 @@
                     </el-dialog>
                     <!--                    表格主体-->
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="tableTitle">删除用户</div></div>
+                        <div slot="header" class="clearfix header" style="display: flex;justify-content: space-between"><div class="tableTitle">删除用户</div>
+                            <div style="width: 30%;">
+                                <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
+                                <el-input
+                                        id="userSearch"
+                                        class="inline-input"
+                                        v-model="userSearch"
+                                        placeholder="请输入搜索用户名"
+                                        @keyup.enter.native = "searchUser"
+                                        clearable
+                                        style="width: 60%;"
+                                ></el-input>
+                            </div>
+                        </div>
                         <div style="margin-bottom: 15px;">
                             <el-table :data="userData" style="width: 100%" :row-class-name="tableRowClassName">
                                 <el-table-column prop="id" label="ID"></el-table-column>
@@ -297,7 +304,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="deleteUserPage"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteUserPage" v-if="paginationShow"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -360,15 +367,14 @@
                         <!--                            </div>-->
                         <div style="width: 30%;">
                             <label for="goodSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
-                            <el-autocomplete
+                            <el-input
                                     id="goodSearch"
                                     class="inline-input"
-                                    v-model="state2"
-                                    :fetch-suggestions="querySearch"
+                                    v-model="goodSearch"
                                     placeholder="请输入搜索商品名"
-                                    :trigger-on-focus="false"
-                                    @select="handleSelect"
-                            ></el-autocomplete>
+                                    @keyup.enter.native="searchGood"
+                                    style="width: 60%;"
+                            ></el-input>
                         </div>
                     </div>
                         <div style="margin-bottom: 15px;">
@@ -400,7 +406,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="findGoodPage"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findGoodPage" v-if="paginationShow"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -486,7 +492,19 @@
 								</span>
                     </el-dialog>
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="tableTitle">删除商品</div></div>
+                        <div slot="header" class="clearfix header" style="display: flex;justify-content: space-between"><div class="tableTitle">删除商品</div>
+                            <div style="width: 30%;">
+                                <label for="goodSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
+                                <el-input
+                                        id="goodSearch"
+                                        class="inline-input"
+                                        v-model="goodSearch"
+                                        placeholder="请输入搜索商品名"
+                                        @keyup.enter.native="searchGood"
+                                        style="width: 60%;"
+                                ></el-input>
+                            </div>
+                        </div>
                         <div style="margin-bottom: 15px;">
                             <el-table :data="goodsData" :row-class-name="tableRowClassName" style="width: 100%">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
@@ -516,7 +534,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="deleteGoodPage"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteGoodPage" v-if="paginationShow"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -539,9 +557,9 @@
                             </el-table>
                         </div>
                         <!--                        分页-->
-                        <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="findGoodPage"></el-pagination>
-                        </div>
+<!--                        <div class="xcenter">-->
+<!--                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findGoodPage"></el-pagination>-->
+<!--                        </div>-->
                     </el-card>
                 </div>
                 <!--                删除评论-->
@@ -569,9 +587,9 @@
                             </el-table>
                         </div>
                         <!--                        分页-->
-                        <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="100" @current-change="deleteGoodPage"></el-pagination>
-                        </div>
+<!--                        <div class="xcenter">-->
+<!--                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteGoodPage"></el-pagination>-->
+<!--                        </div>-->
                     </el-card>
                 </div>
 
@@ -589,6 +607,10 @@
     var app = new Vue({
         el: '#app',
         data: {
+            paginationShow:true,
+            totalPage: 0,
+            userSearch:'',
+            goodSearch:'',
             options: [{
                 value: '1',
                 label: '服装衣物'
@@ -673,7 +695,6 @@
                 real_name: ''
             },
             userData: [
-
             ],
             addUserFormData: {
                 name: '',
@@ -758,11 +779,21 @@
                 }
             },
             stateSwitch:function (e) {
-                console.log(e)
+                // console.log(e)
                 if (e) {
                     this.addUserFormData.information_state = 1;
                 }else {
                     this.addUserFormData.information_state = 0;
+                }
+            },
+            userSearch: function (e) {
+                if (e == '') {
+                    this.refreshUser()
+                }
+            },
+            goodSearch: function (e) {
+                if (e == '') {
+                    this.refreshGoods()
                 }
             }
         },
@@ -787,7 +818,7 @@
                 }
             },//上传成功
             gbeforeAvatarUpload(){
-                console.log("上传前")
+                // console.log("上传前")
             },//图片上传前
             uhandleAvatarSuccess(res, file) {
                 console.log(res);
@@ -797,7 +828,7 @@
                 }
             },//上传成功
             ubeforeAvatarUpload(){
-                console.log("上传前")
+                // console.log("上传前")
             },//图片上传前
             tableRowClassName({row, rowIndex}){
                 if (rowIndex%2 != 0 && rowIndex%4 === 1) {
@@ -808,7 +839,7 @@
             },
             handleSelect(key, keyPath) {},
             handleShow(key, keyPath) {
-                console.log(key)
+                // console.log(key)
                 for (let i in this.cardVisible) {
                     this.cardVisible[i] = false;
                 }
@@ -858,7 +889,6 @@
             // 用户
             // 更新用户数据
             refreshUser(page){
-                this.goodsData =[];
                 this.userData = [];
                 if (typeof page != "number") {
                     page = 1;
@@ -873,8 +903,11 @@
                     }
                 })
                     .done(data => {
+                        // console.log(data);
+                        this.totalPage = data.TotalPage * 10;
                         this.userData = data.findAllUser;
                         this.userLoading = false;
+                        this.paginationShow = true;
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -969,7 +1002,7 @@
                     }
                 })
                     .done((data) => {
-                        console.log(data)
+                        // console.log(data)
                         this.$notify({
                             title: '成功',
                             message: '修改成功',
@@ -998,7 +1031,7 @@
                     }
                 })
                     .done((data) => {
-                        console.log(data);
+                        // console.log(data);
                         this.deleteUserdialogVisible = false;
                         this.refreshUser()
                     })
@@ -1011,7 +1044,6 @@
             },
             // 商品
             refreshGoods(page){
-                this.userData = [];
                 this.goodsData = [];
                 if (typeof page != "number") {
                     page = 1;
@@ -1026,6 +1058,7 @@
                     }
                 })
                     .done(data => {
+                        this.totalPage = data.TotalPage * 10;
                         this.goodsData = data.findAllGoods;
                         for (let i in this.goodsData) {
                             switch (this.goodsData[i].category) {
@@ -1053,6 +1086,7 @@
                             }
                         }
                         this.goodsLoading = false;
+                        this.paginationShow = true;
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -1133,7 +1167,7 @@
                     }
                 })
                     .done((data) => {
-                        console.log(data)
+                        // console.log(data)
                         this.$notify({
                             title: '成功',
                             message: '修改成功',
@@ -1162,7 +1196,7 @@
                     }
                 })
                     .done((data) => {
-                        console.log(data);
+                        // console.log(data);
                         this.deleteGoodsDialogVisible = false;
                         // this.refreshGoods()
                     })
@@ -1199,7 +1233,7 @@
                                 }
                             }
                         }
-                        console.log(this.commentsData)
+                        // console.log(this.commentsData)
                         this.userLoading = false;
                     })
                     .error(function(data) {
@@ -1224,7 +1258,7 @@
                     }
                 })
                     .done(data => {
-                        console.log(data)
+                        // console.log(data)
                         this.deleteCommentsDialogVisible = false;
                         this.refreshComment()
                     })
@@ -1237,6 +1271,48 @@
             },
             editComments(){
                 this.$message.error('此功能尚未开放');
+            },
+            searchUser(){
+                $.ajax({
+                    url: '/api/findAllUserInfo/{name}',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        name: this.userSearch
+                    }
+                })
+                    .done(data => {
+                        // console.log(data);
+                        this.paginationShow = false;
+                        this.userData = data.findAllUserByName;
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
+            },
+            searchGood(){
+                $.ajax({
+                    url: '/api/findGoodsByNameInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        name: this.goodSearch
+                    }
+                })
+                    .done(data => {
+                        // console.log(data);
+                        this.paginationShow = false;
+                        this.goodsData = data.findGoodsByid;
+                    })
+                    .error(function(data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function(data) {
+                        console.log('complete');
+                    });
             }
         }
     });
