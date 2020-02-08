@@ -88,6 +88,7 @@ public class userController {
         if(list != null ){
             map.put("findAllUser",list);
             map.put("currPage",currPage);//当前页
+            map.put("TotalCount",pageUtils.getTotalCount());//总记录数
             map.put("TotalPage",pageUtils.getTotalPage());//总页数
             return map;
         }

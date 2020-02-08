@@ -43,12 +43,12 @@ public class goodsController {
     public Map allGoods(int currPage, int pageSize, Model model){
         int totalCount = goodsmapper.countGoods();
         PageUtils pageUtils = new PageUtils(currPage,pageSize,totalCount);
-        System.out.println(currPage+"     "+pageUtils.getTotalPage());
         Map map = new HashMap<>();
         List<GoodsDto> list = goodsService.allGoods(currPage,pageSize);
         if(list != null ){
             map.put("findAllGoods",list);
             map.put("currPage",currPage);
+            map.put("TotalCount",pageUtils.getTotalCount());
             map.put("TotalPage",pageUtils.getTotalPage());
             return map;
         }
