@@ -1,5 +1,6 @@
 package com.cigt.controller;
 
+import com.cigt.base.R;
 import com.cigt.dto.commentDto;
 import com.cigt.service.CommentService;
 import io.swagger.annotations.Api;
@@ -39,6 +40,14 @@ public class commentController {
         map.put("findAllcomment","false");
         return map;
     }
+
+    /**
+     * 模糊查询
+     */
+    @PostMapping("/findCommentByContentInfo")
+    @ApiOperation(value = "模糊查询评论信息",httpMethod = "POST")
+    @ResponseBody
+    public R findCommentByContent(String content){ return commentService.findCommentByContent(content); }
 
     /**
      * 删除评论

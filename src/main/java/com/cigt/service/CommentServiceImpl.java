@@ -1,5 +1,6 @@
 package com.cigt.service;
 
+import com.cigt.base.R;
 import com.cigt.dto.commentDto;
 import com.cigt.mapper.Commentmapper;
 import org.apache.ibatis.annotations.Select;
@@ -25,6 +26,18 @@ public class CommentServiceImpl implements CommentService {
             return  list;
         }
         return null;
+    }
+
+    /**
+     * 模糊查询
+     */
+    @Override
+    public R findCommentByContent(String content){
+        List<commentDto> list =commentmapper.findCommentByCotent(content);
+        if(list != null ){
+            return  R.ok(list);
+        }
+        return R.error(4001,"搜索结果为空");
     }
 
     /**

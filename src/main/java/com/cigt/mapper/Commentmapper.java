@@ -20,6 +20,12 @@ public interface Commentmapper {
     List<commentDto> findAllcomment();
 
     /**
+     * 模糊查询
+     */
+    @Select("select * from t_comment where content like '%${content}%'")
+    List<commentDto> findCommentByCotent(@Param("content") String content);
+
+    /**
      * 删除评论
      */
     @Delete("delete from t_comment where id =#{id} or pid = #{id}")
