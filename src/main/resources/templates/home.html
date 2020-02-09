@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <title>广科闲置交易系统-后台</title>
@@ -11,6 +12,7 @@
     <script src="/static/index.js"></script>
     <link rel="stylesheet" href="/static/animate.css">
 </head>
+
 <body>
 <div id="app">
     <el-container>
@@ -19,53 +21,65 @@
             <div class="navtitle">
                 广科闲置交易系统
             </div>
-            <el-menu default-active="1-1" class="el-menu-vertical-demo" @select="handleShow" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+            <el-menu default-active="1-1" class="el-menu-vertical-demo" @select="handleShow"
+                     background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
                 <el-submenu index="1">
                     <template slot="title">
                         <i class="el-icon-user-solid"></i>
                         <span>用户管理</span>
                     </template>
-                    <el-menu-item-group><el-menu-item index="1-1">查看用户</el-menu-item></el-menu-item-group>
-                    <el-menu-item-group title="----"><el-menu-item index="1-2">增加用户</el-menu-item></el-menu-item-group>
-                    <el-menu-item-group title="----"><el-menu-item index="1-3">删除用户</el-menu-item></el-menu-item-group>
+                    <el-menu-item-group>
+                        <el-menu-item index="1-1">查看用户</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="1-2">增加用户</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="1-3">删除用户</el-menu-item>
+                    </el-menu-item-group>
                 </el-submenu>
                 <el-submenu index="2">
                     <template slot="title">
                         <i class="el-icon-s-goods"></i>
                         <span>商品管理</span>
                     </template>
-                    <el-menu-item-group><el-menu-item index="2-1">查看商品</el-menu-item></el-menu-item-group>
-                    <el-menu-item-group title="----"><el-menu-item index="2-2">增加商品</el-menu-item></el-menu-item-group>
-                    <el-menu-item-group title="----"><el-menu-item index="2-3">删除商品</el-menu-item></el-menu-item-group>
+                    <el-menu-item-group>
+                        <el-menu-item index="2-1">查看商品</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="2-2">增加商品</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="2-3">删除商品</el-menu-item>
+                    </el-menu-item-group>
                 </el-submenu>
                 <el-submenu index="3">
                     <template slot="title">
                         <i class="el-icon-message-solid"></i>
                         <span>留言管理</span>
                     </template>
-                    <el-menu-item-group><el-menu-item index="3-1">查看留言</el-menu-item></el-menu-item-group>
-                    <el-menu-item-group title="----"><el-menu-item index="3-2">删除留言</el-menu-item></el-menu-item-group>
+                    <el-menu-item-group>
+                        <el-menu-item index="3-1">查看留言</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="----">
+                        <el-menu-item index="3-2">删除留言</el-menu-item>
+                    </el-menu-item-group>
                 </el-submenu>
             </el-menu>
         </el-aside>
         <el-container>
             <el-header>
                 <!--                头部导航-->
-                <el-menu
-                        :default-active="activeIndex2"
-                        class="el-menu-demo"
-                        mode="horizontal"
-                        @select="handleSelect"
-                        background-color="#24292E"
-                        text-color="#FFFFFF"
-                        active-text-color="#ffd04b"
-                >
+                <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal"
+                         @select="handleSelect" background-color="#24292E" text-color="#FFFFFF"
+                         active-text-color="#ffd04b">
                     <el-submenu index="2">
                         <template slot="title">
                             个人中心
                         </template>
                         <el-menu-item index="2-1" style="text-align: center">欢迎进入闲置交易系统后台！</el-menu-item>
-                        <el-menu-item index="2-3" @click="sendLoginOut" style="text-align: center">退出登录</el-menu-item>
+                        <el-menu-item index="2-3" @click="sendLoginOut" style="text-align: center">退出登录
+                        </el-menu-item>
                     </el-submenu>
                 </el-menu>
             </el-header>
@@ -78,7 +92,9 @@
                         <ul class="checkUl">
                             <li>id：{{ checkUserData.id }}</li>
                             <li>用户名：{{ checkUserData.name }}</li>
-                            <li class="ycenter">头像：<el-avatar :size="30" :src="checkUserData.image" fit="cover"></el-avatar></li>
+                            <li class="ycenter">头像：<el-avatar :size="30" :src="checkUserData.image" fit="cover">
+                            </el-avatar>
+                            </li>
                             <li>密码：{{ checkUserData.password }}</li>
                             <li>地址：{{ checkUserData.address }}</li>
                             <li>性别：{{ checkUserData.sex }}</li>
@@ -89,7 +105,9 @@
                             <li>更新时间：{{ checkUserData.updated_at }}</li>
                             <li>真实姓名：{{ checkUserData.real_name }}</li>
                         </ul>
-                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button></span>
+                        <span slot="footer" class="dialog-footer">
+                                <el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button>
+                            </span>
                     </el-dialog>
                     <!--                    编辑-->
                     <el-dialog title="编辑" :visible.sync="editUserdialogVisible" width="30%" center>
@@ -97,54 +115,59 @@
                             <el-form-item label="用户名" :rules="[
                               { required: true, message: '用户名不能为空',trigger:['blur','change']}
                             ]" prop="name">
-                                <el-input type="primary" size="small" v-model="editUserData.name"></el-input></el-form-item>
+                                <el-input type="primary" size="small" v-model="editUserData.name"></el-input>
+                            </el-form-item>
                             <el-form-item label="头像">
-                                <el-input type="primary" size="small" v-model="editUserData.image"></el-input></el-form-item>
+                                <el-input type="primary" size="small" v-model="editUserData.image"></el-input>
+                            </el-form-item>
                             <el-form-item label="密码" :rules="[
                               { required: true, message: '密码不能为空',trigger:['blur','change']}
                             ]" prop="password">
-                                <el-input type="primary" size="small" v-model="editUserData.password"></el-input></el-form-item>
+                                <el-input type="primary" size="small" v-model="editUserData.password"></el-input>
+                            </el-form-item>
                             <el-form-item label="地址">
-                                <el-input type="primary" size="small" v-model="editUserData.address"></el-input></el-form-item>
+                                <el-input type="primary" size="small" v-model="editUserData.address"></el-input>
+                            </el-form-item>
                             <el-form-item label="性别">
-                                <el-input type="primary" size="small" v-model="editUserData.sex"></el-input></el-form-item>
+                                <el-input type="primary" size="small" v-model="editUserData.sex"></el-input>
+                            </el-form-item>
                             <el-form-item label="电话">
-                                <el-input type="primary" size="small" v-model="editUserData.phone"></el-input></el-form-item>
+                                <el-input type="primary" size="small" v-model="editUserData.phone"></el-input>
+                            </el-form-item>
                             <el-form-item label="状态" :rules="[
                               { required: true, message: '状态不能为空',trigger:['blur','change']}
                             ]" prop="information_state">
-                                <el-tooltip class="item" effect="dark" content="状态只能为数字，0为不公开，1为公开" placement="right">
-                                <el-input type="primary" size="small" v-model.number="editUserData.information_state"></el-input>
+                                <el-tooltip class="item" effect="dark" content="状态只能为数字，0为不公开，1为公开"
+                                            placement="right">
+                                    <el-input type="primary" size="small"
+                                              v-model.number="editUserData.information_state"></el-input>
                                 </el-tooltip>
                             </el-form-item>
                             <el-form-item label="个性签名">
-                                <el-input type="primary" size="small" v-model="editUserData.autograph"></el-input></el-form-item>
+                                <el-input type="primary" size="small" v-model="editUserData.autograph"></el-input>
+                            </el-form-item>
                             <el-form-item label="真实姓名">
-                                <el-input type="primary" size="small" v-model="editUserData.real_name"></el-input></el-form-item>
+                                <el-input type="primary" size="small" v-model="editUserData.real_name"></el-input>
+                            </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="sendEditUser">修 改</el-button>
-									<el-button type="" @click="editUserdialogVisible = false">放弃修改</el-button>
-								</span>
+                                <el-button type="primary" @click="sendEditUser">修 改</el-button>
+                                <el-button type="" @click="editUserdialogVisible = false">放弃修改</el-button>
+                            </span>
                     </el-dialog>
                     <el-card>
                         <div slot="header" class="clearfix" style="display: flex;justify-content: space-between">
                             <div style="line-height: 40px" class="tableTitle">查看用户</div>
                             <div style="width: 30%;">
                                 <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
-                                <el-input
-                                        id="userSearch"
-                                        class="inline-input"
-                                        v-model="userSearch_c"
-                                        placeholder="请输入搜索用户名"
-                                        @keyup.enter.native = "searchUser(userSearch_c)"
-                                        clearable
-                                        style="width: 60%;"
-                                ></el-input>
+                                <el-input id="userSearch" class="inline-input" v-model="userSearch_c"
+                                          placeholder="请输入搜索用户名" @keyup.enter.native="searchUser(userSearch_c)" clearable
+                                          style="width: 60%;"></el-input>
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table v-loading="userLoading" :data="userData" style="width: 100%" :row-class-name="tableRowClassName" fit>
+                            <el-table v-loading="userLoading" :data="userData" style="width: 100%"
+                                      :row-class-name="tableRowClassName" fit>
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
                                 <el-table-column prop="name" label="用户名" width="100"></el-table-column>
                                 <el-table-column prop="image" label="头像" width="100">
@@ -164,66 +187,77 @@
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
                                         <el-button @click="checkUser(scope.row)" type="" size="mini">查看</el-button>
-                                        <el-button @click="editUser(scope.row)" type="danger" size="mini">修改</el-button>
+                                        <el-button @click="editUser(scope.row)" type="danger" size="mini">修改
+                                        </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findUserPage" v-if="paginationShow" :current-page="currentPage_cu"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage"
+                                           @current-change="findUserPage" v-if="paginationShow" :current-page="currentPage_cu">
+                            </el-pagination>
                         </div>
                     </el-card>
                 </div>
                 <!--                添加用户-->
                 <div class="editUser" v-if="cardVisible.addUserShow">
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="tableTitle">添加用户</div></div>
+                        <div slot="header" class="clearfix header">
+                            <div class="tableTitle">添加用户</div>
+                        </div>
                         <div class="addUserForm">
                             <el-form :model="addUserFormData" label-width="80px">
                                 <el-form-item label="用户名" :rules="[
                               { required: true, message: '用户名不能为空',trigger:['blur','change']}
                             ]" prop="name">
-                                    <el-input type="primary" size="large" placeholder="请输入您的姓名" v-model="addUserFormData.name"></el-input></el-form-item>
+                                    <el-input type="primary" size="large" placeholder="请输入您的姓名"
+                                              v-model="addUserFormData.name"></el-input>
+                                </el-form-item>
                                 <el-form-item label="头像">
-<!--                                    <el-input type="primary" size="large" placeholder="请输入您的头像" v-model=""></el-input>-->
-                                    <el-upload
-                                            class="avatar-uploader"
-                                            action="/upGoodsImage"
-                                            :show-file-list="false"
-                                            :auto-upload="true"
-                                            name="fileName"
-                                            :data="userImageData"
-                                            :on-success="uhandleAvatarSuccess"
-                                            :before-upload="ubeforeAvatarUpload">
-                                        <img v-if="addUserFormData.image" :src="addUserFormData.image" class="avatar">
+                                    <!--                                    <el-input type="primary" size="large" placeholder="请输入您的头像" v-model=""></el-input>-->
+                                    <el-upload class="avatar-uploader" action="/upGoodsImage"
+                                               :show-file-list="false" :auto-upload="true" name="fileName"
+                                               :data="userImageData" :on-success="uhandleAvatarSuccess"
+                                               :before-upload="ubeforeAvatarUpload">
+                                        <img v-if="addUserFormData.image" :src="addUserFormData.image"
+                                             class="avatar">
                                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                     </el-upload>
                                 </el-form-item>
                                 <el-form-item label="密码" :rules="[
                               { required: true, message: '密码不能为空',trigger:['blur','change']}
                             ]" prop="password">
-                                    <el-input type="primary" size="large" placeholder="请输入您的密码" v-model="addUserFormData.password"></el-input></el-form-item>
+                                    <el-input type="primary" size="large" placeholder="请输入您的密码"
+                                              v-model="addUserFormData.password"></el-input>
+                                </el-form-item>
                                 <el-form-item label="地址">
-                                    <el-input type="primary" size="large" placeholder="请输入您的地址" v-model="addUserFormData.address"></el-input></el-form-item>
+                                    <el-input type="primary" size="large" placeholder="请输入您的地址"
+                                              v-model="addUserFormData.address"></el-input>
+                                </el-form-item>
                                 <el-form-item label="性别">
-<!--                                    <el-input type="primary" size="large" placeholder="请输入您的性别" v-model="addUserFormData.sex"></el-input>-->
+                                    <!--                                    <el-input type="primary" size="large" placeholder="请输入您的性别" v-model="addUserFormData.sex"></el-input>-->
                                     <el-radio v-model="addUserFormData.sex" label="男">男</el-radio>
                                     <el-radio v-model="addUserFormData.sex" label="女">女</el-radio>
                                 </el-form-item>
                                 <el-form-item label="电话">
-                                    <el-input type="primary" size="large" placeholder="请输入您的电话" v-model="addUserFormData.phone"></el-input></el-form-item>
+                                    <el-input type="primary" size="large" placeholder="请输入您的电话"
+                                              v-model="addUserFormData.phone"></el-input>
+                                </el-form-item>
                                 <el-form-item label="状态">
-                                    <el-switch
-                                            v-model="stateSwitch"
-                                            active-color="#13ce66"
-                                            inactive-color="#ff4949">
+                                    <el-switch v-model="stateSwitch" active-color="#13ce66"
+                                               inactive-color="#ff4949">
                                     </el-switch>
                                 </el-form-item>
                                 <el-form-item label="个性签名">
-                                    <el-input type="primary" size="large" placeholder="请输入您的个性签名" v-model="addUserFormData.autograph"></el-input></el-form-item>
+                                    <el-input type="primary" size="large" placeholder="请输入您的个性签名"
+                                              v-model="addUserFormData.autograph"></el-input>
+                                </el-form-item>
                                 <el-form-item label="真实姓名">
-                                    <el-input type="primary" size="large" placeholder="请输入您的真实姓名" v-model="addUserFormData.real_name"></el-input></el-form-item>
+                                    <el-input type="primary" size="large" placeholder="请输入您的真实姓名"
+                                              v-model="addUserFormData.real_name"></el-input>
+                                </el-form-item>
                                 <div class="xcenter">
                                     <el-button type="primary" @click="sendAddUser">提交</el-button>
                                 </div>
@@ -239,7 +273,9 @@
                         <ul class="checkUl">
                             <li>id：{{ checkUserData.id }}</li>
                             <li>用户名：{{ checkUserData.name }}</li>
-                            <li class="ycenter">头像：<el-avatar :size="30" :src="checkUserData.image" fit="cover"></el-avatar></li>
+                            <li class="ycenter">头像：<el-avatar :size="30" :src="checkUserData.image" fit="cover">
+                            </el-avatar>
+                            </li>
                             <li>密码：{{ checkUserData.password }}</li>
                             <li>地址：{{ checkUserData.address }}</li>
                             <li>性别：{{ checkUserData.sex }}</li>
@@ -250,34 +286,33 @@
                             <li>更新时间：{{ checkUserData.updated_at }}</li>
                             <li>真实姓名：{{ checkUserData.real_name }}</li>
                         </ul>
-                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button></span>
+                        <span slot="footer" class="dialog-footer">
+                                <el-button type="primary" @click="checkUserdialogVisible = false">确 定</el-button>
+                            </span>
                     </el-dialog>
                     <!--                    删除-->
                     <el-dialog title="确认删除" :visible.sync="deleteUserdialogVisible" width="30%" center>
                         <p>您正在删除表格数据！</p>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="sendDeleteUser">确认</el-button>
-									<el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>
-								</span>
+                                <el-button type="primary" @click="sendDeleteUser">确认</el-button>
+                                <el-button type="" @click="deleteUserdialogVisible = false">取消</el-button>
+                            </span>
                     </el-dialog>
                     <!--                    表格主体-->
                     <el-card>
-                        <div slot="header" class="clearfix header" style="display: flex;justify-content: space-between"><div class="tableTitle">删除用户</div>
+                        <div slot="header" class="clearfix header"
+                             style="display: flex;justify-content: space-between">
+                            <div class="tableTitle">删除用户</div>
                             <div style="width: 30%;">
                                 <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
-                                <el-input
-                                        id="userSearch"
-                                        class="inline-input"
-                                        v-model="userSearch_d"
-                                        placeholder="请输入搜索用户名"
-                                        @keyup.enter.native = "searchUser(userSearch_d)"
-                                        clearable
-                                        style="width: 60%;"
-                                ></el-input>
+                                <el-input id="userSearch" class="inline-input" v-model="userSearch_d"
+                                          placeholder="请输入搜索用户名" @keyup.enter.native="searchUser(userSearch_d)" clearable
+                                          style="width: 60%;"></el-input>
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table :data="userData" style="width: 100%" :row-class-name="tableRowClassName" v-loading="userLoading">
+                            <el-table :data="userData" style="width: 100%" :row-class-name="tableRowClassName"
+                                      v-loading="userLoading">
                                 <el-table-column prop="id" label="ID"></el-table-column>
                                 <el-table-column prop="name" label="用户名"></el-table-column>
                                 <el-table-column prop="image" label="头像">
@@ -297,14 +332,17 @@
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
                                         <el-button @click="checkUser(scope.row)" type="" size="mini">查看</el-button>
-                                        <el-button @click="deleteUser(scope.row)" type="danger" size="mini">删除</el-button>
+                                        <el-button @click="deleteUser(scope.row)" type="danger" size="mini">删除
+                                        </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteUserPage" v-if="paginationShow" :current-page="currentPage_du"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage"
+                                           @current-change="deleteUserPage" v-if="paginationShow"
+                                           :current-page="currentPage_du"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -318,76 +356,69 @@
                             <li>id：{{ checkGoodsData.id }}</li>
                             <li>商品名称：{{ checkGoodsData.name }}</li>
                             <li>商品价格：{{ checkGoodsData.price }}</li>
-                            <li class="ycenter">商品图片：<el-image
-                                    style="width: 30px; height: 30px"
-                                    :src="checkGoodsData.images"
-                                    fit="cover"
-                                    >
-                            </el-image></li>
+                            <li class="ycenter">商品图片：<el-image style="width: 30px; height: 30px"
+                                                               :src="checkGoodsData.images" fit="cover">
+                            </el-image>
+                            </li>
                             <li>创建时间：{{ checkGoodsData.time }}</li>
                             <li>更新时间：{{ checkGoodsData.updated_at }}</li>
                             <li>用户id：{{ checkGoodsData.user_id }}</li>
                             <li>商品数量：{{ checkGoodsData.num }}</li>
                             <li>商品分类：{{ checkGoodsData.showCategory }}</li>
                         </ul>
-                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
+                        <span slot="footer" class="dialog-footer">
+                                <el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button>
+                            </span>
                     </el-dialog>
                     <!--                    编辑-->
                     <el-dialog title="编辑" :visible.sync="editGoodsDialogVisible" width="30%" center>
                         <el-form label-width="80px">
-                            <el-form-item label="商品名称"><el-input type="primary" size="small" v-model="editGoodsData.name"></el-input></el-form-item>
-                            <el-form-item label="价格"><el-input type="primary" size="small" v-model="editGoodsData.price"></el-input></el-form-item>
-                            <el-form-item label="图片"><el-input type="primary" size="small" v-model="editGoodsData.images"></el-input></el-form-item>
-                            <el-form-item label="数量"><el-input type="primary" size="small" v-model="editGoodsData.num"></el-input></el-form-item>
+                            <el-form-item label="商品名称">
+                                <el-input type="primary" size="small" v-model="editGoodsData.name"></el-input>
+                            </el-form-item>
+                            <el-form-item label="价格">
+                                <el-input type="primary" size="small" v-model="editGoodsData.price"></el-input>
+                            </el-form-item>
+                            <el-form-item label="图片">
+                                <el-input type="primary" size="small" v-model="editGoodsData.images"></el-input>
+                            </el-form-item>
+                            <el-form-item label="数量">
+                                <el-input type="primary" size="small" v-model="editGoodsData.num"></el-input>
+                            </el-form-item>
                             <el-form-item label="类别">
-<!--                                <el-input type="primary" size="small" v-model="editGoodsData.category"></el-input>-->
+                                <!--                                <el-input type="primary" size="small" v-model="editGoodsData.category"></el-input>-->
                                 <el-select v-model="editGoodsData.category" clearable placeholder="请选择">
-                                    <el-option
-                                            v-for="item in options"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
+                                    <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                               :value="item.value">
                                     </el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="sendEditGoods">修 改</el-button>
-									<el-button type="" @click="editGoodsDialogVisible = false">放弃修改</el-button>
-								</span>
+                                <el-button type="primary" @click="sendEditGoods">修 改</el-button>
+                                <el-button type="" @click="editGoodsDialogVisible = false">放弃修改</el-button>
+                            </span>
                     </el-dialog>
                     <el-card>
                         <div slot="header" class="clearfix" style="display: flex;justify-content: space-between">
-                        <div style="line-height: 40px" class="tableTitle">查看商品</div>
-                        <!--                            <div style="width:30%">-->
-                        <!--                                <label for="userSearch" style="font-style: normal;font-size: 14px;">搜索：</label>-->
-                        <!--                                <el-input id="userSearch" style="width:70%"  placeholder="搜索单个用户">-->
-                        <!--                                    <i slot="suffix" class="el-input__icon el-icon-search" ></i>-->
-                        <!--                                </el-input>-->
-                        <!--                            </div>-->
-                        <div style="width: 30%;">
-                            <label for="goodSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
-                            <el-input
-                                    id="goodSearch"
-                                    class="inline-input"
-                                    v-model="goodSearch_c"
-                                    placeholder="请输入搜索商品名"
-                                    @keyup.enter.native="searchGood(goodSearch_c)"
-                                    style="width: 60%;"
-                            ></el-input>
+                            <div style="line-height: 40px" class="tableTitle">查看商品</div>
+                            <div style="width: 30%;">
+                                <label for="goodSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
+                                <el-input id="goodSearch" class="inline-input" v-model="goodSearch_c"
+                                          placeholder="请输入搜索商品名" @keyup.enter.native="searchGood(goodSearch_c)"
+                                          style="width: 60%;" clearable></el-input>
+                            </div>
                         </div>
-                    </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table v-loading="goodsLoading" :data="goodsData" style="width: 100%" :row-class-name="tableRowClassName">
+                            <el-table v-loading="goodsLoading" :data="goodsData" style="width: 100%"
+                                      :row-class-name="tableRowClassName">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
                                 <el-table-column prop="name" label="名称" width="150"></el-table-column>
                                 <el-table-column prop="price" label="价格" width="80"></el-table-column>
                                 <el-table-column prop="images" label="图片" width="100">
                                     <template slot-scope="scope">
-                                        <el-image
-                                                style="width: 100px; height: 100px"
-                                                :src="scope.row.images"
-                                                fit="cover">
+                                        <el-image style="width: 100px; height: 100px" :src="scope.row.images"
+                                                  fit="cover">
                                         </el-image>
                                     </template>
                                 </el-table-column>
@@ -399,58 +430,58 @@
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
                                         <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
-                                        <el-button @click="editGoods(scope.row)" type="danger" size="mini">修改</el-button>
+                                        <el-button @click="editGoods(scope.row)" type="danger" size="mini">修改
+                                        </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findGoodPage" v-if="paginationShow"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage"
+                                           @current-change="findGoodPage" v-if="paginationShow"></el-pagination>
                         </div>
                     </el-card>
                 </div>
                 <!--                添加商品-->
                 <div class="editUser" v-if="cardVisible.addGoodsShow">
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="tableTitle">添加商品</div></div>
+                        <div slot="header" class="clearfix header">
+                            <div class="tableTitle">添加商品</div>
+                        </div>
                         <div class="addGoodsForm">
                             <el-form :model="addGoodsFormData" label-width="80px">
                                 <el-form-item label="用户id">
-                                    <el-input type="primary" size="large" placeholder="请输入发布此商品的用户id" v-model="addGoodsFormData.user_id"></el-input>
+                                    <el-input type="primary" size="large" placeholder="请输入发布此商品的用户id"
+                                              v-model="addGoodsFormData.user_id"></el-input>
                                 </el-form-item>
                                 <el-form-item label="商品名称">
-                                    <el-input type="primary" size="large" placeholder="请输入您要发布商品名称" v-model="addGoodsFormData.name"></el-input>
+                                    <el-input type="primary" size="large" placeholder="请输入您要发布商品名称"
+                                              v-model="addGoodsFormData.name"></el-input>
                                 </el-form-item>
                                 <el-form-item label="价格">
-                                    <el-input type="primary" size="large" placeholder="请输入您的商品价格" v-model="addGoodsFormData.price"></el-input>
+                                    <el-input type="primary" size="large" placeholder="请输入您的商品价格"
+                                              v-model="addGoodsFormData.price"></el-input>
                                 </el-form-item>
                                 <el-form-item label="图片">
-                                    <el-upload
-                                            class="avatar-uploader"
-                                            action="/upGoodsImage"
-                                            :show-file-list="false"
-                                            :auto-upload="true"
-                                            name="fileName"
-                                            :on-success="ghandleAvatarSuccess"
-                                            :before-upload="gbeforeAvatarUpload"
-                                            :data="goodImageData"
-                                    >
-                                        <img v-if="addGoodsFormData.images" :src="addGoodsFormData.images" class="avatar">
+                                    <el-upload class="avatar-uploader" action="/upGoodsImage"
+                                               :show-file-list="false" :auto-upload="true" name="fileName"
+                                               :on-success="ghandleAvatarSuccess" :before-upload="gbeforeAvatarUpload"
+                                               :data="goodImageData">
+                                        <img v-if="addGoodsFormData.images" :src="addGoodsFormData.images"
+                                             class="avatar">
                                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                     </el-upload>
                                 </el-form-item>
                                 <el-form-item label="数量">
-                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量" v-model="addGoodsFormData.num"></el-input>
+                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量"
+                                              v-model="addGoodsFormData.num"></el-input>
                                 </el-form-item>
                                 <el-form-item label="类别">
-<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>-->
+                                    <!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>-->
                                     <el-select v-model="addGoodsFormData.category" clearable placeholder="请选择">
-                                        <el-option
-                                                v-for="item in options"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value">
+                                        <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                                   :value="item.value">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
@@ -470,52 +501,49 @@
                             <li>id：{{ checkGoodsData.id }}</li>
                             <li>商品名称：{{ checkGoodsData.name }}</li>
                             <li>商品价格：{{ checkGoodsData.price }}</li>
-                            <li class="ycenter">商品图片：<el-image
-                                    style="width: 30px; height: 30px"
-                                    :src="checkGoodsData.images"
-                                    fit="cover">
-                            </el-image></li>
+                            <li class="ycenter">商品图片：<el-image style="width: 30px; height: 30px"
+                                                               :src="checkGoodsData.images" fit="cover">
+                            </el-image>
+                            </li>
                             <li>创建时间：{{ checkGoodsData.time }}</li>
                             <li>更新时间：{{ checkGoodsData.updated_at }}</li>
                             <li>用户id：{{ checkGoodsData.user_id }}</li>
                             <li>商品数量：{{ checkGoodsData.num }}</li>
                             <li>商品分类：{{ checkGoodsData.showCategory }}</li>
                         </ul>
-                        <span slot="footer" class="dialog-footer"><el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button></span>
+                        <span slot="footer" class="dialog-footer">
+                                <el-button type="primary" @click="checkGoodsDialogVisible = false">确 定</el-button>
+                            </span>
                     </el-dialog>
                     <!--                    删除-->
                     <el-dialog title="确认删除" :visible.sync="deleteGoodsDialogVisible" width="30%" center>
                         <p>您正在删除表格数据！</p>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="sendDeleteGoods">确认</el-button>
-									<el-button type="" @click="deleteGoodsDialogVisible = false">取消</el-button>
-								</span>
+                                <el-button type="primary" @click="sendDeleteGoods">确认</el-button>
+                                <el-button type="" @click="deleteGoodsDialogVisible = false">取消</el-button>
+                            </span>
                     </el-dialog>
                     <el-card>
-                        <div slot="header" class="clearfix header" style="display: flex;justify-content: space-between"><div class="tableTitle">删除商品</div>
+                        <div slot="header" class="clearfix header"
+                             style="display: flex;justify-content: space-between">
+                            <div class="tableTitle" style="line-height: 40px;">删除商品</div>
                             <div style="width: 30%;">
                                 <label for="goodSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
-                                <el-input
-                                        id="goodSearch"
-                                        class="inline-input"
-                                        v-model="goodSearch_d"
-                                        placeholder="请输入搜索商品名"
-                                        @keyup.enter.native="searchGood(goodSearch_d)"
-                                        style="width: 60%;"
-                                ></el-input>
+                                <el-input id="goodSearch" class="inline-input" v-model="goodSearch_d"
+                                          placeholder="请输入搜索商品名" @keyup.enter.native="searchGood(goodSearch_d)"
+                                          style="width: 60%;" clearable></el-input>
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table :data="goodsData" :row-class-name="tableRowClassName" style="width: 100%" v-loading="goodsLoading">
+                            <el-table :data="goodsData" :row-class-name="tableRowClassName" style="width: 100%"
+                                      v-loading="goodsLoading">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
                                 <el-table-column prop="name" label="名称" width="150"></el-table-column>
                                 <el-table-column prop="price" label="价格" width="80"></el-table-column>
                                 <el-table-column prop="images" label="图片" width="100">
                                     <template slot-scope="scope">
-                                        <el-image
-                                                style="width: 100px; height: 100px"
-                                                :src="scope.row.images"
-                                                fit="cover">
+                                        <el-image style="width: 100px; height: 100px" :src="scope.row.images"
+                                                  fit="cover">
                                         </el-image>
                                     </template>
                                 </el-table-column>
@@ -527,14 +555,16 @@
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
                                         <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
-                                        <el-button @click="deleteGoods(scope.row)" type="danger" size="mini">删除</el-button>
+                                        <el-button @click="deleteGoods(scope.row)" type="danger" size="mini">删除
+                                        </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteGoodPage" v-if="paginationShow"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage"
+                                           @current-change="deleteGoodPage" v-if="paginationShow"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -542,24 +572,36 @@
                 <!--                查看评论-->
                 <div class="editUser" v-if="cardVisible.commentsShow">
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="tableTitle">查看留言</div></div>
+                        <div slot="header" class="clearfix header"
+                             style="display: flex;justify-content: space-between">
+                            <div class="tableTitle" style="line-height: 40px;">查看留言</div>
+                            <div style="width: 30%;">
+                                <label for="goodSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
+                                <el-input id="goodSearch" class="inline-input" v-model="commentSearch_c"
+                                          placeholder="请输入搜索评论内容" @keyup.enter.native="searchComment(commentSearch_c)"
+                                          style="width: 60%;" clearable></el-input>
+                            </div>
+                        </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table v-loading="userLoading" :data="commentsData"  style="width: 100%" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
+                            <el-table v-loading="userLoading" :data="commentsData" style="width: 100%"
+                                      :row-class-name="tableRowClassName"
+                                      :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
                                 <el-table-column prop="id" label="ID" width="100"></el-table-column>
                                 <el-table-column prop="goods_name" label="商品" width="150"></el-table-column>
                                 <el-table-column prop="user_name" label="评论用户" width="80"></el-table-column>
                                 <el-table-column prop="content" label="评论内容" width=""></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="editComments(scope.row)" type="danger" size="mini">修改</el-button>
+                                        <el-button @click="checkComments(scope.row)" type="danger" size="mini">查看
+                                        </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
-<!--                        <div class="xcenter">-->
-<!--                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findGoodPage"></el-pagination>-->
-<!--                        </div>-->
+                        <!--                        <div class="xcenter">-->
+                        <!--                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findGoodPage"></el-pagination>-->
+                        <!--                        </div>-->
                     </el-card>
                 </div>
                 <!--                删除评论-->
@@ -567,29 +609,40 @@
                     <el-dialog title="确认删除" :visible.sync="deleteCommentsDialogVisible" width="30%" center>
                         <p>您正在删除表格数据！</p>
                         <span slot="footer" class="dialog-footer">
-									<el-button type="primary" @click="sendDeleteComments">确认</el-button>
-									<el-button type="" @click="deleteCommentsDialogVisible = false">取消</el-button>
-								</span>
+                                <el-button type="primary" @click="sendDeleteComments">确认</el-button>
+                                <el-button type="" @click="deleteCommentsDialogVisible = false">取消</el-button>
+                            </span>
                     </el-dialog>
                     <el-card>
-                        <div slot="header" class="clearfix header"><div class="tableTitle">删除评论</div></div>
+                        <div slot="header" class="clearfix header" style="display: flex;justify-content: space-between">
+                            <div class="tableTitle" style="line-height: 40px;">删除评论</div>
+                            <div style="width: 30%;">
+                                <label for="goodSearch" style="font-style: normal;font-size: 14px;">搜索：</label>
+                                <el-input id="goodSearch" class="inline-input" v-model="commentSearch_d"
+                                          placeholder="请输入搜索评论内容" @keyup.enter.native="searchComment(commentSearch_d)"
+                                          style="width: 60%;" clearable></el-input>
+                            </div>
+                        </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table v-loading="userLoading" :data="commentsData" style="width: 100%" :row-class-name="tableRowClassName" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
+                            <el-table v-loading="userLoading" :data="commentsData" style="width: 100%"
+                                      :row-class-name="tableRowClassName"
+                                      :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
                                 <el-table-column prop="id" label="ID" width="100"></el-table-column>
                                 <el-table-column prop="goods_name" label="商品" width="150"></el-table-column>
                                 <el-table-column prop="user_name" label="评论用户" width="80"></el-table-column>
                                 <el-table-column prop="content" label="评论内容" width=""></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="deleteComments(scope.row)" type="danger" size="mini">删除</el-button>
+                                        <el-button @click="deleteComments(scope.row)" type="danger" size="mini">删除
+                                        </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                         <!--                        分页-->
-<!--                        <div class="xcenter">-->
-<!--                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteGoodPage"></el-pagination>-->
-<!--                        </div>-->
+                        <!--                        <div class="xcenter">-->
+                        <!--                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteGoodPage"></el-pagination>-->
+                        <!--                        </div>-->
                     </el-card>
                 </div>
 
@@ -607,12 +660,14 @@
     var app = new Vue({
         el: '#app',
         data: {
-            paginationShow:true,
+            paginationShow: true,
             totalPage: 0,
-            userSearch_c:'',//查看用户页面的搜索内容
-            userSearch_d:'',//删除用户页面的搜索内容
-            goodSearch_c:'',//查看商品页面的搜索内容
-            goodSearch_d:'',//查看商品页面的搜索内容
+            userSearch_c: '', //查看用户页面的搜索内容
+            userSearch_d: '', //删除用户页面的搜索内容
+            goodSearch_c: '', //查看商品页面的搜索内容
+            goodSearch_d: '', //查看商品页面的搜索内容
+            commentSearch_c: '', //查看评论页面的搜索内容
+            commentSearch_d: '', //查看评论页面的搜索内容
             options: [{
                 value: '1',
                 label: '服装衣物'
@@ -628,29 +683,29 @@
             }, {
                 value: '5',
                 label: '零食饮品'
-            },{
+            }, {
                 value: '6',
                 label: '爱情文学'
-            },{
+            }, {
                 value: '0',
                 label: '其他物品'
             }],
-        commentsData :[],
-        goodImageData:{
+            commentsData: [],
+            goodImageData: {
                 type: 2
             },
-            userImageData:{
+            userImageData: {
                 type: 1
             },
-            iscollapse:false,
+            iscollapse: false,
             mode: 'vertical',
             activeIndex2: '1',
             checkUserdialogVisible: false,
             editUserdialogVisible: false,
             deleteUserdialogVisible: false,
 
-            deleteCommentsDialogVisible:false,
-            deleteCommentsID:'',//暂时存放要删除的评论id
+            deleteCommentsDialogVisible: false,
+            deleteCommentsID: '', //暂时存放要删除的评论id
             checkGoodsDialogVisible: false,
             editGoodsDialogVisible: false,
             deleteGoodsDialogVisible: false,
@@ -666,8 +721,8 @@
             },
             // user
             userLoading: true,
-                //暂时存放删除id
-                deleteID:'',
+            //暂时存放删除id
+            deleteID: '',
             checkUserData: {
                 id: '',
                 name: '',
@@ -696,8 +751,7 @@
                 updated_at: '',
                 real_name: ''
             },
-            userData: [
-            ],
+            userData: [],
             addUserFormData: {
                 name: '',
                 image: '',
@@ -712,8 +766,8 @@
             stateSwitch: true,
             // 商品
             goodsLoading: true,
-                //暂时存放删除id
-                deleteGoodsID:'',
+            //暂时存放删除id
+            deleteGoodsID: '',
             checkGoodsData: {
                 id: '',
                 name: '',
@@ -748,47 +802,47 @@
                 num: '',
                 category: ''
             },
-            currentPage_cu: 1,//查看用户暂存第几页
-            currentPage_du: 1,//删除用户暂存第几页
-            currentPage_cg: 1,//查看用户暂存第几页
-            currentPage_dg: 1,//删除用户暂存第几页
+            currentPage_cu: 1, //查看用户暂存第几页
+            currentPage_du: 1, //删除用户暂存第几页
+            currentPage_cg: 1, //查看用户暂存第几页
+            currentPage_dg: 1, //删除用户暂存第几页
         },
         watch: {
-            'cardVisible.userShow': function(e) {
+            'cardVisible.userShow': function (e) {
                 if (e) {
                     this.refreshUser()
                 }
             },
-            'cardVisible.deleteUserShow': function(e) {
+            'cardVisible.deleteUserShow': function (e) {
                 if (e) {
                     this.refreshUser()
                 }
             },
-            'cardVisible.goodsShow': function(e) {
+            'cardVisible.goodsShow': function (e) {
                 if (e) {
                     this.refreshGoods()
                 }
             },
-            'cardVisible.deleteGoodsShow': function(e) {
+            'cardVisible.deleteGoodsShow': function (e) {
                 if (e) {
                     this.refreshGoods()
                 }
             },
-            'cardVisible.commentsShow': function(e) {
+            'cardVisible.commentsShow': function (e) {
                 if (e) {
                     this.refreshComment()
                 }
             },
-            'cardVisible.deleteCommentsShow': function(e) {
+            'cardVisible.deleteCommentsShow': function (e) {
                 if (e) {
                     this.refreshComment()
                 }
             },
-            stateSwitch:function (e) {
+            stateSwitch: function (e) {
                 // console.log(e)
                 if (e) {
                     this.addUserFormData.information_state = 1;
-                }else {
+                } else {
                     this.addUserFormData.information_state = 0;
                 }
             },
@@ -809,49 +863,63 @@
             },
             goodSearch_d: function (e) {
                 if (e == '') {
-                    this.refreshGoods(this.currentPage_dg)
+                    this.refreshComment(this.currentPage_dg)
+                }
+            },
+            // commentSearch_c
+            commentSearch_c: function (e) {
+                if (e == '') {
+                    this.refreshComment()
+                }
+            },
+            commentSearch_d: function (e) {
+                if (e == '') {
+                    this.refreshComment()
                 }
             }
         },
         methods: {
-            deleteGoodPage(e){
+            deleteGoodPage(e) {
                 this.currentPage_cg = e;
                 this.refreshGoods(this.currentPage_cg);
             },
-            findGoodPage(e){
+            findGoodPage(e) {
                 this.currentPage_dg = e;
                 this.refreshGoods(this.currentPage_dg);
             },
-            deleteUserPage(e){
+            deleteUserPage(e) {
                 this.currentPage_du = e;
                 this.refreshUser(this.currentPage_du);
             },
-            findUserPage(e){
+            findUserPage(e) {
                 this.currentPage_cu = e;
                 this.refreshUser(this.currentPage_cu);
             },
             ghandleAvatarSuccess(res, file) {
                 console.log(res);
-                if (res.code == 0){
+                if (res.code == 0) {
                     console.log(res.msg)
                     this.addGoodsFormData.images = res.msg;
                 }
-            },//上传成功
-            gbeforeAvatarUpload(){
+            }, //上传成功
+            gbeforeAvatarUpload() {
                 // console.log("上传前")
-            },//图片上传前
+            }, //图片上传前
             uhandleAvatarSuccess(res, file) {
                 console.log(res);
-                if (res.code == 0){
+                if (res.code == 0) {
                     console.log(res.msg)
                     this.addUserFormData.image = res.msg;
                 }
-            },//上传成功
-            ubeforeAvatarUpload(){
+            }, //上传成功
+            ubeforeAvatarUpload() {
                 // console.log("上传前")
-            },//图片上传前
-            tableRowClassName({row, rowIndex}){
-                if (rowIndex%2 != 0 && rowIndex%4 === 1) {
+            }, //图片上传前
+            tableRowClassName({
+                                  row,
+                                  rowIndex
+                              }) {
+                if (rowIndex % 2 != 0 && rowIndex % 4 === 1) {
                     return 'warning-row';
                 } else if (rowIndex % 2 != 0) {
                     return 'success-row';
@@ -865,50 +933,50 @@
                 }
                 switch (key) {
                     case '1-1':
-                        setTimeout( ()=> {
+                        setTimeout(() => {
                             this.cardVisible.userShow = true;
-                        },200);
+                        }, 200);
                         break;
                     case '1-2':
                         this.cardVisible.addUserShow = true;
                         break;
                     case '1-3':
-                        setTimeout( ()=> {
+                        setTimeout(() => {
                             this.cardVisible.deleteUserShow = true;
-                        },200);
+                        }, 200);
                         break;
                     case '2-1':
-                        setTimeout( ()=> {
+                        setTimeout(() => {
                             this.cardVisible.goodsShow = true;
-                        },200);
+                        }, 200);
                         break;
                     case '2-2':
                         this.cardVisible.addGoodsShow = true;
                         break;
                     case '2-3':
-                        setTimeout( ()=> {
+                        setTimeout(() => {
                             this.cardVisible.deleteGoodsShow = true;
-                        },200);
+                        }, 200);
                         break;
                     case '3-1':
-                        setTimeout( ()=> {
+                        setTimeout(() => {
                             this.cardVisible.commentsShow = true;
-                        },200);
+                        }, 200);
                         break;
                     case '3-2':
-                        setTimeout( ()=> {
+                        setTimeout(() => {
                             this.cardVisible.deleteCommentsShow = true;
-                        },200);
+                        }, 200);
                         break;
                 }
             },
             //退出登录
-            sendLoginOut(){
+            sendLoginOut() {
                 window.location.replace('/loginout');
             },
             // 用户
             // 更新用户数据
-            refreshUser(page){
+            refreshUser(page) {
                 this.userLoading = true;
                 this.userData = [];
                 if (typeof page != "number") {
@@ -921,8 +989,8 @@
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        currPage:page,
-                        pageSize:10,
+                        currPage: page,
+                        pageSize: 10,
                     }
                 })
                     .done(data => {
@@ -932,10 +1000,10 @@
                         this.userLoading = false;
                         this.paginationShow = true;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
@@ -953,22 +1021,22 @@
                 this.checkUserData.created_at = obj.created_at;
                 this.checkUserData.updated_at = obj.updated_at;
                 this.checkUserData.real_name = obj.real_name;
-            },//查看用户详情对话框
-            sendAddUser(){
+            }, //查看用户详情对话框
+            sendAddUser() {
                 $.ajax({
                     url: '/api/insertUserInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        name:this.addUserFormData.name,
-                        image:this.addUserFormData.image,
-                        password:this.addUserFormData.password,
-                        address:this.addUserFormData.address,
-                        sex:this.addUserFormData.sex,
-                        phone:this.addUserFormData.phone,
-                        information_state:this.addUserFormData.information_state,
-                        autograph:this.addUserFormData.autograph,
-                        real_name:this.addUserFormData.real_name
+                        name: this.addUserFormData.name,
+                        image: this.addUserFormData.image,
+                        password: this.addUserFormData.password,
+                        address: this.addUserFormData.address,
+                        sex: this.addUserFormData.sex,
+                        phone: this.addUserFormData.phone,
+                        information_state: this.addUserFormData.information_state,
+                        autograph: this.addUserFormData.autograph,
+                        real_name: this.addUserFormData.real_name
                     }
                 })
                     .done(data => {
@@ -978,14 +1046,14 @@
                             type: 'success'
                         });
                         this.handleShow('1-2')
-                        for (let i in this.addUserFormData){
+                        for (let i in this.addUserFormData) {
                             this.addUserFormData[i] = '';
                         }
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
@@ -1007,24 +1075,24 @@
                 this.editUserData.created_at = obj.created_at;
                 this.editUserData.updated_at = obj.updated_at;
                 this.editUserData.real_name = obj.real_name;
-            },//查看编辑用户对话框
-            sendEditUser(){
+            }, //查看编辑用户对话框
+            sendEditUser() {
                 this.editUserdialogVisible = false;
                 $.ajax({
                     url: '/api/updateUserInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        id:this.editUserData.id,
-                        name:this.editUserData.name,
-                        image:this.editUserData.image,
-                        password:this.editUserData.password,
-                        address:this.editUserData.address,
-                        sex:this.editUserData.sex,
-                        phone:this.editUserData.phone,
-                        information_state:this.editUserData.information_state,
-                        autograph:this.editUserData.autograph,
-                        real_name:this.editUserData.real_name
+                        id: this.editUserData.id,
+                        name: this.editUserData.name,
+                        image: this.editUserData.image,
+                        password: this.editUserData.password,
+                        address: this.editUserData.address,
+                        sex: this.editUserData.sex,
+                        phone: this.editUserData.phone,
+                        information_state: this.editUserData.information_state,
+                        autograph: this.editUserData.autograph,
+                        real_name: this.editUserData.real_name
                     }
                 })
                     .done((data) => {
@@ -1037,24 +1105,24 @@
                         console.log(this.currentPage_cu)
                         this.refreshUser(this.currentPage_cu);
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
             deleteUser(obj) {
                 this.deleteUserdialogVisible = true;
-                this.deleteID=obj.id;
-            },//查看删除用户表格
-            sendDeleteUser(){
+                this.deleteID = obj.id;
+            }, //查看删除用户表格
+            sendDeleteUser() {
                 $.ajax({
                     url: '/api/delectUserInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        id:this.deleteID
+                        id: this.deleteID
                     }
                 })
                     .done((data) => {
@@ -1062,15 +1130,15 @@
                         this.deleteUserdialogVisible = false;
                         this.refreshUser(this.currentPage_du)
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
             // 商品
-            refreshGoods(page){
+            refreshGoods(page) {
                 this.goodSearch = '';
                 this.goodsLoading = true;
                 this.goodsData = [];
@@ -1084,8 +1152,8 @@
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        currPage:page,
-                        pageSize:10,
+                        currPage: page,
+                        pageSize: 10,
                     }
                 })
                     .done(data => {
@@ -1119,10 +1187,10 @@
                         this.goodsLoading = false;
                         this.paginationShow = true;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
@@ -1137,19 +1205,19 @@
                 this.checkGoodsData.user_id = obj.user_id;
                 this.checkGoodsData.num = obj.num;
                 this.checkGoodsData.showCategory = obj.showCategory;
-            },//查看商品详情对话框
-            sendAddGoods(){
+            }, //查看商品详情对话框
+            sendAddGoods() {
                 $.ajax({
                     url: '/api/insertGoodsInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        name:this.addGoodsFormData.name,
-                        price:this.addGoodsFormData.price,
-                        images:this.addGoodsFormData.images,
-                        num:this.addGoodsFormData.num,
-                        user_id:this.addGoodsFormData.user_id,
-                        category:this.addGoodsFormData.category
+                        name: this.addGoodsFormData.name,
+                        price: this.addGoodsFormData.price,
+                        images: this.addGoodsFormData.images,
+                        num: this.addGoodsFormData.num,
+                        user_id: this.addGoodsFormData.user_id,
+                        category: this.addGoodsFormData.category
                     }
                 })
                     .done(data => {
@@ -1160,10 +1228,10 @@
                         });
                         this.handleShow('2-1')
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
@@ -1180,21 +1248,21 @@
                 this.editGoodsData.num = obj.num;
                 this.editGoodsData.user_id = obj.user_id;
                 this.editGoodsData.category = obj.category;
-            },//查看编辑商品对话框
-            sendEditGoods(){
+            }, //查看编辑商品对话框
+            sendEditGoods() {
                 this.editGoodsDialogVisible = false;
                 $.ajax({
                     url: '/api/updateGoodsInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        id:this.editGoodsData.id,
-                        name:this.editGoodsData.name,
-                        price:this.editGoodsData.price,
-                        images:this.editGoodsData.images,
-                        num:this.editGoodsData.num,
-                        category:this.editGoodsData.category,
-                        status:1
+                        id: this.editGoodsData.id,
+                        name: this.editGoodsData.name,
+                        price: this.editGoodsData.price,
+                        images: this.editGoodsData.images,
+                        num: this.editGoodsData.num,
+                        category: this.editGoodsData.category,
+                        status: 1
                     }
                 })
                     .done((data) => {
@@ -1206,24 +1274,24 @@
                         });
                         this.refreshGoods(this.currentPage_cg);
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
             deleteGoods(obj) {
                 this.deleteGoodsDialogVisible = true;
-                this.deleteGoodsID=obj.id;
-            },//查看删除商品表格
-            sendDeleteGoods(){
+                this.deleteGoodsID = obj.id;
+            }, //查看删除商品表格
+            sendDeleteGoods() {
                 $.ajax({
                     url: '/api/delectGoodsInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        id:this.deleteGoodsID
+                        id: this.deleteGoodsID
                     }
                 })
                     .done((data) => {
@@ -1231,33 +1299,32 @@
                         this.deleteGoodsDialogVisible = false;
                         this.refreshGoods(this.currentPage_dg)
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
-            refreshComment(){
-                this.goodsData =[];
+            refreshComment() {
+                this.goodsData = [];
                 this.userData = [];
                 this.commentsData = [];
                 $.ajax({
                     url: '/api/findAllcommentInfo',
                     method: 'POST',
                     dataType: 'JSON',
-                    data: {
-                    }
+                    data: {}
                 })
                     .done(data => {
                         // this.commentsData = data.findAllcomment;
                         for (let i in data.findAllcomment) {
-                            if (data.findAllcomment[i].pid == 0){
+                            if (data.findAllcomment[i].pid == 0) {
                                 this.commentsData.push(data.findAllcomment[i]);
                             }
-                            if (data.findAllcomment[i].pid != 0){
-                                for (let j in this.commentsData){
-                                    if (this.commentsData[j].id == data.findAllcomment[i].pid){
+                            if (data.findAllcomment[i].pid != 0) {
+                                for (let j in this.commentsData) {
+                                    if (this.commentsData[j].id == data.findAllcomment[i].pid) {
                                         this.commentsData[j].children = [];
                                         this.commentsData[j].children.push(data.findAllcomment[i]);
                                     }
@@ -1267,19 +1334,19 @@
                         // console.log(this.commentsData)
                         this.userLoading = false;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
-            deleteComments(r){
+            deleteComments(r) {
                 // console.log(r)
                 this.deleteCommentsDialogVisible = true;
                 this.deleteCommentsID = r.id;
             },
-            sendDeleteComments(){
+            sendDeleteComments() {
                 $.ajax({
                     url: '/api/delectCommentInfo',
                     method: 'POST',
@@ -1293,17 +1360,17 @@
                         this.deleteCommentsDialogVisible = false;
                         this.refreshComment()
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
-            editComments(){
+            checkComments() {
                 this.$message.error('此功能尚未开放');
             },
-            searchUser(serContent){
+            searchUser(serContent) {
                 $.ajax({
                     url: '/api/findAllUserInfo/{name}',
                     method: 'POST',
@@ -1317,14 +1384,14 @@
                         this.paginationShow = false;
                         this.userData = data.findAllUserByName;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
                         console.log('complete');
                     });
             },
-            searchGood(searchContent){
+            searchGood(searchContent) {
                 $.ajax({
                     url: '/api/findGoodsByNameInfo',
                     method: 'POST',
@@ -1338,15 +1405,37 @@
                         this.paginationShow = false;
                         this.goodsData = data.findGoodsByid;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         console.log('error' + data);
                     })
-                    .complete(function(data) {
+                    .complete(function (data) {
+                        console.log('complete');
+                    });
+            },
+            searchComment(searchContent) {
+                $.ajax({
+                    url: '/api/findCommentByContentInfo',
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        content: searchContent
+                    }
+                })
+                    .done(data => {
+                        // console.log(data);
+                        this.paginationShow = false;
+                        this.commentsData = data.data;
+                    })
+                    .error(function (data) {
+                        console.log('error' + data);
+                    })
+                    .complete(function (data) {
                         console.log('complete');
                     });
             }
         }
     });
 </script>
+
 </html>
 <script type="text/javascript" src="/static/jquery.min.js"></script>
