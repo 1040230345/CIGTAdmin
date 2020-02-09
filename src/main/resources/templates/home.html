@@ -129,19 +129,18 @@
                                 <el-input type="primary" size="small" v-model="editUserData.address"></el-input>
                             </el-form-item>
                             <el-form-item label="性别">
-                                <el-input type="primary" size="small" v-model="editUserData.sex"></el-input>
+                                <el-radio v-model="editUserData.sex" label="男">男</el-radio>
+                                <el-radio v-model="editUserData.sex" label="女">女</el-radio>
                             </el-form-item>
                             <el-form-item label="电话">
                                 <el-input type="primary" size="small" v-model="editUserData.phone"></el-input>
                             </el-form-item>
-                            <el-form-item label="状态" :rules="[
-                              { required: true, message: '状态不能为空',trigger:['blur','change']}
-                            ]" prop="information_state">
-                                <el-tooltip class="item" effect="dark" content="状态只能为数字，0为不公开，1为公开"
-                                            placement="right">
-                                    <el-input type="primary" size="small"
-                                              v-model.number="editUserData.information_state"></el-input>
-                                </el-tooltip>
+                            <el-form-item label="状态">
+                                <el-switch
+                                        v-model="editUserData.information_state"
+                                        active-color="#13ce66"
+                                        inactive-color="#ff4949">
+                                </el-switch>
                             </el-form-item>
                             <el-form-item label="个性签名">
                                 <el-input type="primary" size="small" v-model="editUserData.autograph"></el-input>
@@ -186,8 +185,8 @@
                                 <el-table-column prop="real_name" label="真实姓名"></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkUser(scope.row)" type="" size="mini">查看</el-button>
-                                        <el-button @click="editUser(scope.row)" type="danger" size="mini">修改
+                                        <el-button @click="checkUser(scope.row)" type="success" size="mini">查看</el-button>
+                                        <el-button @click="editUser(scope.row)" type="warning" size="mini">修改
                                         </el-button>
                                     </template>
                                 </el-table-column>
@@ -210,7 +209,7 @@
                         <div class="addUserForm">
                             <el-form :model="addUserFormData" label-width="80px">
                                 <el-form-item label="用户名" :rules="[
-                              { required: true, message: '用户名不能为空',trigger:['blur','change']}
+                              { required: true, message: '用户名不能为空',trigger:['blur']}
                             ]" prop="name">
                                     <el-input type="primary" size="large" placeholder="请输入您的姓名"
                                               v-model="addUserFormData.name"></el-input>
@@ -227,7 +226,7 @@
                                     </el-upload>
                                 </el-form-item>
                                 <el-form-item label="密码" :rules="[
-                              { required: true, message: '密码不能为空',trigger:['blur','change']}
+                              { required: true, message: '密码不能为空',trigger:['blur']}
                             ]" prop="password">
                                     <el-input type="primary" size="large" placeholder="请输入您的密码"
                                               v-model="addUserFormData.password"></el-input>
@@ -331,7 +330,7 @@
                                 <el-table-column prop="real_name" label="真实姓名"></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkUser(scope.row)" type="" size="mini">查看</el-button>
+                                        <el-button @click="checkUser(scope.row)" type="success" size="mini">查看</el-button>
                                         <el-button @click="deleteUser(scope.row)" type="danger" size="mini">删除
                                         </el-button>
                                     </template>
@@ -429,8 +428,8 @@
                                 <el-table-column prop="showCategory" label="类别" width="100"></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
-                                        <el-button @click="editGoods(scope.row)" type="danger" size="mini">修改
+                                        <el-button @click="checkGoods(scope.row)" type="success" size="mini">查看</el-button>
+                                        <el-button @click="editGoods(scope.row)" type="warning" size="mini">修改
                                         </el-button>
                                     </template>
                                 </el-table-column>
@@ -554,7 +553,7 @@
                                 <el-table-column prop="showCategory" label="类别" width="100"></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkGoods(scope.row)" type="" size="mini">查看</el-button>
+                                        <el-button @click="checkGoods(scope.row)" type="success" size="mini">查看</el-button>
                                         <el-button @click="deleteGoods(scope.row)" type="danger" size="mini">删除
                                         </el-button>
                                     </template>
@@ -571,6 +570,17 @@
 
                 <!--                查看评论-->
                 <div class="editUser" v-if="cardVisible.commentsShow">
+                    <!--                    查看详情-->
+                    <el-dialog title="详情" :visible.sync="checkCommentsDialogVisible" width="30%" center>
+                        <ul class="checkUl">
+                            <li><span class="lititle">id:</span><span class="licontent">{{checkCommentsData.id}}</span></li>
+                            <li><span class="lititle">goods_name:</span><span class="licontent">{{checkCommentsData.goods_name}}</span></li>
+                            <li><span class="lititle">content:</span><span class="licontent">{{checkCommentsData.content}}</span></li>
+                        </ul>
+                        <span slot="footer" class="dialog-footer">
+                                <el-button type="primary" @click="checkCommentsDialogVisible = false">确 定</el-button>
+                            </span>
+                    </el-dialog>
                     <el-card>
                         <div slot="header" class="clearfix header"
                              style="display: flex;justify-content: space-between">
@@ -592,7 +602,7 @@
                                 <el-table-column prop="content" label="评论内容" width=""></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="175">
                                     <template slot-scope="scope">
-                                        <el-button @click="checkComments(scope.row)" type="danger" size="mini">查看
+                                        <el-button @click="checkComments(scope.row)" type="success" size="mini">查看
                                         </el-button>
                                     </template>
                                 </el-table-column>
@@ -709,6 +719,9 @@
             checkGoodsDialogVisible: false,
             editGoodsDialogVisible: false,
             deleteGoodsDialogVisible: false,
+
+            checkCommentsDialogVisible:false,
+            checkCommentsData:{},
             cardVisible: {
                 userShow: false,
                 addUserShow: false,
@@ -839,11 +852,11 @@
                 }
             },
             stateSwitch: function (e) {
-                // console.log(e)
+                console.log(e)
                 if (e) {
-                    this.addUserFormData.information_state = 1;
-                } else {
                     this.addUserFormData.information_state = 0;
+                } else {
+                    this.addUserFormData.information_state = 1;
                 }
             },
             userSearch_c: function (e) {
@@ -1023,6 +1036,7 @@
                 this.checkUserData.real_name = obj.real_name;
             }, //查看用户详情对话框
             sendAddUser() {
+                // console.log(this.addUserFormData)
                 $.ajax({
                     url: '/api/insertUserInfo',
                     method: 'POST',
@@ -1070,14 +1084,25 @@
                 this.editUserData.address = obj.address;
                 this.editUserData.sex = obj.sex;
                 this.editUserData.phone = obj.phone;
-                this.editUserData.information_state = obj.information_state;
+                // this.editUserData.information_state = obj.information_state;
+                if (obj.information_state == 0) {
+                    this.editUserData.information_state = true;
+                }else {
+                    this.editUserData.information_state = false;
+                }
                 this.editUserData.autograph = obj.autograph;
                 this.editUserData.created_at = obj.created_at;
                 this.editUserData.updated_at = obj.updated_at;
                 this.editUserData.real_name = obj.real_name;
             }, //查看编辑用户对话框
             sendEditUser() {
+                let information_state;
                 this.editUserdialogVisible = false;
+                if (this.editUserData.information_state == true){
+                    information_state = 0;
+                }else {
+                    information_state = 0;
+                }
                 $.ajax({
                     url: '/api/updateUserInfo',
                     method: 'POST',
@@ -1090,7 +1115,7 @@
                         address: this.editUserData.address,
                         sex: this.editUserData.sex,
                         phone: this.editUserData.phone,
-                        information_state: this.editUserData.information_state,
+                        information_state: information_state,
                         autograph: this.editUserData.autograph,
                         real_name: this.editUserData.real_name
                     }
@@ -1226,7 +1251,10 @@
                             message: '添加成功',
                             type: 'success'
                         });
-                        this.handleShow('2-1')
+                        // this.handleShow('2-1')
+                        for (let i in this.addGoodsFormData) {
+                            this.addGoodsFormData[i] = '';
+                        }
                     })
                     .error(function (data) {
                         console.log('error' + data);
@@ -1367,8 +1395,10 @@
                         console.log('complete');
                     });
             },
-            checkComments() {
-                this.$message.error('此功能尚未开放');
+            checkComments(e) {
+                console.log(e);
+                this.checkCommentsData = e;
+                this.checkCommentsDialogVisible  = true;
             },
             searchUser(serContent) {
                 $.ajax({
