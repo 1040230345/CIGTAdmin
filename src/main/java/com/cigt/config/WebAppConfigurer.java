@@ -29,6 +29,6 @@ public class WebAppConfigurer implements WebMvcConfigurer {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         //映射图片保存地址
-        registry.addResourceHandler("/images/**").addResourceLocations("file:/root/images/");
+        registry.addResourceHandler("/images/**").addResourceLocations("file:D:/CIGTAdmin/images/");
     }
 }
