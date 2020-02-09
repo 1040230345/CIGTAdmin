@@ -135,9 +135,9 @@
                                 <el-input
                                         id="userSearch"
                                         class="inline-input"
-                                        v-model="userSearch"
+                                        v-model="userSearch_c"
                                         placeholder="请输入搜索用户名"
-                                        @keyup.enter.native = "searchUser"
+                                        @keyup.enter.native = "searchUser(userSearch_c)"
                                         clearable
                                         style="width: 60%;"
                                 ></el-input>
@@ -171,7 +171,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findUserPage" v-if="paginationShow"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findUserPage" v-if="paginationShow" :current-page="currentPage_cu"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -268,16 +268,16 @@
                                 <el-input
                                         id="userSearch"
                                         class="inline-input"
-                                        v-model="userSearch"
+                                        v-model="userSearch_d"
                                         placeholder="请输入搜索用户名"
-                                        @keyup.enter.native = "searchUser"
+                                        @keyup.enter.native = "searchUser(userSearch_d)"
                                         clearable
                                         style="width: 60%;"
                                 ></el-input>
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table :data="userData" style="width: 100%" :row-class-name="tableRowClassName">
+                            <el-table :data="userData" style="width: 100%" :row-class-name="tableRowClassName" v-loading="userLoading">
                                 <el-table-column prop="id" label="ID"></el-table-column>
                                 <el-table-column prop="name" label="用户名"></el-table-column>
                                 <el-table-column prop="image" label="头像">
@@ -304,7 +304,7 @@
                         </div>
                         <!--                        分页-->
                         <div class="xcenter">
-                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteUserPage" v-if="paginationShow"></el-pagination>
+                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="deleteUserPage" v-if="paginationShow" :current-page="currentPage_du"></el-pagination>
                         </div>
                     </el-card>
                 </div>
@@ -370,9 +370,9 @@
                             <el-input
                                     id="goodSearch"
                                     class="inline-input"
-                                    v-model="goodSearch"
+                                    v-model="goodSearch_c"
                                     placeholder="请输入搜索商品名"
-                                    @keyup.enter.native="searchGood"
+                                    @keyup.enter.native="searchGood(goodSearch_c)"
                                     style="width: 60%;"
                             ></el-input>
                         </div>
@@ -498,15 +498,15 @@
                                 <el-input
                                         id="goodSearch"
                                         class="inline-input"
-                                        v-model="goodSearch"
+                                        v-model="goodSearch_d"
                                         placeholder="请输入搜索商品名"
-                                        @keyup.enter.native="searchGood"
+                                        @keyup.enter.native="searchGood(goodSearch_d)"
                                         style="width: 60%;"
                                 ></el-input>
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <el-table :data="goodsData" :row-class-name="tableRowClassName" style="width: 100%">
+                            <el-table :data="goodsData" :row-class-name="tableRowClassName" style="width: 100%" v-loading="goodsLoading">
                                 <el-table-column prop="id" label="ID" width="50"></el-table-column>
                                 <el-table-column prop="name" label="名称" width="150"></el-table-column>
                                 <el-table-column prop="price" label="价格" width="80"></el-table-column>
@@ -609,8 +609,10 @@
         data: {
             paginationShow:true,
             totalPage: 0,
-            userSearch:'',
-            goodSearch:'',
+            userSearch_c:'',//查看用户页面的搜索内容
+            userSearch_d:'',//删除用户页面的搜索内容
+            goodSearch_c:'',//查看商品页面的搜索内容
+            goodSearch_d:'',//查看商品页面的搜索内容
             options: [{
                 value: '1',
                 label: '服装衣物'
@@ -745,7 +747,11 @@
                 user_id: '',
                 num: '',
                 category: ''
-            }
+            },
+            currentPage_cu: 1,//查看用户暂存第几页
+            currentPage_du: 1,//删除用户暂存第几页
+            currentPage_cg: 1,//查看用户暂存第几页
+            currentPage_dg: 1,//删除用户暂存第几页
         },
         watch: {
             'cardVisible.userShow': function(e) {
@@ -786,29 +792,43 @@
                     this.addUserFormData.information_state = 0;
                 }
             },
-            userSearch: function (e) {
+            userSearch_c: function (e) {
                 if (e == '') {
-                    this.refreshUser()
+                    this.refreshUser(this.currentPage_cu);
                 }
             },
-            goodSearch: function (e) {
+            userSearch_d: function (e) {
                 if (e == '') {
-                    this.refreshGoods()
+                    this.refreshUser(this.currentPage_du);
+                }
+            },
+            goodSearch_c: function (e) {
+                if (e == '') {
+                    this.refreshGoods(this.currentPage_cg)
+                }
+            },
+            goodSearch_d: function (e) {
+                if (e == '') {
+                    this.refreshGoods(this.currentPage_dg)
                 }
             }
         },
         methods: {
             deleteGoodPage(e){
-                this.refreshGoods(e);
+                this.currentPage_cg = e;
+                this.refreshGoods(this.currentPage_cg);
             },
             findGoodPage(e){
-                this.refreshGoods(e);
+                this.currentPage_dg = e;
+                this.refreshGoods(this.currentPage_dg);
             },
             deleteUserPage(e){
-                this.refreshUser(e);
+                this.currentPage_du = e;
+                this.refreshUser(this.currentPage_du);
             },
             findUserPage(e){
-                this.refreshUser(e);
+                this.currentPage_cu = e;
+                this.refreshUser(this.currentPage_cu);
             },
             ghandleAvatarSuccess(res, file) {
                 console.log(res);
@@ -889,9 +909,12 @@
             // 用户
             // 更新用户数据
             refreshUser(page){
+                this.userLoading = true;
                 this.userData = [];
                 if (typeof page != "number") {
                     page = 1;
+                    this.currentPage_du = 1;
+                    this.currentPage_cu = 1;
                 }
                 $.ajax({
                     url: '/api/findAllUserInfo',
@@ -954,7 +977,10 @@
                             message: '添加成功',
                             type: 'success'
                         });
-                        this.handleShow('1-1')
+                        this.handleShow('1-2')
+                        for (let i in this.addUserFormData){
+                            this.addUserFormData[i] = '';
+                        }
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -1008,7 +1034,8 @@
                             message: '修改成功',
                             type: 'success'
                         });
-                        this.refreshUser()
+                        console.log(this.currentPage_cu)
+                        this.refreshUser(this.currentPage_cu);
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -1033,7 +1060,7 @@
                     .done((data) => {
                         // console.log(data);
                         this.deleteUserdialogVisible = false;
-                        this.refreshUser()
+                        this.refreshUser(this.currentPage_du)
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -1044,9 +1071,13 @@
             },
             // 商品
             refreshGoods(page){
+                this.goodSearch = '';
+                this.goodsLoading = true;
                 this.goodsData = [];
                 if (typeof page != "number") {
                     page = 1;
+                    this.currentPage_dg = 1;
+                    this.currentPage_cg = 1;
                 }
                 $.ajax({
                     url: '/api/findAllGoodsInfo',
@@ -1173,7 +1204,7 @@
                             message: '修改成功',
                             type: 'success'
                         });
-                        // this.refreshGoods()
+                        this.refreshGoods(this.currentPage_cg);
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -1198,7 +1229,7 @@
                     .done((data) => {
                         // console.log(data);
                         this.deleteGoodsDialogVisible = false;
-                        // this.refreshGoods()
+                        this.refreshGoods(this.currentPage_dg)
                     })
                     .error(function(data) {
                         console.log('error' + data);
@@ -1272,13 +1303,13 @@
             editComments(){
                 this.$message.error('此功能尚未开放');
             },
-            searchUser(){
+            searchUser(serContent){
                 $.ajax({
                     url: '/api/findAllUserInfo/{name}',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        name: this.userSearch
+                        name: serContent
                     }
                 })
                     .done(data => {
@@ -1293,13 +1324,13 @@
                         console.log('complete');
                     });
             },
-            searchGood(){
+            searchGood(searchContent){
                 $.ajax({
                     url: '/api/findGoodsByNameInfo',
                     method: 'POST',
                     dataType: 'JSON',
                     data: {
-                        name: this.goodSearch
+                        name: searchContent
                     }
                 })
                     .done(data => {
