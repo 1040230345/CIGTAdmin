@@ -118,7 +118,15 @@
                                 <el-input type="primary" size="small" v-model="editUserData.name"></el-input>
                             </el-form-item>
                             <el-form-item label="头像">
-                                <el-input type="primary" size="small" v-model="editUserData.image"></el-input>
+<!--                                <el-input type="primary" size="small" v-model="editUserData.image"></el-input>-->
+                                <el-upload class="avatar-uploader" action="/upGoodsImage"
+                                           :show-file-list="false" :auto-upload="true" name="fileName"
+                                           :data="userImageData" :on-success="uehandleAvatarSuccess"
+                                           :before-upload="uebeforeAvatarUpload">
+                                    <img v-if="editUserData.image" :src="editUserData.image"
+                                         class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
                             </el-form-item>
                             <el-form-item label="密码" :rules="[
                               { required: true, message: '密码不能为空',trigger:['blur','change']}
@@ -132,8 +140,8 @@
                                 <el-radio v-model="editUserData.sex" label="男">男</el-radio>
                                 <el-radio v-model="editUserData.sex" label="女">女</el-radio>
                             </el-form-item>
-                            <el-form-item label="电话">
-                                <el-input type="primary" size="small" v-model="editUserData.phone"></el-input>
+                            <el-form-item label="电话" style="width:70%">
+                                <el-input type="text" size="small" v-model="editUserData.phone" maxlength="11" show-word-limit></el-input>
                             </el-form-item>
                             <el-form-item label="状态">
                                 <el-switch
@@ -175,9 +183,9 @@
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="password" label="密码" width="100"></el-table-column>
-                                <el-table-column prop="address" label="地址"></el-table-column>
+                                <el-table-column prop="address" label="地址" width="130"></el-table-column>
                                 <el-table-column prop="sex" label="性别" width="50"></el-table-column>
-                                <el-table-column prop="phone" label="电话"></el-table-column>
+                                <el-table-column prop="phone" label="电话" width="130"></el-table-column>
                                 <el-table-column prop="information_state" label="状态" width="50"></el-table-column>
                                 <el-table-column prop="autograph" label="个性签名"></el-table-column>
                                 <el-table-column prop="real_name" label="真实姓名"></el-table-column>
@@ -240,9 +248,9 @@
                                     <el-radio v-model="addUserFormData.sex" label="男">男</el-radio>
                                     <el-radio v-model="addUserFormData.sex" label="女">女</el-radio>
                                 </el-form-item>
-                                <el-form-item label="电话">
-                                    <el-input type="primary" size="large" placeholder="请输入您的电话"
-                                              v-model="addUserFormData.phone"></el-input>
+                                <el-form-item label="电话" style="width:50%">
+                                    <el-input type="text" size="large" placeholder="请输入您的电话"
+                                              v-model="addUserFormData.phone" maxlength="11" show-word-limit></el-input>
                                 </el-form-item>
                                 <el-form-item label="状态">
                                     <el-switch v-model="stateSwitch" active-color="#13ce66"
@@ -379,10 +387,18 @@
                                 <el-input type="primary" size="small" v-model="editGoodsData.price"></el-input>
                             </el-form-item>
                             <el-form-item label="图片">
-                                <el-input type="primary" size="small" v-model="editGoodsData.images"></el-input>
+<!--                                <el-input type="primary" size="small" v-model="editGoodsData.images"></el-input>-->
+                                <el-upload class="avatar-uploader" action="/upGoodsImage"
+                                           :show-file-list="false" :auto-upload="true" name="fileName"
+                                           :on-success="gehandleAvatarSuccess" :before-upload="gebeforeAvatarUpload"
+                                           :data="goodImageData">
+                                    <img v-if="editGoodsData.images" :src="editGoodsData.images"
+                                         class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
                             </el-form-item>
                             <el-form-item label="数量">
-                                <el-input type="primary" size="small" v-model="editGoodsData.num"></el-input>
+                                <el-input-number v-model="editGoodsData.num" :min="1" :max="999" label=""></el-input-number>
                             </el-form-item>
                             <el-form-item label="类别">
                                 <!--                                <el-input type="primary" size="small" v-model="editGoodsData.category"></el-input>-->
@@ -473,8 +489,9 @@
                                     </el-upload>
                                 </el-form-item>
                                 <el-form-item label="数量">
-                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量"
-                                              v-model="addGoodsFormData.num"></el-input>
+<!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品数量"-->
+<!--                                              v-model="addGoodsFormData.num"></el-input>-->
+                                    <el-input-number v-model="addGoodsFormData.num" :min="1" :max="999" label=""></el-input-number>
                                 </el-form-item>
                                 <el-form-item label="类别">
                                     <!--                                    <el-input type="primary" size="large" placeholder="请输入您的商品类别" v-model="addGoodsFormData.category"></el-input>-->
@@ -608,10 +625,6 @@
                                 </el-table-column>
                             </el-table>
                         </div>
-                        <!--                        分页-->
-                        <!--                        <div class="xcenter">-->
-                        <!--                            <el-pagination background layout="prev, pager, next" :total="totalPage" @current-change="findGoodPage"></el-pagination>-->
-                        <!--                        </div>-->
                     </el-card>
                 </div>
                 <!--                删除评论-->
@@ -908,6 +921,16 @@
                 this.currentPage_cu = e;
                 this.refreshUser(this.currentPage_cu);
             },
+            gebeforeAvatarUpload() {
+                // console.log("上传前")
+            }, //图片上传前
+            gehandleAvatarSuccess(res, file) {
+                console.log(res);
+                if (res.code == 0) {
+                    console.log(res.msg)
+                    this.editGoodsData.images = res.msg;
+                }
+            },
             ghandleAvatarSuccess(res, file) {
                 console.log(res);
                 if (res.code == 0) {
@@ -918,6 +941,13 @@
             gbeforeAvatarUpload() {
                 // console.log("上传前")
             }, //图片上传前
+            uehandleAvatarSuccess(res, file) {
+                console.log(res);
+                if (res.code == 0) {
+                    console.log(res.msg)
+                    this.editUserData.image = res.msg;
+                }
+            },
             uhandleAvatarSuccess(res, file) {
                 console.log(res);
                 if (res.code == 0) {
@@ -925,6 +955,9 @@
                     this.addUserFormData.image = res.msg;
                 }
             }, //上传成功
+            uebeforeAvatarUpload(){
+
+            },
             ubeforeAvatarUpload() {
                 // console.log("上传前")
             }, //图片上传前
